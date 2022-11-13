@@ -35,6 +35,33 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseClickMain"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cb4f464-72c1-46c6-b163-3b8d10967a18"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""de52081b-7d02-4f2b-8855-907374378b65"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""3b9c973e-c86f-4ec9-8354-d64edf763762"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -92,6 +119,61 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                     ""action"": ""MoveCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""325c3031-25e5-4b8c-ad35-3b2db8c45dfd"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PCSontrolScheme"",
+                    ""action"": ""MouseClickMain"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d2b6915-63d7-4553-960f-7ada07118330"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PCSontrolScheme"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""ScrollWheel"",
+                    ""id"": ""db1c5719-5b97-44b3-8322-ee87b1e06031"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""3078bcd4-c66e-4342-ac7b-10338624f2b2"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PCSontrolScheme"",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c5e8c102-cbe5-4eb4-86e5-d478e5d4a9ec"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PCSontrolScheme"",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -118,6 +200,9 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
         // DefaultCameraControls
         m_DefaultCameraControls = asset.FindActionMap("DefaultCameraControls", throwIfNotFound: true);
         m_DefaultCameraControls_MoveCamera = m_DefaultCameraControls.FindAction("MoveCamera", throwIfNotFound: true);
+        m_DefaultCameraControls_MouseClickMain = m_DefaultCameraControls.FindAction("MouseClickMain", throwIfNotFound: true);
+        m_DefaultCameraControls_MousePosition = m_DefaultCameraControls.FindAction("MousePosition", throwIfNotFound: true);
+        m_DefaultCameraControls_MouseScroll = m_DefaultCameraControls.FindAction("MouseScroll", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -178,11 +263,17 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_DefaultCameraControls;
     private IDefaultCameraControlsActions m_DefaultCameraControlsActionsCallbackInterface;
     private readonly InputAction m_DefaultCameraControls_MoveCamera;
+    private readonly InputAction m_DefaultCameraControls_MouseClickMain;
+    private readonly InputAction m_DefaultCameraControls_MousePosition;
+    private readonly InputAction m_DefaultCameraControls_MouseScroll;
     public struct DefaultCameraControlsActions
     {
         private @CameraControls m_Wrapper;
         public DefaultCameraControlsActions(@CameraControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveCamera => m_Wrapper.m_DefaultCameraControls_MoveCamera;
+        public InputAction @MouseClickMain => m_Wrapper.m_DefaultCameraControls_MouseClickMain;
+        public InputAction @MousePosition => m_Wrapper.m_DefaultCameraControls_MousePosition;
+        public InputAction @MouseScroll => m_Wrapper.m_DefaultCameraControls_MouseScroll;
         public InputActionMap Get() { return m_Wrapper.m_DefaultCameraControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -195,6 +286,15 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 @MoveCamera.started -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMoveCamera;
                 @MoveCamera.performed -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMoveCamera;
                 @MoveCamera.canceled -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMoveCamera;
+                @MouseClickMain.started -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMouseClickMain;
+                @MouseClickMain.performed -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMouseClickMain;
+                @MouseClickMain.canceled -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMouseClickMain;
+                @MousePosition.started -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMousePosition;
+                @MouseScroll.started -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMouseScroll;
+                @MouseScroll.performed -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMouseScroll;
+                @MouseScroll.canceled -= m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface.OnMouseScroll;
             }
             m_Wrapper.m_DefaultCameraControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -202,6 +302,15 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
                 @MoveCamera.started += instance.OnMoveCamera;
                 @MoveCamera.performed += instance.OnMoveCamera;
                 @MoveCamera.canceled += instance.OnMoveCamera;
+                @MouseClickMain.started += instance.OnMouseClickMain;
+                @MouseClickMain.performed += instance.OnMouseClickMain;
+                @MouseClickMain.canceled += instance.OnMouseClickMain;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
+                @MouseScroll.started += instance.OnMouseScroll;
+                @MouseScroll.performed += instance.OnMouseScroll;
+                @MouseScroll.canceled += instance.OnMouseScroll;
             }
         }
     }
@@ -218,5 +327,8 @@ public partial class @CameraControls : IInputActionCollection2, IDisposable
     public interface IDefaultCameraControlsActions
     {
         void OnMoveCamera(InputAction.CallbackContext context);
+        void OnMouseClickMain(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
     }
 }
