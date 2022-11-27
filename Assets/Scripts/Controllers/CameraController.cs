@@ -28,7 +28,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float dampening = 15f;
 
-    private float zoomVelocity = 0f;
     [SerializeField]
     private float zoomSpeed = 1f;
     [SerializeField]
