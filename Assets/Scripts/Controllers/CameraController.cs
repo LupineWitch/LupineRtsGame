@@ -57,9 +57,6 @@ public class CameraController : MonoBehaviour
         Vector2 mousePos = _cameraControls.DefaultCameraControls.MousePosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         Vector3Int cellPos = _mouseGridhelper.GetTopCell(mousePos);
-        _ = _mouseGridhelper.GetTopCell2(mousePos);
-
-        Debug.LogFormat("clicked cell position: {0}",cellPos);
     }
 
     private void OnEnable()

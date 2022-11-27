@@ -154,6 +154,87 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "CommandControls",
+            "id": "1b438e87-236c-4f78-b121-1b20e2aa0005",
+            "actions": [
+                {
+                    "name": "PointerPosition",
+                    "type": "PassThrough",
+                    "id": "cdefef12-0685-4b34-8ada-19703a682e2d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MainPointerDrag",
+                    "type": "PassThrough",
+                    "id": "d333848d-5288-4ca9-bbc2-9da7e9342577",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "62935892-83c8-4314-9ad1-9107a36037e1",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PCSontrolScheme",
+                    "action": "PointerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "PointerDrag",
+                    "id": "1595b408-bb70-44c9-9d0f-dd8bedd9cef1",
+                    "path": "MouseDrag",
+                    "interactions": "MouseDrag",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MainPointerDrag",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Button",
+                    "id": "0c28d0a3-e1af-4ab7-a2cd-33d27ae759e3",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PCSontrolScheme",
+                    "action": "MainPointerDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Axis1",
+                    "id": "551ac77e-c273-43a4-8345-4f26e8ce887d",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PCSontrolScheme",
+                    "action": "MainPointerDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Axis2",
+                    "id": "360ebea4-2072-4feb-bef4-2fd1d9ec2a72",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PCSontrolScheme",
+                    "action": "MainPointerDrag",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": [

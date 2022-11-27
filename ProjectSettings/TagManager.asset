@@ -44,3 +44,6 @@ TagManager:
   - name: TilemapCollison
     uniqueID: 2007445675
     locked: 0
+  - name: UISprites
+    uniqueID: 4044315127
+    locked: 0
