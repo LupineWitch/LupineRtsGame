@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -18,14 +19,14 @@ public class BasicCommandControler : MonoBehaviour
     private CameraControls _cameraControls;
     private InputAction _pointerPosition;
 
-    private List<GameObject> selectedObjects;
+    private List<BasicUnitScript> selectedObjects;
     [SerializeField]
     private GameObject selectionBox;
 
 
     private void Awake()
     {
-        selectedObjects = new List<GameObject>();
+        selectedObjects = new List<BasicUnitScript>();
     }
 
     private void OnEnable()
@@ -46,6 +47,9 @@ public class BasicCommandControler : MonoBehaviour
 
     private void MainPointerDrag_started(CallbackContext obj)
     {
+        foreach (var unit in selectedObjects)
+            unit.isSelected = false;
+
         selectedObjects.Clear();
         Vector2 pointerPos = _pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
@@ -71,13 +75,19 @@ public class BasicCommandControler : MonoBehaviour
 
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
+
         Vector2 pointerPos = _pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
         Debug.Log(string.Format("Start position: {0}, end position: {1}", startPosition, pointerPos));
         foreach (var hit in hits)
         {
-            selectedObjects.Add(hit.gameObject);
+            BasicUnitScript unitScript = hit.gameObject.GetComponent<BasicUnitScript>() ;
+            if (unitScript == null)
+                continue;
+
+            selectedObjects.Add(unitScript);
+            unitScript.isSelected = true;
             Debug.Log(hit.gameObject.name);
         }
 
