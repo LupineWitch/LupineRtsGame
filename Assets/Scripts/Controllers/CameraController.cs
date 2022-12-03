@@ -10,19 +10,19 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class CameraController : MonoBehaviour
 {
-    private CameraControls _cameraControls;
-    private InputAction _moveCameraAction;
-    private Camera _parentCamera;
+    private BasicControls basicControls;
+    private InputAction moveCameraAction;
+    private Camera parentCamera;
 
-    private Vector3 _lastPosition;
-    private Vector3 _targetPosition;
-    private Vector3 _cameraVelocity;
+    private Vector3 lastPosition;
+    private Vector3 targetPosition;
+    private Vector3 cameraVelocity;
 
-    private MouseGridHelper _mouseGridhelper;
+    private MouseGridHelper mouseGridhelper;
 
     [SerializeField]
     private float maxSpeed = 1f;
-    private float _speed;
+    private float currentSpeed;
     [SerializeField]
     private float acceleration = 10f;
     [SerializeField]
@@ -40,41 +40,41 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        _parentCamera = this.gameObject.GetComponent<Camera>();
-        if (_parentCamera == null)
+        parentCamera = this.gameObject.GetComponent<Camera>();
+        if (parentCamera == null)
             throw new NullReferenceException(String.Format("{0} script couldn't awake, gameobject has no camera component", nameof(CameraController)));
 
-        _cameraControls = new CameraControls();
-        _moveCameraAction = _cameraControls.DefaultCameraControls.MoveCamera;
-        _cameraControls.DefaultCameraControls.MouseClickMain.performed += OnMouseClickMain;
+        basicControls = new BasicControls();
+        moveCameraAction = basicControls.DefaultCameraControls.MoveCamera;
+        basicControls.DefaultCameraControls.MouseClickMain.performed += OnMouseClickMain;
 
-        _mouseGridhelper = new MouseGridHelper(mainTilemap);
+        mouseGridhelper = new MouseGridHelper(mainTilemap);
     }
 
     private void OnMouseClickMain(CallbackContext context)
     {
-        Vector2 mousePos = _cameraControls.DefaultCameraControls.MousePosition.ReadValue<Vector2>();
+        Vector2 mousePos = basicControls.DefaultCameraControls.MousePosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector3Int cellPos = _mouseGridhelper.GetTopCell(mousePos);
+        Vector3Int cellPos = mouseGridhelper.GetTopCell(mousePos);
     }
 
     private void OnEnable()
     {
-        _cameraControls.Enable();
+        basicControls.Enable();
     }
 
     private void OnDisable()
     {
-        _cameraControls.Disable();
+        basicControls.Disable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _speed = 0f;
-        _targetPosition = Vector3.zero;
-        _lastPosition = this.transform.position;
-        _cameraVelocity = Vector3.zero;
+        currentSpeed = 0f;
+        targetPosition = Vector3.zero;
+        lastPosition = this.transform.position;
+        cameraVelocity = Vector3.zero;
         //_moveCameraAction.performed += OnMoveCamera;
     }
 
@@ -89,40 +89,40 @@ public class CameraController : MonoBehaviour
 
     private void ApplyScroll()
     {
-        float scrollValue = _cameraControls.DefaultCameraControls.MouseScroll.ReadValue<float>();
+        float scrollValue = basicControls.DefaultCameraControls.MouseScroll.ReadValue<float>();
 
         if (scrollValue != 0)
-            _parentCamera.orthographicSize = Math.Clamp(_parentCamera.orthographicSize + scrollValue * zoomSpeed * Time.deltaTime, minZoom, maxZoom);
+            parentCamera.orthographicSize = Math.Clamp(parentCamera.orthographicSize + scrollValue * zoomSpeed * Time.deltaTime, minZoom, maxZoom);
     }
 
     private void UpdateCameraPosition()
     {
-        if(_targetPosition.sqrMagnitude > 0.1f)
+        if(targetPosition.sqrMagnitude > 0.1f)
         {
-            _speed = Mathf.Lerp(_speed, maxSpeed, Time.deltaTime * acceleration);
-            transform.position += _targetPosition * _speed * Time.deltaTime;
+            currentSpeed = Mathf.Lerp(currentSpeed, maxSpeed, Time.deltaTime * acceleration);
+            transform.position += targetPosition * currentSpeed * Time.deltaTime;
         }
         else
         {
-            _cameraVelocity = Vector3.Lerp(_cameraVelocity, Vector3.zero, Time.deltaTime * dampening);
-            transform.position += _cameraVelocity * Time.deltaTime;
+            cameraVelocity = Vector3.Lerp(cameraVelocity, Vector3.zero, Time.deltaTime * dampening);
+            transform.position += cameraVelocity * Time.deltaTime;
         }
 
-        _targetPosition = Vector3.zero;
+        targetPosition = Vector3.zero;
     }
 
     private void UpdateVelocity()
     {
-        _cameraVelocity = (this.transform.position - _lastPosition) / Time.deltaTime;
-        _lastPosition = this.transform.position;
+        cameraVelocity = (this.transform.position - lastPosition) / Time.deltaTime;
+        lastPosition = this.transform.position;
     }    
 
     private void SetTargetPosition()
     {
-        Vector3 moveDirection = _moveCameraAction.ReadValue<Vector2>().normalized;
+        Vector3 moveDirection = moveCameraAction.ReadValue<Vector2>().normalized;
 
         if (moveDirection.sqrMagnitude > 0.1f)
-            _targetPosition += moveDirection;
+            targetPosition += moveDirection;
     }
 
 }
