@@ -38,7 +38,7 @@ namespace Assets.Scripts.Classes.Commands
 
         public override CommandState ExecuteOnUpdate()
         { 
-            if(Vector3.Distance(currentPosition, destination) < 0.2f)
+            if(Vector3.Distance(currentPosition, destination) < 0.1f)
             {
                 EndCommand();
                 return CommandState.Ended;
