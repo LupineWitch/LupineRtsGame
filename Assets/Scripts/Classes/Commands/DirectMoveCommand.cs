@@ -38,7 +38,7 @@ namespace Assets.Scripts.Classes.Commands
 
         public override CommandState ExecuteOnUpdate()
         { 
-            if(Vector3.Distance(currentPosition, destination) < 0.1f)
+            if(Vector3.Distance(currentPosition, destination) < 0.2f)
             {
                 EndCommand();
                 return CommandState.Ended;
@@ -63,7 +63,9 @@ namespace Assets.Scripts.Classes.Commands
 
         public override CommandResult EndCommand()
         {
-            this.rigidbody2D.velocity = Vector2.zero;
+            if(this.rigidbody2D)
+                this.rigidbody2D.velocity = Vector2.zero;
+
             return base.EndCommand();
         }
     }
