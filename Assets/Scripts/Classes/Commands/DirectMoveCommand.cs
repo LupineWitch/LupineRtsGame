@@ -16,6 +16,7 @@ namespace Assets.Scripts.Classes.Commands
         private float movingSpeed = 1f;
 
         GameObject movingGameObject;
+        Rigidbody2D rigidbody2D;
 
         public DirectMoveCommand(MovingType movingObject, Vector3 destination, float movingSpeed) : base(movingObject)
         {
@@ -30,6 +31,8 @@ namespace Assets.Scripts.Classes.Commands
                 throw new ArgumentException(string.Format("{0} class initialized with invalid type: {1}, valid type must derive either from {2} or {3}", 
                     nameof(DirectMoveCommand<MovingType>), typeof(MovingType).Name, nameof(GameObject), nameof(MonoBehaviour)),nameof(movingObject) );
 
+            rigidbody2D = movingGameObject.GetComponent<Rigidbody2D>();
+
             SetCurentState(CommandState.Queued);
         }
 
@@ -42,8 +45,13 @@ namespace Assets.Scripts.Classes.Commands
             }
 
             Vector3 newPosition = Vector3.MoveTowards(currentPosition, destination, movingSpeed * Time.deltaTime);
-            movingGameObject.transform.position = newPosition;
-            this.currentPosition = movingGameObject.transform.position;
+
+            if (rigidbody2D)
+                rigidbody2D.MovePosition(newPosition);
+            else
+                movingGameObject.transform.position = newPosition;
+
+            this.currentPosition = movingGameObject.transform.position;            
             return CommandState.InProgress;
         }
 
@@ -51,6 +59,12 @@ namespace Assets.Scripts.Classes.Commands
         {
             this.currentPosition = movingGameObject.transform.position;
             this.SetCurentState(CommandState.InProgress);
+        }
+
+        public override CommandResult EndCommand()
+        {
+            this.rigidbody2D.velocity = Vector2.zero;
+            return base.EndCommand();
         }
     }
 }
