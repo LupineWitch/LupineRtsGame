@@ -1,0 +1,34 @@
+﻿using Assets.Scripts.Pathfinding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+namespace Assets.Scripts.Managers
+{
+    public  class MapManager : MonoBehaviour
+    {
+        public PathingGrid PathingGrid { get { return pathingGrid; } }
+        public Tilemap UsedTilemap { get { return mainTilemap; } }
+
+        private PathingGrid pathingGrid;
+        private LevelLoader mapLoader;
+        [SerializeField]
+        private Tilemap mainTilemap;
+
+        private void Awake()
+        {
+            mapLoader = new LevelLoader(mainTilemap);
+            pathingGrid = new PathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
+        }
+
+        private void Start()
+        {
+            mapLoader.LoadMap();
+            pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);
+        }
+    }
+}

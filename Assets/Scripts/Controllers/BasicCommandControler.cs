@@ -1,5 +1,6 @@
 using Assets.Scripts.Classes.Commands;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ public class BasicCommandControler : MonoBehaviour
     private Tilemap mainTilemap;
     [SerializeField]
     private GameObject selectionBox;
+    [SerializeField]
+    private MapManager mapManager;
 
     private Vector2 startPosition;
     private BasicControls basicControls;
@@ -101,13 +104,12 @@ public class BasicCommandControler : MonoBehaviour
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         Vector3Int cellPos = mouseGridhelper.GetTopCell(mousePos);
-        Vector3 newPos = mainTilemap.CellToLocal(cellPos);
         //Debug.Log("CellPos: " + cellPos);
         //Debug.Log("NewPos: " + newPos);
 
         foreach (BasicUnitScript unitScript in selectedObjects)
         {
-            DirectMoveCommand<BasicUnitScript> moveOrder = new DirectMoveCommand<BasicUnitScript>(unitScript, newPos, unitScript.unitSpeed);
+            AstarMoveCommand<BasicUnitScript> moveOrder = new AstarMoveCommand<BasicUnitScript>(unitScript, cellPos, mapManager);
             unitScript.SetCommand(moveOrder);
         }
     }
