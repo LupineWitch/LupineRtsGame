@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Classes.Commands
@@ -24,18 +25,18 @@ namespace Assets.Scripts.Classes.Commands
         private Vector3 currentTargetPos;
         private Vector3 currentPosition;
         private PathingGrid pathingGrid;
-        private bool isInitialized = false;
         private float movingSpeed = 1f;
         private bool shouldDequeueNextPoint = true;
 
         private GameObject movingGameObject;
         private Rigidbody2D rigidbody2D;
 
-        public AstarMoveCommand(MovingType reciver, Vector3Int target, MapManager mapManager) : base(reciver)
+        public AstarMoveCommand(MovingType reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver)
         {
             tilemap = mapManager.UsedTilemap;             
-            this.targetPos = target;
+            this.targetCell = target;
             this.pathingGrid = mapManager.PathingGrid;
+            this.movingSpeed = speed;
 
             if (reciver is MonoBehaviour objectComponent)
                 movingGameObject = objectComponent.gameObject;
@@ -49,23 +50,8 @@ namespace Assets.Scripts.Classes.Commands
             SetCurentState(CommandState.Queued);
         }
 
-        public void Initialize()
-        {
-            Vector3 pos = movingGameObject.transform.position;
-            startPos = tilemap.WorldToCell(pos);
-            positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
-            this.currentPosition = movingGameObject.transform.position;
-        }
-
         public override CommandState ExecuteOnUpdate()
         {
-            if (!isInitialized)
-            {
-                SetCurentState(CommandState.Starting);
-                this.Initialize();
-                SetCurentState(CommandState.InProgress);
-            }
-
             if (shouldDequeueNextPoint)
             {
                 if (!positionsToVisit.TryDequeue(out Vector3Int nextPoint))
@@ -73,9 +59,12 @@ namespace Assets.Scripts.Classes.Commands
 
                 this.currentTargetCell = nextPoint;
                 this.currentTargetPos = tilemap.CellToLocal(this.currentTargetCell);
+                //Debug.Log($"Current Target Cell: {currentTargetCell}");
+                //Debug.Log($"Current Target Pos: {currentTargetPos}");
+                shouldDequeueNextPoint = false;
             }
 
-            if (Vector3.Distance(currentPosition, this.currentTargetPos) < 0.1f)
+            if (Vector2.Distance(currentPosition, this.currentTargetPos) < 0.8f)
             {
                 shouldDequeueNextPoint = true;
                 return CommandState.InProgress;
@@ -88,7 +77,28 @@ namespace Assets.Scripts.Classes.Commands
                 movingGameObject.transform.position = newPosition;
 
             this.currentPosition = movingGameObject.transform.position;
+            this.rigidbody2D.velocity = Vector2.zero;
             return CommandState.InProgress;
+        }
+
+        public override void StartCommand()
+        {
+            this.SetCurentState(CommandState.Starting);
+            Vector3 pos = movingGameObject.transform.localPosition;
+            startCell = tilemap.WorldToCell(pos);
+            //Debug.Log($"Start Cell:{startCell}");
+            //Debug.Log($"Target Cell:{targetCell}");
+            positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
+            this.currentPosition = movingGameObject.transform.position;
+            this.SetCurentState(CommandState.InProgress);
+        }
+
+        public override CommandResult EndCommand()
+        {
+            if (this.rigidbody2D)
+                this.rigidbody2D.velocity = Vector2.zero;
+
+            return base.EndCommand();
         }
     }
 }

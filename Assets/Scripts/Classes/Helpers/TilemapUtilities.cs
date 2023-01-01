@@ -31,12 +31,17 @@ namespace Assets.Scripts.Classes.Helpers
         /// <returns>The position of the top tile</returns>
         public static Vector3Int GetTopTilePosition(this Tilemap tilemap, Vector3Int position)
         {
-            position.z = 0;
+            Vector3Int topTile = position;
+            Vector3Int tempTile = topTile;
 
-            while (tilemap.HasTile(position))
-                position += Vector3Int.forward;
+            for(int z = 0; z < tilemap.cellBounds.zMax; z++)
+            {
+                tempTile.z = z;
+                if(tilemap.HasTile(tempTile))
+                    topTile = tempTile;
+            }
 
-            return (position - Vector3Int.back);
+            return topTile;
         }
 
         /// <summary>
@@ -48,13 +53,28 @@ namespace Assets.Scripts.Classes.Helpers
         {
             Dictionary<Vector3Int, bool> pathableNeigbours = new Dictionary<Vector3Int, bool>(); 
             Vector3Int topTilePosition = tilemap.GetTopTilePosition(position);
-            bool isPathableTo = false;
+            bool isPathableTo = true;
             foreach(Vector3Int direction in NeighbourDirections)
             {
-                Vector3Int currentNeighbour = topTilePosition + direction;
-                if (currentNeighbour.IsValidVector())
-                    if (Math.Abs((currentNeighbour - topTilePosition).z) < 2)
-                        isPathableTo = true;
+                Vector3Int currentNeighbour = tilemap.GetTopTilePosition(topTilePosition + direction);
+                int heigthDiff = currentNeighbour.z - topTilePosition.z;
+                if (heigthDiff != 0)
+                {
+                    Debug.Log($"Difference: {heigthDiff}");
+                    Debug.Log($"Abs of difference: {Math.Abs(heigthDiff)}, smaller bigger or equal to two: {Math.Abs(heigthDiff) >= 2}");
+                }
+
+                if(Math.Abs(heigthDiff) >= 2)
+                {
+                    Debug.Log("Pathable set to false!");
+                    isPathableTo = false;
+                }
+
+                if(!isPathableTo)
+                    Debug.Log($"Should Remove edgde betweeen: {currentNeighbour} and {topTilePosition}");
+                
+                if(isPathableTo && heigthDiff != 0)
+                    Debug.Log($"Should Remove edgde betweeen: {currentNeighbour} and {topTilePosition}, but something went wrong... height diff: {heigthDiff}");
 
                 pathableNeigbours.Add(currentNeighbour, isPathableTo);
             }

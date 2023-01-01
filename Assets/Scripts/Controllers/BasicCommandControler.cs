@@ -82,7 +82,7 @@ public class BasicCommandControler : MonoBehaviour
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
-        Debug.Log(string.Format("Start position: {0}, end position: {1}", startPosition, pointerPos));
+        //Debug.Log(string.Format("Start position: {0}, end position: {1}", startPosition, pointerPos));
         foreach (var hit in hits)
         {
             BasicUnitScript unitScript = hit.gameObject.GetComponent<BasicUnitScript>() ;
@@ -107,10 +107,11 @@ public class BasicCommandControler : MonoBehaviour
         //Debug.Log("CellPos: " + cellPos);
         //Debug.Log("NewPos: " + newPos);
 
-        foreach (BasicUnitScript unitScript in selectedObjects)
+        Debug.Log($"TopCell pos(target):{cellPos}");
+        foreach (BasicUnitScript unit in selectedObjects)
         {
-            AstarMoveCommand<BasicUnitScript> moveOrder = new AstarMoveCommand<BasicUnitScript>(unitScript, cellPos, mapManager);
-            unitScript.SetCommand(moveOrder);
+            AstarMoveCommand<BasicUnitScript> moveOrder = new AstarMoveCommand<BasicUnitScript>(unit, cellPos, mapManager, unit.unitSpeed);
+            unit.SetCommand(moveOrder);
         }
     }
 

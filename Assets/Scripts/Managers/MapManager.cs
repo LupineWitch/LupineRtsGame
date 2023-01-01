@@ -22,13 +22,14 @@ namespace Assets.Scripts.Managers
         private void Awake()
         {
             mapLoader = new LevelLoader(mainTilemap);
+            mapLoader.LoadMap();
             pathingGrid = new PathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
+            pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);
         }
 
         private void Start()
         {
-            mapLoader.LoadMap();
-            pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);
+            //eeh..
         }
     }
 }

@@ -47,6 +47,7 @@ namespace Assets.Scripts.Pathfinding
                     {
                         if (!neighbour.Value)
                         {
+                            Debug.Log($"Removed pathable edgde between:{currentPos} and {neighbour}");
                             this.grid.RemoveEdge(currentPos.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition());
                         }
                     }
@@ -55,11 +56,14 @@ namespace Assets.Scripts.Pathfinding
 
         public Queue<Vector3Int> GetFastestPath(Vector3Int start, Vector3Int target)
         {
-            Path foundPath = pathFinder.FindPath(start.ToAstarGridPosition(), target.ToAstarGridPosition(), this.grid);
+            var astarGridPosStart = start.ToAstarGridPosition();
+            var astarGridPosTarget = target.ToAstarGridPosition();
+            Path foundPath = pathFinder.FindPath(astarGridPosStart, astarGridPosTarget, this.grid);
             Queue<Vector3Int> positionsToGoTo = new Queue<Vector3Int>(foundPath.Edges.Count);
             foreach(Roy_T.AStar.Graphs.IEdge edge in foundPath.Edges)
             {
-                positionsToGoTo.Append(edge.End.Position.ToUnityVector3Int());
+                var cringyTempVar = edge.End.Position.ToUnityVector3Int();
+                positionsToGoTo.Enqueue(cringyTempVar);
             }
 
             return positionsToGoTo;

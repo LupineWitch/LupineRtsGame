@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Classes.Helpers
 {
-    public static  class CommandUtilities
+    public static class CommandUtilities
     {
         public static bool IsActiveState(this CommandState state)
         {
