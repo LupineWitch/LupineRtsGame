@@ -107,7 +107,6 @@ public class BasicCommandControler : MonoBehaviour
         //Debug.Log("CellPos: " + cellPos);
         //Debug.Log("NewPos: " + newPos);
 
-        Debug.Log($"TopCell pos(target):{cellPos}");
         foreach (BasicUnitScript unit in selectedObjects)
         {
             AstarMoveCommand<BasicUnitScript> moveOrder = new AstarMoveCommand<BasicUnitScript>(unit, cellPos, mapManager, unit.unitSpeed);

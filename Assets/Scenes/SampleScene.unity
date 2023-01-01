@@ -657,7 +657,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2600900047561440779, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: unitSpeed
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4993150341364685332, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_Name
@@ -677,7 +677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4993150341364685334, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4993150341364685334, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -709,7 +709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7029850306226955424, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_LinearDrag
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7029850306226955424, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_Interpolate
