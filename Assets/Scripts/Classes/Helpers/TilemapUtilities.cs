@@ -58,23 +58,11 @@ namespace Assets.Scripts.Classes.Helpers
             {
                 Vector3Int currentNeighbour = tilemap.GetTopTilePosition(topTilePosition + direction);
                 int heigthDiff = currentNeighbour.z - topTilePosition.z;
-                if (heigthDiff != 0)
-                {
-                    Debug.Log($"Difference: {heigthDiff}");
-                    Debug.Log($"Abs of difference: {Math.Abs(heigthDiff)}, smaller bigger or equal to two: {Math.Abs(heigthDiff) >= 2}");
-                }
 
                 if(Math.Abs(heigthDiff) >= 2)
                 {
-                    Debug.Log("Pathable set to false!");
                     isPathableTo = false;
                 }
-
-                if(!isPathableTo)
-                    Debug.Log($"Should Remove edgde betweeen: {currentNeighbour} and {topTilePosition}");
-                
-                if(isPathableTo && heigthDiff != 0)
-                    Debug.Log($"Should Remove edgde betweeen: {currentNeighbour} and {topTilePosition}, but something went wrong... height diff: {heigthDiff}");
 
                 pathableNeigbours.Add(currentNeighbour, isPathableTo);
             }

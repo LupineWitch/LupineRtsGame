@@ -47,7 +47,6 @@ namespace Assets.Scripts.Pathfinding
                     {
                         if (!neighbour.Value)
                         {
-                            Debug.Log($"Removed pathable edgde between:{currentPos} and {neighbour}");
                             this.grid.RemoveEdge(currentPos.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition());
                         }
                     }

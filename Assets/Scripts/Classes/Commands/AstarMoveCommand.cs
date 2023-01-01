@@ -64,7 +64,7 @@ namespace Assets.Scripts.Classes.Commands
                 shouldDequeueNextPoint = false;
             }
 
-            if (Vector2.Distance(currentPosition, this.currentTargetPos) < 0.8f)
+            if (Vector2.Distance(currentPosition, this.currentTargetPos) < 0.09f)
             {
                 shouldDequeueNextPoint = true;
                 return CommandState.InProgress;
