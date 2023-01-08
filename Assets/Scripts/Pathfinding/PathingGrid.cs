@@ -18,7 +18,7 @@ namespace Assets.Scripts.Pathfinding
 {
     public class PathingGrid
     {
-        private readonly PathFinder pathFinder;
+        //private readonly PathFinder pathFinder;
         private Grid grid;
 
         /// <summary>
@@ -28,7 +28,6 @@ namespace Assets.Scripts.Pathfinding
         /// <param name="y">The heigth of pathfidning grid.</param>
         public PathingGrid(int x, int y)
         {
-            this.pathFinder = new PathFinder();
             GridSize gridSize = new GridSize(x, y);
             Size cellSize = new Size(Distance.FromMeters(1f), Distance.FromMeters(1f));
             //Initialize basic grid with all cells pathable.
@@ -55,10 +54,12 @@ namespace Assets.Scripts.Pathfinding
 
         public Queue<Vector3Int> GetFastestPath(Vector3Int start, Vector3Int target)
         {
-            var astarGridPosStart = start.ToAstarGridPosition();
-            var astarGridPosTarget = target.ToAstarGridPosition();
+            var pathFinder = new PathFinder();
+            GridPosition astarGridPosStart = start.ToAstarGridPosition();
+            GridPosition astarGridPosTarget = target.ToAstarGridPosition();
             Path foundPath = pathFinder.FindPath(astarGridPosStart, astarGridPosTarget, this.grid);
             Queue<Vector3Int> positionsToGoTo = new Queue<Vector3Int>(foundPath.Edges.Count);
+
             foreach(Roy_T.AStar.Graphs.IEdge edge in foundPath.Edges)
             {
                 var cringyTempVar = edge.End.Position.ToUnityVector3Int();

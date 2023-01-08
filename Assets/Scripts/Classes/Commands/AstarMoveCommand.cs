@@ -89,6 +89,11 @@ namespace Assets.Scripts.Classes.Commands
             //Debug.Log($"Start Cell:{startCell}");
             //Debug.Log($"Target Cell:{targetCell}");
             positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
+            if(positionsToVisit == null || !positionsToVisit.Any())
+            {
+                Debug.LogFormat("Pathing from {0} to {1} yielded empty path", pos, targetCell);
+                this.EndCommand();
+            }
             this.currentPosition = movingGameObject.transform.position;
             this.SetCurentState(CommandState.InProgress);
         }
