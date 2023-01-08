@@ -55,12 +55,13 @@ namespace Assets.Scripts.Classes.Commands
             if (shouldDequeueNextPoint)
             {
                 if (!positionsToVisit.TryDequeue(out Vector3Int nextPoint))
+                {
                     EndCommand();
+                    return CommandState.Ended;
+                }
 
                 this.currentTargetCell = nextPoint;
-                this.currentTargetPos = tilemap.CellToLocal(this.currentTargetCell);
-                //Debug.Log($"Current Target Cell: {currentTargetCell}");
-                //Debug.Log($"Current Target Pos: {currentTargetPos}");
+                this.currentTargetPos = tilemap.CellToWorld(this.currentTargetCell);
                 shouldDequeueNextPoint = false;
             }
 
@@ -84,10 +85,9 @@ namespace Assets.Scripts.Classes.Commands
         public override void StartCommand()
         {
             this.SetCurentState(CommandState.Starting);
-            Vector3 pos = movingGameObject.transform.localPosition;
+            Vector3 pos = movingGameObject.transform.position;
             startCell = tilemap.WorldToCell(pos);
-            //Debug.Log($"Start Cell:{startCell}");
-            //Debug.Log($"Target Cell:{targetCell}");
+
             positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
             if(positionsToVisit == null || !positionsToVisit.Any())
             {
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Classes.Commands
         {
             if (this.rigidbody2D)
                 this.rigidbody2D.velocity = Vector2.zero;
-
+            Debug.Log("Move command has ended");
             return base.EndCommand();
         }
     }

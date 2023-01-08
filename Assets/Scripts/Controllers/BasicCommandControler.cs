@@ -1,4 +1,5 @@
 using Assets.Scripts.Classes.Commands;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using System;
@@ -24,7 +25,7 @@ public class BasicCommandControler : MonoBehaviour
     private BasicControls basicControls;
     private InputAction pointerPosition;
     private List<BasicUnitScript> selectedObjects;
-    private MouseGridHelper mouseGridhelper;
+    private ITopCellSelector topCellSelector;
 
     private void Awake()
     {
@@ -33,7 +34,7 @@ public class BasicCommandControler : MonoBehaviour
 
         basicControls = new BasicControls();
         selectedObjects = new List<BasicUnitScript>();
-        mouseGridhelper = new MouseGridHelper(mainTilemap);
+        topCellSelector = new CursorTileSelector(mainTilemap);
     }
 
     private void OnEnable()
@@ -103,8 +104,8 @@ public class BasicCommandControler : MonoBehaviour
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector3Int cellPos = mouseGridhelper.GetTopCell(mousePos);
-        //Debug.Log("CellPos: " + cellPos);
+        Vector3Int cellPos = topCellSelector.GetTopCell(mousePos);
+        Debug.Log("Clicked pos: " + cellPos);
         //Debug.Log("NewPos: " + newPos);
 
         foreach (BasicUnitScript unit in selectedObjects)

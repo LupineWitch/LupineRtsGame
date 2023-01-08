@@ -9,7 +9,7 @@ using TMPro;
 
 namespace Assets.Scripts.Helpers
 {
-    internal class MouseGridHelper
+    internal class TopCellSelectionHelper : ITopCellSelector
     {
 
         //y difference for each 1 unit of z;
@@ -19,7 +19,7 @@ namespace Assets.Scripts.Helpers
         private int zMax;
         private Tilemap _tilemap;
 
-        public MouseGridHelper(Tilemap tilemap)
+        public TopCellSelectionHelper(Tilemap tilemap)
         {
             _tilemap = tilemap;
             zMax = _tilemap.cellBounds.zMax;
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Helpers
         {
             //Debug.LogFormat("{0}: {1}", nameof(mouseWorldPos), mouseWorldPos);
             Vector3Int gridCell = _tilemap.WorldToCell(mouseWorldPos);
-           //Debug.LogFormat("WorldToCell: {0}", gridCell);
+            //Debug.LogFormat("WorldToCell: {0}", gridCell);
 
             mouseWorldPos.y -= zMax * halfCellHeight; // to be adapted depending on your max Z and the start of the loop below
             for (int z = zMax; z > -1; z--)
