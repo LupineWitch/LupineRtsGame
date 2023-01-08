@@ -48,7 +48,7 @@ namespace Assets.Scripts.Classes.Helpers
         /// Gets the dictionary of (topmost) neighbouring tiles and if they're directly pathable from given <paramref name="position"/>
         /// </summary>
         /// <param name="position">Position of tiles to find neighbours of</param>
-        /// <returns>Dictionary of tiles and if there are directly pathable to.</returns>
+        /// <returns>Dictionary of tiles and if they are directly pathable to.</returns>
         public static Dictionary<Vector3Int, bool> GetNeighbouringNodes(this Tilemap tilemap, Vector3Int position)
         {
             Dictionary<Vector3Int, bool> pathableNeigbours = new Dictionary<Vector3Int, bool>(); 
