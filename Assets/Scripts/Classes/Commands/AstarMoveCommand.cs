@@ -13,7 +13,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Classes.Commands
 {
-    public class AstarMoveCommand<MovingType> : Command<MovingType>
+    public class AStarMoveCommand<MovingType> : Command<MovingType>
     {
         private Queue<Vector3Int> positionsToVisit;
         private Tilemap tilemap;
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes.Commands
         private GameObject movingGameObject;
         private Rigidbody2D rigidbody2D;
 
-        public AstarMoveCommand(MovingType reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver)
+        public AStarMoveCommand(MovingType reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver)
         {
             tilemap = mapManager.UsedTilemap;             
             this.targetCell = target;

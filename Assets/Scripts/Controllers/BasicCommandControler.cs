@@ -27,6 +27,9 @@ public class BasicCommandControler : MonoBehaviour
     private List<BasicUnitScript> selectedObjects;
     private ITopCellSelector topCellSelector;
 
+    private Vector3Int previousCell = Vector3Int.zero;
+    private Color previousCellColor;
+
     private void Awake()
     {
         _ = mainTilemap ?? throw new ArgumentNullException(nameof(mainTilemap) + "field is null");
@@ -34,7 +37,8 @@ public class BasicCommandControler : MonoBehaviour
 
         basicControls = new BasicControls();
         selectedObjects = new List<BasicUnitScript>();
-        topCellSelector = new CursorTileSelector(mainTilemap);
+        topCellSelector = new TopCellSelector(mainTilemap);
+        previousCellColor = mainTilemap.GetColor(previousCell);
     }
 
     private void OnEnable()
@@ -47,6 +51,23 @@ public class BasicCommandControler : MonoBehaviour
         basicControls.CommandControls.SendCommand.performed += SendCommand;
         pointerPosition = basicControls.CommandControls.PointerPosition;
         selectionBox.SetActive(false);
+    }
+
+    private void Update()
+    {
+        mainTilemap.SetColor(previousCell, previousCellColor);
+
+        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        TopCellResult topCellRes = topCellSelector.GetTopCell(mousePos);
+
+        if(!topCellRes.found)
+            return;
+
+        previousCellColor = mainTilemap.GetColor(topCellRes.topCell);
+        previousCell = topCellRes.topCell;
+        mainTilemap.SetTileFlags(topCellRes.topCell, TileFlags.None);
+        mainTilemap.SetColor(topCellRes.topCell, Color.green);
     }
 
     private void MainPointerDrag_started(CallbackContext obj)
@@ -104,13 +125,14 @@ public class BasicCommandControler : MonoBehaviour
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector3Int cellPos = topCellSelector.GetTopCell(mousePos);
-        Debug.Log("Clicked pos: " + cellPos);
-        //Debug.Log("NewPos: " + newPos);
+        TopCellResult cellResult = topCellSelector.GetTopCell(mousePos);
+
+        if (!cellResult.found)
+            return;
 
         foreach (BasicUnitScript unit in selectedObjects)
         {
-            AstarMoveCommand<BasicUnitScript> moveOrder = new AstarMoveCommand<BasicUnitScript>(unit, cellPos, mapManager, unit.unitSpeed);
+            AStarMoveCommand<BasicUnitScript> moveOrder = new AStarMoveCommand<BasicUnitScript>(unit, cellResult.topCell, mapManager, unit.unitSpeed);
             unit.SetCommand(moveOrder);
         }
     }

@@ -12,7 +12,7 @@ namespace Assets.Scripts.Classes.Helpers
     internal class CursorTileSelector : ITopCellSelector
     {
         //Tweak based on you tile origin; constant offset applied to mouse coordinates
-        public Vector3 mouseOffset = new Vector3(0, -0.5f, 0);
+        public Vector3 mouseOffset = new Vector3(0, 0f, 0);
 
         //y difference for each 1 unit of z; My tiles were .25 units tall
         public float ydelta = -0.5f;
@@ -27,7 +27,7 @@ namespace Assets.Scripts.Classes.Helpers
         }
 
 
-        public Vector3Int GetTopCell(Vector2 mouseWorldPos)
+        public TopCellResult GetTopCell(Vector2 mouseWorldPos)
         {
 
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -44,10 +44,10 @@ namespace Assets.Scripts.Classes.Helpers
                 if (tilemap.HasTile(cell))
                 {
                     cell = IterateToTopCell(cell);
-                    return cell;
+                    return new TopCellResult(cell, true);
                 }
             }
-            return cell;
+            return new TopCellResult(cell, false);
         }
 
         /// <summary>

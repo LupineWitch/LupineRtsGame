@@ -9,7 +9,7 @@ using TMPro;
 
 namespace Assets.Scripts.Helpers
 {
-    internal class TopCellSelectionHelper : ITopCellSelector
+    internal class TopCellSelector : ITopCellSelector
     {
 
         //y difference for each 1 unit of z;
@@ -19,14 +19,14 @@ namespace Assets.Scripts.Helpers
         private int zMax;
         private Tilemap _tilemap;
 
-        public TopCellSelectionHelper(Tilemap tilemap)
+        public TopCellSelector(Tilemap tilemap)
         {
             _tilemap = tilemap;
             zMax = _tilemap.cellBounds.zMax;
         }
 
 
-        public Vector3Int GetTopCell(Vector2 mouseWorldPos)
+        public TopCellResult GetTopCell(Vector2 mouseWorldPos)
         {
             //Debug.LogFormat("{0}: {1}", nameof(mouseWorldPos), mouseWorldPos);
             Vector3Int gridCell = _tilemap.WorldToCell(mouseWorldPos);
@@ -41,12 +41,12 @@ namespace Assets.Scripts.Helpers
                 if (tile != null)
                 {
                     //Debug.Log("grid Z" + gridCell + " found " + tile.name);
-                    return gridCell; // If you need only the first tile encountered
+                    return new TopCellResult(gridCell, true); // If you need only the first tile encountered
                 }
                 mouseWorldPos.y += halfCellHeight;
             }
 
-            return Vector3Int.zero;
+            return new TopCellResult(default, false);
         }
     }
 }

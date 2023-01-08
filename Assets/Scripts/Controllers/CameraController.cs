@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition;
     private Vector3 cameraVelocity;
 
-    private TopCellSelectionHelper mouseGridhelper;
+    private TopCellSelector mouseGridhelper;
 
     [SerializeField]
     private float maxSpeed = 1f;
@@ -46,16 +46,7 @@ public class CameraController : MonoBehaviour
 
         basicControls = new BasicControls();
         moveCameraAction = basicControls.DefaultCameraControls.MoveCamera;
-        basicControls.DefaultCameraControls.MouseClickMain.performed += OnMouseClickMain;
-
-        mouseGridhelper = new TopCellSelectionHelper(mainTilemap);
-    }
-
-    private void OnMouseClickMain(CallbackContext context)
-    {
-        Vector2 mousePos = basicControls.DefaultCameraControls.MousePosition.ReadValue<Vector2>();
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        Vector3Int cellPos = mouseGridhelper.GetTopCell(mousePos);
+        mouseGridhelper = new TopCellSelector(mainTilemap);
     }
 
     private void OnEnable()
