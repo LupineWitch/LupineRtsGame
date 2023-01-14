@@ -421,31 +421,31 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 3.4570545e-19
+      e00: 1.2891568e-19
       e01: 0
-      e02: -2.7505531
-      e03: -2.7505531
-      e10: 8.8e-43
+      e02: 5.0728617e+19
+      e03: 5.0728617e+19
+      e10: 5.24e-43
       e11: 0
-      e12: 8.79e-43
-      e13: 8.79e-43
-      e20: -1.18144414e-35
-      e21: -9.162275e-30
-      e22: 3.457129e-19
-      e23: -3.7655793e+19
-      e30: 4.5905e-41
-      e31: 8.83e-43
-      e32: 8.8e-43
-      e33: 8.83e-43
+      e12: 5.24e-43
+      e13: 5.24e-43
+      e20: 0.000046554895
+      e21: -2.9774456e+37
+      e22: -3.000153e-19
+      e23: 1.6152125e+29
+      e30: 4.5904e-41
+      e31: 5.28e-43
+      e32: 5.24e-43
+      e33: 5.28e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 3.9225e-41, g: 3.9225e-41, b: 3.9225e-41, a: 3.9225e-41}
+    m_Data: {r: 6.8257e-41, g: 6.8257e-41, b: 6.8257e-41, a: 6.8257e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -14, y: -14, z: 0}
-  m_Size: {x: 28, y: 18, z: 3}
-  m_TileAnchor: {x: 0, y: 0, z: 0}
+  m_Size: {x: 28, y: 28, z: 3}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -541,7 +541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_Navigation.m_Mode
@@ -1035,7 +1035,7 @@ GameObject:
   m_Component:
   - component: {fileID: 764934207}
   - component: {fileID: 764934206}
-  - component: {fileID: 764934205}
+  - component: {fileID: 764934208}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1043,25 +1043,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &764934205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 764934204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &764934206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,6 +1073,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &764934208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764934204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &792778365
 GameObject:
   m_ObjectHideFlags: 0
@@ -6438,7 +6448,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -126, y: -32, z: 0}
   m_Size: {x: 165, y: 165, z: 5}
-  m_TileAnchor: {x: 0, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1

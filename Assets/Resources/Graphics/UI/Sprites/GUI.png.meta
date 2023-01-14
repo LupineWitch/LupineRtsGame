@@ -530,16 +530,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_19
+      name: Banner
       rect:
         serializedVersion: 2
         x: 81
-        y: 177
+        y: 176
         width: 30
-        height: 30
+        height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 6, y: 6, z: 6, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -572,7 +572,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_21
+      name: MenuButtonUnpressed
       rect:
         serializedVersion: 2
         x: 113
@@ -581,7 +581,7 @@ TextureImporter:
         height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 4, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -614,7 +614,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_23
+      name: Board
       rect:
         serializedVersion: 2
         x: 0
@@ -623,7 +623,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 6, y: 5, z: 5, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -635,7 +635,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_24
+      name: BoardMessage
       rect:
         serializedVersion: 2
         x: 49
@@ -644,7 +644,7 @@ TextureImporter:
         height: 30
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 3, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -656,7 +656,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_25
+      name: MenuButtonPressed
       rect:
         serializedVersion: 2
         x: 113
@@ -665,7 +665,7 @@ TextureImporter:
         height: 13
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 4, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -698,7 +698,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_30
+      name: MenuButtonDisabled
       rect:
         serializedVersion: 2
         x: 113
@@ -707,7 +707,7 @@ TextureImporter:
         height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 4, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -977,6 +977,7 @@ TextureImporter:
       GUI_78: -1226001582
       GUI_22: 1115135380
       GUI_6: -1610554269
+      MenuButtonUnpressed: 1883124146
       GUI_8: -38723796
       GUI_52: -678380162
       GUI_58: -94426561
@@ -985,35 +986,34 @@ TextureImporter:
       GUI_77: -1711019366
       GUI_34: 1419021730
       GUI_32: 644610480
-      GUI_19: 898218229
       PanelBackground: -1756295689
       GUI_85: -1508456542
       GUI_53: -938265387
       GUI_29: -253768278
       GUI_20: -203978916
-      GUI_30: -1521777558
       GUI_36: 711737041
-      GUI_23: 657249774
-      GUI_35: 1589115299
+      PortraitPanelBackground: -918267168
       GUI_66: 176359453
+      Banner: 898218229
       GUI_38: 2075861208
+      GUI_35: 1589115299
       GUI_17: 994979552
       GUI_46: 1040228619
       GUI_86: 75633842
-      GUI_25: 897799213
       GUI_84: 825148682
-      PortraitPanelBackground: -918267168
       GUI_18: 1449970627
       GUI_4: 1100019924
+      Board: 657249774
       GUI_73: -554285082
       GUI_3: 1410460051
       GUI_81: -62148937
       GUI_50: 489788385
+      MenuButtonPressed: 897799213
+      BoardMessage: 477438059
       GUI_44: 1757748992
       GUI_68: -491552113
       GUI_88: 1847574077
       ButtonPressed: -173696300
-      GUI_21: 1883124146
       GUI_13: -327701301
       GUI_12: -966578038
       GUI_41: -583607690
@@ -1043,8 +1043,8 @@ TextureImporter:
       GUI_51: 902301259
       GUI_1: -850378899
       GUI_55: -684819309
+      MenuButtonDisabled: -1521777558
       GUI_69: -1083820789
-      GUI_24: 477438059
       GUI_63: -219045554
       GUI_65: 1776819095
       GUI_59: 834189465
