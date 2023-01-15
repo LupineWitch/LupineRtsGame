@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Assets.Scripts.Classes.Models.Level;
 
 namespace Assets.Scripts.Managers
 {
-    public  class MapManager : MonoBehaviour
+    public class MapManager : MonoBehaviour
     {
         public PathingGrid PathingGrid { get { return pathingGrid; } }
         public Tilemap UsedTilemap { get { return mainTilemap; } }
