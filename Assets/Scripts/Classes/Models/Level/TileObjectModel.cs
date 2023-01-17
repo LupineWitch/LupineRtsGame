@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Models.Level
 {
-    public abstract class TileObjectModel : ILevelPartModel<TileObjectModel>
+    public abstract class TileObjectModel : ILevelPartXMLModel<TileObjectModel>
     {
         public string Name { get; set; }
         public Type TileObjectType { get; set; }

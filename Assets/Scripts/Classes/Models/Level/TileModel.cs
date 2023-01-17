@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Models.Level
 {
-    public class TileModel : ILevelPartModel<TileModel>
+    public class TileModel : ILevelPartXMLModel<TileModel>
     {
         public Type TileType { get; set; }
         public Vector3Int Position { get; set; }

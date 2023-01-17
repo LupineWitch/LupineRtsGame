@@ -9,19 +9,27 @@ using Assets.Scripts.Managers;
 
 public static class ContextMenuExtensions
 {
-    [MenuItem("CONTEXT/Tilemap/Export Tilemap to XML")]
-    private static void TilemapToXML()
+    private static IMapSerialiser mapSerialiser = new JsonMapSerialiser();
+
+    [MenuItem("CONTEXT/Tilemap/Export Tilemap to file")]
+    private static void TilemapToFile()
     {
         var map = Selection.activeGameObject.GetComponent<Tilemap>();
-        string path = EditorUtility.SaveFilePanel("Save Tilemap to XML:",string.Empty, "ZasYTilemapLevel","xml");
-        IMapSerialiser mapSerialiser = new XMLMapSerialiser();
+        string path = EditorUtility.SaveFilePanel("Save Tilemap to a file:", string.Empty, "ZasYTilemapLevel","json");
         mapSerialiser.SerialiseTilemapToAFile(map, path, Path.GetFileNameWithoutExtension(path), map.gameObject.GetComponentInParent<MapManager>());
     }
 
-    [MenuItem("CONTEXT/Tilemap/Export Tilemap to XML", true)]
-    private static bool ValidateTilemapToXML()
+    [MenuItem("CONTEXT/Tilemap/Import File into selected Tilemap")]
+    private static void FileToTilemap()
     {
-        return Selection.activeGameObject.GetComponent<Tilemap>() != default;
+        var map = Selection.activeGameObject.GetComponent<Tilemap>();
+        string path = EditorUtility.OpenFilePanel("Import file as Tilemap:", string.Empty, "json");
+        mapSerialiser.DeserialiseMapFromAFileToTileMap(map, path, map.gameObject.GetComponentInParent<MapManager>());
     }
+
+    [MenuItem("CONTEXT/Tilemap/Export Tilemap to file", true)]
+    [MenuItem("CONTEXT/Tilemap/Import File into selected Tilemap", true)]
+    private static bool ValidateTilemapSerialisation() => Selection.activeGameObject.GetComponent<Tilemap>() != default;
+
 }
 #endif

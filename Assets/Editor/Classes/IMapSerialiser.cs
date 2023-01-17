@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 
 namespace Assets.Editor.Classes
 {
-    internal interface IMapSerialiser
+    public interface IMapSerialiser
     {
         public void SerialiseTilemapToAFile(Tilemap map, string filepath, string mapName, MapManager mapManger);
 

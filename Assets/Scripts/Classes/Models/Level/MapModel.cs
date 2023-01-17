@@ -11,27 +11,26 @@ using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.Classes.Models.Level
 {
-    public interface ILevelPartModel<Type>
+    public interface ILevelPartXMLModel<Type>
     {
         public XmlNode SerialiseToNode(XmlDocument document);
         public void DeserialiseFromNode(XmlNode node);
     }
 
 
-    public class MapModel : ILevelPartModel<MapModel>
+    public class MapModel : ILevelPartXMLModel<MapModel>
     {
         public string Name { get; private set; }
         public string Version { get; protected set; }
-        public IReadOnlyDictionary<int, List<TileModel>> MapLayers => mapLayers;
+        public Dictionary<int, List<TileModel>> MapLayers { get; set; }
 
-        private Dictionary<int, List<TileModel>> mapLayers { get; set; }
         private List<TileObjectModel> containedObjects;
 
         public MapModel(string name)
         {
             Name = name;
             Version = "v0.0.1";
-            mapLayers = new Dictionary<int, List<TileModel>>();
+            MapLayers = new Dictionary<int, List<TileModel>>();
             containedObjects = new List<TileObjectModel>();
         }
 
@@ -44,10 +43,10 @@ namespace Assets.Scripts.Classes.Models.Level
                 Sprite = tile.sprite.name
             };
 
-            if (!mapLayers.ContainsKey(position.z))
-                mapLayers.Add(position.z, new List<TileModel>());
+            if (!MapLayers.ContainsKey(position.z))
+                MapLayers.Add(position.z, new List<TileModel>());
 
-            mapLayers[position.z].Add(model);
+            MapLayers[position.z].Add(model);
         }
 
         public void AddTileObject(TileObjectModel tileObject) => containedObjects.Add(tileObject);
@@ -63,8 +62,8 @@ namespace Assets.Scripts.Classes.Models.Level
             versionEl = document.CreateElement(nameof(Version));
             versionEl.AppendChild(document.CreateTextNode(Version));
             objectListEl = document.CreateElement(nameof(containedObjects));
-            mapLayersEl = document.CreateElement(nameof(mapLayers));
-            foreach(var levelTilesPair in mapLayers)
+            mapLayersEl = document.CreateElement(nameof(MapLayers));
+            foreach(var levelTilesPair in MapLayers)
             {
                 var layerEl = document.CreateElement("layer");
                 layerEl.SetAttribute("Level", levelTilesPair.Key.ToString());
