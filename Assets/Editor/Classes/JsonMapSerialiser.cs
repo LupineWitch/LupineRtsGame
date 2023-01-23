@@ -16,7 +16,8 @@ namespace Assets.Editor.Classes
 {
     public class JsonMapSerialiser : IMapSerialiser
     {
-        private string spritesPath = @"\Assets\Resources\Graphics\Spirtes\SeparateTiles\DefaultTiles";
+        private const string tilePalletsBasePath = "Graphics\\Tilepallets\\DefaultPaletteAssets\\";
+
         public void DeserialiseMapFromAFileToTileMap(Tilemap map, string filepath, MapManager mapManger)
         {
             string jsonContents = File.ReadAllText(filepath);
@@ -36,9 +37,9 @@ namespace Assets.Editor.Classes
                 {
                     Type tileType = tileModel.TileType;
                     //TODO: add plymorphism check
-                    Tile newTile = ScriptableObject.CreateInstance(tileType) as Tile;
-                    newTile.sprite = Resources.Load<Sprite>(Path.Combine(spritesPath, tileModel.Sprite));
-                    map.SetTile(tileModel.Position, newTile);
+                    
+                    Tile tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, tileModel.AssetName));
+                    map.SetTile(tileModel.Position, tileToSet);
                 }
             }
         }

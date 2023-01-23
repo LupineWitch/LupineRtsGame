@@ -40,7 +40,7 @@ namespace Assets.Scripts.Classes.Models.Level
             {
                 TileType = tile.GetType(),
                 Position = position,
-                Sprite = tile.sprite.name
+                AssetName = tile.sprite.name
             };
 
             if (!MapLayers.ContainsKey(position.z))

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Classes.Models.Level
     {
         public Type TileType { get; set; }
         public Vector3Int Position { get; set; }
-        public string Sprite { get; set; }
+        public string AssetName { get; set; }
 
         public void DeserialiseFromNode(XmlNode node)
         {
@@ -21,10 +21,10 @@ namespace Assets.Scripts.Classes.Models.Level
         {
             var parentNode = doc.CreateElement(nameof(TileModel));
             var positionNode = doc.CreateElement(nameof(Position));
-            var spriteNode = doc.CreateElement(nameof(Sprite));
+            var spriteNode = doc.CreateElement(nameof(AssetName));
             parentNode.SetAttribute(nameof(TileType), TileType.FullName);
             positionNode.AppendChild(doc.CreateTextNode(Position.ToString()));
-            spriteNode.AppendChild(doc.CreateTextNode(Sprite.ToString()));
+            spriteNode.AppendChild(doc.CreateTextNode(AssetName.ToString()));
 
             parentNode.AppendChild(spriteNode);
             parentNode.AppendChild(positionNode);
