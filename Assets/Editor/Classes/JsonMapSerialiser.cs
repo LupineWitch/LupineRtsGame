@@ -35,8 +35,7 @@ namespace Assets.Editor.Classes
             {
                 foreach(TileModel tileModel in layer.Value)
                 {
-                    Type tileType = tileModel.TileType;
-                    //TODO: add plymorphism check
+                //TODO: add plymorphism check
                     
                     Tile tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, tileModel.AssetName));
                     map.SetTile(tileModel.Position, tileToSet);
