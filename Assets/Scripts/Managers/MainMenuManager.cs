@@ -1,3 +1,5 @@
+using Assets.Scripts.Classes.Static;
+using Assets.Scripts.Classes.UI.Progress;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,20 +25,11 @@ public class MainMenuManager : MonoBehaviour
         loadingPanel.gameObject.SetActive(false);
     }
 
-    public void StartGame(string mainSceneName)
+    public void StartGame()
     {
         loadingPanel.gameObject.SetActive(true);
-        _ = StartCoroutine(LoadSceneAsync(mainSceneName));
-    }
-
-    IEnumerator LoadSceneAsync(string sceneName)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-        {
-            loadingLabel.text = string.Format(initialLoadingFormatString, asyncLoad.progress * 100);
-            yield return null;
-        }
+        AsyncSceneLoader progressModal = new AsyncSceneLoaderOnUIText(loadingLabel);
+        var coroutine = progressModal.LoadSceneAsync(SceneNames.ChooseMap);
+        _ = StartCoroutine(coroutine);
     }
 }

@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_4
+      name: Bar_Highlight
       rect:
         serializedVersion: 2
         x: 51
@@ -224,7 +224,7 @@ TextureImporter:
         height: 10
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 3, y: 3, z: 3, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -539,7 +539,7 @@ TextureImporter:
         height: 31
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 6, y: 6, z: 6, w: 6}
+      border: {x: 6, y: 7, z: 6, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -623,7 +623,7 @@ TextureImporter:
         height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 6, y: 5, z: 5, w: 6}
+      border: {x: 6, y: 5, z: 6, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -803,7 +803,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_32
+      name: Bar_Empty
       rect:
         serializedVersion: 2
         x: 50
@@ -812,7 +812,7 @@ TextureImporter:
         height: 12
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 4, y: 4, z: 4, w: 4}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -984,8 +984,8 @@ TextureImporter:
       GUI_27: -2146889170
       GUI_60: 2040997491
       GUI_77: -1711019366
+      Bar_Empty: 644610480
       GUI_34: 1419021730
-      GUI_32: 644610480
       PanelBackground: -1756295689
       GUI_85: -1508456542
       GUI_53: -938265387
@@ -1002,7 +1002,6 @@ TextureImporter:
       GUI_86: 75633842
       GUI_84: 825148682
       GUI_18: 1449970627
-      GUI_4: 1100019924
       Board: 657249774
       GUI_73: -554285082
       GUI_3: 1410460051
@@ -1014,6 +1013,7 @@ TextureImporter:
       GUI_68: -491552113
       GUI_88: 1847574077
       ButtonPressed: -173696300
+      Bar_Highlight: 1100019924
       GUI_13: -327701301
       GUI_12: -966578038
       GUI_41: -583607690
@@ -1032,8 +1032,8 @@ TextureImporter:
       GUI_42: -720710032
       GUI_76: 1083948699
       GUI_0: 1081284364
-      GUI_79: 2097012373
       GUI_61: 1068787008
+      GUI_79: 2097012373
       GUI_33: 1973127514
       GUI_90: 304560876
       GUI_89: 32121823

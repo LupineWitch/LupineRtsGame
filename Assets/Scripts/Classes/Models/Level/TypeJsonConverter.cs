@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace Assets.Editor.Classes
+namespace Assets.Scripts.Classes.Models.Level
 {
     public class TypeJsonConverter : JsonConverter<Type>
     {
