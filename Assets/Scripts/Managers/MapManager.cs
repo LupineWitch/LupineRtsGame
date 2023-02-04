@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Assets.Scripts.Classes.Models.Level;
+using Assets.Scripts.Classes.DPL;
+using Assets.Scripts.Classes.Serialisers;
 
 namespace Assets.Scripts.Managers
 {
@@ -15,15 +17,20 @@ namespace Assets.Scripts.Managers
         public PathingGrid PathingGrid { get { return pathingGrid; } }
         public Tilemap UsedTilemap { get { return mainTilemap; } }
 
-        private PathingGrid pathingGrid;
-        private LevelLoader mapLoader;
         [SerializeField]
         private Tilemap mainTilemap;
+        [SerializeField]
+        private LoadMapPersistenceData loadedMapData;
+
+        private PathingGrid pathingGrid;
 
         private void Awake()
         {
-            mapLoader = new LevelLoader(mainTilemap);
-            mapLoader.LoadMap();
+            //load map from the model
+            IMapSerialiser mapDeserialiser = new JsonMapSerialiser();
+            mainTilemap.ClearAllTiles();
+            mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel);
+            //Generate path based on map
             pathingGrid = new PathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
             pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);
         }

@@ -1895,7 +1895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5497128417247339359, guid: 0a4b9e593d842ac46949d8fd25be10eb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0000038146973
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5497128417247339359, guid: 0a4b9e593d842ac46949d8fd25be10eb, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6700,6 +6700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTilemap: {fileID: 1791363598}
+  loadedMapData: {fileID: 11400000, guid: a0d11fff02ac9de41a1705ec32efffb9, type: 2}
 --- !u!1001 &1987734019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7103,7 +7104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.1, y: 0.15}
   m_AnchorMax: {x: 0.9, y: 0.75}
-  m_AnchoredPosition: {x: 0.0000038146973, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061342287

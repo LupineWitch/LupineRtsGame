@@ -331,6 +331,7 @@ MonoBehaviour:
   mapButtonPrefab: {fileID: 8242357938063868371, guid: 5dddb1913ff39104bba2ceff79c299e1, type: 3}
   loadingModal: {fileID: 1733326355}
   loadingProgressLabel: {fileID: 892487540}
+  loadedMapData: {fileID: 11400000, guid: a0d11fff02ac9de41a1705ec32efffb9, type: 2}
 --- !u!1001 &446342109
 PrefabInstance:
   m_ObjectHideFlags: 0

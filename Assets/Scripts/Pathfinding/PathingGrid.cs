@@ -43,12 +43,13 @@ namespace Assets.Scripts.Pathfinding
                     Vector3Int currentPos = new Vector3Int(x, y, 0);
                     Dictionary<Vector3Int, bool> neighbours = fromTilemap.GetNeighbouringNodes(currentPos);
                     foreach (var neighbour in neighbours)
-                    {
                         if (!neighbour.Value)
                         {
-                            this.grid.RemoveEdge(currentPos.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition());
+                            var fromNode = currentPos.ToAstarGridPosition();
+                            var toNode = neighbour.Key.ToAstarGridPosition();
+                            this.grid.RemoveEdge(fromNode, toNode);
                         }
-                    }
+
                 }
         }
 

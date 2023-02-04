@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Managers;
-using Codice.CM.SEIDInfo;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace Assets.Editor.Classes
+namespace Assets.Scripts.Classes.Serialisers
 {
     public class JsonMapSerialiser : IMapSerialiser
     {
@@ -28,16 +27,20 @@ namespace Assets.Editor.Classes
                     new TypeJsonConverter()
                 },
             };
-            
+
             MapModel mapModel = JsonConvert.DeserializeObject<MapModel>(jsonContents, settings);
+            DeserialiseMapModelToTilemap(map, mapModel);
+        }
+
+        public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel)
+        {
             //Turn map model into TileMap
-            foreach(var layer in mapModel.MapLayers)
+            foreach (var layer in mapModel.MapLayers)
             {
-                foreach(TileModel tileModel in layer.Value)
+                foreach (TileModel tileModel in layer.Value)
                 {
-                //TODO: add plymorphism check
-                    
-                    Tile tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, tileModel.AssetName));
+                    //TODO: add polymorphism check
+                    Tile tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, tileModel.Sprite));
                     map.SetTile(tileModel.Position, tileToSet);
                 }
             }

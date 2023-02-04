@@ -11,7 +11,7 @@ using UnityEngine.Tilemaps;
 using System.Data.SqlTypes;
 using Unity.VisualScripting;
 
-namespace Assets.Editor.Classes
+namespace Assets.Scripts.Classes.Serialisers
 {
     public class XMLMapSerialiser : IMapSerialiser
     {
@@ -21,16 +21,21 @@ namespace Assets.Editor.Classes
 
         }
 
+        public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SerialiseTilemapToAFile(Tilemap map, string filepath, string mapName, MapManager mapManger)
         {
             //Build MapModel
-            MapModel mapModel= new MapModel(mapName);
-            foreach(Vector3Int position in map.cellBounds.allPositionsWithin)
+            MapModel mapModel = new MapModel(mapName);
+            foreach (Vector3Int position in map.cellBounds.allPositionsWithin)
             {
                 if (!map.HasTile(position))
                     continue;
 
-                Tile tileAtPos =  map.GetTile<Tile>(position);
+                Tile tileAtPos = map.GetTile<Tile>(position);
                 mapModel.AddCell(tileAtPos, position);
             }
             //TODO: Get Objects from MapManager

@@ -57,16 +57,16 @@ namespace Assets.Scripts.Classes.Helpers
             foreach(Vector3Int direction in NeighbourDirections)
             {
                 Vector3Int currentNeighbour = tilemap.GetTopTilePosition(topTilePosition + direction);
-                int heigthDiff = currentNeighbour.z - topTilePosition.z;
+                //is this tile in the expected bounds??
+                if (!tilemap.cellBounds.Contains(currentNeighbour))
+                    continue;                    
 
+                int heigthDiff = currentNeighbour.z - topTilePosition.z;
                 if(Math.Abs(heigthDiff) >= 2)
-                {
                     isPathableTo = false;
-                }
 
                 pathableNeigbours.Add(currentNeighbour, isPathableTo);
             }
-
             return pathableNeigbours;
         }
     }

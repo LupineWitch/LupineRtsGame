@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Assets.Scripts.Classes.DPL;
 using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Classes.UI.Progress;
@@ -13,7 +14,7 @@ using UnityEngine.UI;
 public class LoadMapViewManager : MonoBehaviour
 {
     public string MapsDirectory = @"Maps";
-    public int SelectedMapIndex {get{return selectedIndex;}}
+    public int SelectedMapIndex { get { return selectedIndex; } }
 
     [SerializeField]
     private TextMeshProUGUI MapSizeLabel;
@@ -29,10 +30,11 @@ public class LoadMapViewManager : MonoBehaviour
     private GameObject loadingModal;
     [SerializeField]
     private TextMeshProUGUI loadingProgressLabel;
+    [SerializeField]
+    private LoadMapPersistenceData loadedMapData;
 
     private List<MapModel> AvailableMaps;
     private int selectedIndex = -1;
-
     private string MapSizeBaseText;
     private string MapNameBaseText;
     private string MapDiffBaseText;
@@ -77,6 +79,11 @@ public class LoadMapViewManager : MonoBehaviour
 
     public void StartGameOnTheMap()
     {
+        //TODO:Add proper invalid selection handling here
+        if (selectedIndex < 0)
+            return;
+
+        loadedMapData.LoadedMapModel = AvailableMaps[selectedIndex];
         loadingModal.SetActive(true);
         AsyncSceneLoader progressModal = new AsyncSceneLoaderOnUIText(loadingProgressLabel);
         StartCoroutine(progressModal.LoadSceneAsync(SceneNames.MainScene));
