@@ -21,15 +21,20 @@ namespace Assets.Scripts.Managers
         private Tilemap mainTilemap;
         [SerializeField]
         private LoadMapPersistenceData loadedMapData;
+        [SerializeField]
+        private bool loadMapFromFile = true;
 
         private PathingGrid pathingGrid;
 
         private void Awake()
         {
             //load map from the model
-            IMapSerialiser mapDeserialiser = new JsonMapSerialiser();
-            mainTilemap.ClearAllTiles();
-            mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel);
+            if(loadMapFromFile)
+            { 
+                IMapSerialiser mapDeserialiser = new JsonMapSerialiser();
+                mainTilemap.ClearAllTiles();
+                mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel);
+            }
             //Generate path based on map
             pathingGrid = new PathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
             pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);

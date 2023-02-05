@@ -1216,7 +1216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4993150341364685334, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.2
+      value: 2.04
       objectReference: {fileID: 0}
     - target: {fileID: 4993150341364685334, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6701,6 +6701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainTilemap: {fileID: 1791363598}
   loadedMapData: {fileID: 11400000, guid: a0d11fff02ac9de41a1705ec32efffb9, type: 2}
+  loadMapFromFile: 1
 --- !u!1001 &1987734019
 PrefabInstance:
   m_ObjectHideFlags: 0

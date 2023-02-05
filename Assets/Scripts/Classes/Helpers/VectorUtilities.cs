@@ -28,5 +28,13 @@ namespace Assets.Scripts.Classes.Helpers
         public static GridPosition ToAstarGridPosition(this Vector3Int vector) =>  new GridPosition(vector.x, vector.y);
 
         public static Vector3Int ToUnityVector3Int(this Position position) => new Vector3Int((int)position.X, (int)position.Y);
+
+        /// <summary>
+        /// Check if any of the <paramref name="vector"'s component is negative/>
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <returns><see cref="true"/> if any of the components is negative,
+        /// <see cref="false"/> if all components are positive</returns>
+        public static bool HasNegativeComponent(this Vector3Int vector) => vector.x < 0 || vector.y < 0 || vector.z < 0;
     }
 }

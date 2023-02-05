@@ -43,12 +43,20 @@ namespace Assets.Scripts.Pathfinding
                     Vector3Int currentPos = new Vector3Int(x, y, 0);
                     Dictionary<Vector3Int, bool> neighbours = fromTilemap.GetNeighbouringNodes(currentPos);
                     foreach (var neighbour in neighbours)
+                    {
+                        if(neighbour.Key.HasNegativeComponent())
+                        {
+                            Debug.LogWarningFormat("Tried to remove an edge from a {0} to a negative position {1}!", currentPos, neighbour.Key);
+                            continue;
+                        }
+
                         if (!neighbour.Value)
                         {
                             var fromNode = currentPos.ToAstarGridPosition();
                             var toNode = neighbour.Key.ToAstarGridPosition();
                             this.grid.RemoveEdge(fromNode, toNode);
                         }
+                    }
 
                 }
         }
