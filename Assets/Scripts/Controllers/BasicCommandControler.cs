@@ -132,7 +132,12 @@ public class BasicCommandControler : MonoBehaviour
 
         foreach (BasicUnitScript unit in selectedObjects)
         {
-            AStarMoveCommand<BasicUnitScript> moveOrder = new AStarMoveCommand<BasicUnitScript>(unit, cellResult.topCell, mapManager, unit.unitSpeed);
+            AStarMoveCommand<object,BasicUnitScript> moveOrder = new AStarMoveCommand<object, BasicUnitScript>(
+                this,
+                unit,
+                cellResult.topCell,
+                mapManager,
+                unit.unitSpeed);
             unit.SetCommand(moveOrder);
         }
     }

@@ -11,6 +11,7 @@ namespace Assets.Scripts.Classes.Commands
 {
     public enum CommandResult
     {
+        Invalid = -1,
         NoResult = 0,
         Success,
         Cancelled,
@@ -28,91 +29,62 @@ namespace Assets.Scripts.Classes.Commands
         Ended
     }
 
-    public abstract class Command<RecieverType>
+    public abstract class Command<SenderType, RecieverType>
     {
-        private RecieverType reciver;
-        private CommandState state = CommandState.Cold;
-        private CommandResult result = CommandResult.NoResult;
-        protected Queue<Command<RecieverType>> steps;
-        protected Command<RecieverType> currentStep;
-
-        public virtual CommandState GetCurentState => this.state;
-
-        public virtual CommandResult GetCommandResult => state.IsActiveState() ? CommandResult.NoResult : result;
-
-        public RecieverType GetReciver => reciver;
-
-        protected Command(RecieverType reciver)
-        {
-            this.reciver = reciver;
-        }
-        
-        protected Command(RecieverType reciver, Queue<Command<RecieverType>> steps)
-        {
-            this.reciver = reciver;
-            this.steps = steps;
-        }
-
-        protected virtual void SetCurentState(CommandState state)
-        {
-            this.state = state;
-        }
-
-        protected virtual void SetCommandResult(CommandResult resultToSet)
-        {
-            this.result = resultToSet;
-        }
-
-        public virtual void StartCommand()
-        {
-            this.state = CommandState.Starting;
-
-            if( currentStep == null || (currentStep.GetCurentState == default || currentStep.GetCurentState == CommandState.Ended))
+        public CommandState currentState { get => _currentState; protected set
             {
-                this.state = CommandState.Ended;
-                return;
+                _currentState = value;
+                if (currentStateCallback != null)
+                    currentStateCallback(_currentState);
+                else
+                    Debug.LogError("Changed command state without callback!");
             }
-
-            if( !steps.TryDequeue(out Command<RecieverType> firstStep))
+        }
+        public CommandResult commandResult
+        {
+            get => _commandResult; protected set
             {
-                this.state = CommandState.Ended;
-                return;
+                _commandResult = value;
+                if(commandResultCallback != null)
+                    commandResultCallback(_commandResult);
+                else
+                    Debug.LogError("Changed command result without callback!");
             }
-
-            this.currentStep = firstStep;
-            this.state = CommandState.InProgress;
         }
 
-        public virtual CommandState ExecuteNextStep()
+        protected SenderType sender;
+        protected RecieverType reciever;
+        protected Action<CommandResult> commandResultCallback;
+        protected Action<CommandState> currentStateCallback;
+
+        private CommandResult _commandResult = CommandResult.Invalid;
+        private CommandState _currentState = CommandState.Cold;       
+
+        protected Command(RecieverType recieverType, SenderType sender)
         {
-            if (!steps.TryDequeue(out Command<RecieverType> nextStep))
-            {
-                result = EndCommand();
-                return CommandState.Ended;
-            }
-
-            currentStep = nextStep;
-            return CommandState.InProgress;
+            this.reciever = recieverType;
+            this.sender = sender;
         }
 
-        public abstract CommandState ExecuteOnUpdate();
+        /// <summary>
+        /// A coroutine which contains actions in given command
+        /// </summary>
+        /// <param name="resultCallback">A method group to execute when coroutine ends with result.</param>
+        /// <param name="stateCallback">A method group to execute when state of executing command changes</param>
+        /// <returns>A coroutine which contains action the command consits of.</returns>
+        public abstract IEnumerator CommandCoroutine(Action<CommandResult> resultCallback, Action<CommandState> stateCallback);
 
-        public virtual CommandResult Cancel()
+        public virtual IEnumerator CommandCoroutine()
         {
-            steps.Clear();
-            return CommandResult.Cancelled;
+            return CommandCoroutine(SetResult, SetState);
         }
 
-        public virtual CommandResult EndCommand()
-        {
-            SetCurentState(CommandState.Ended);
-            return CommandResult.Success;
-        }
-        
-        public virtual CommandResult EndCommand(CommandResult withResult)
-        {
-            EndCommand();
-            return withResult;
-        }
+        private void SetState(CommandState state) => this.currentState = state;
+
+        private void SetResult(CommandResult result) => this.commandResult = result;
+
+        public virtual CommandState GetCurrentState() => currentState;
+
+        public virtual CommandResult GetCommandResult() => commandResult;
     }
 }

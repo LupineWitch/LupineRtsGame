@@ -24,6 +24,8 @@ namespace Assets.Scripts.Managers
         [SerializeField]
         private Tilemap buildingSpaceTilemap;
 
+        private bool shouldShow {get; set;}
+
         private BasicControls basicControls;
         private ITopCellSelector topCellSelector;
         private int buildingAreaDiameter = 7;
@@ -55,17 +57,17 @@ namespace Assets.Scripts.Managers
         {
             Vector2 currentMousePos = pointerPosition.ReadValue<Vector2>();
             var result = GetTopCellAtMousePos(currentMousePos);
-            if (!result.found)
+            if (!result.found || !shouldShow)
             {
                 buildingSpaceTilemap.ClearAllTiles();
                 return;
             }
             Vector3Int bottomLeftCorner = new Vector3Int(result.topCell.x - buildingAreaRadius, result.topCell.y - buildingAreaRadius, 0);
             BoundsInt newBounds = new BoundsInt(bottomLeftCorner, new Vector3Int(buildingAreaDiameter, buildingAreaDiameter, 1));
-            DrawTilesAroundMosePosition(newBounds);
+            DrawTilesAroundMousePosition(newBounds);
         }
 
-        private void DrawTilesAroundMosePosition(BoundsInt bounds)
+        private void DrawTilesAroundMousePosition(BoundsInt bounds)
         {
             ///Dont draw again, if bounds are the same
             buildingSpaceTilemap.ClearAllTiles();
@@ -83,5 +85,9 @@ namespace Assets.Scripts.Managers
                 Debug.LogErrorFormat("Some fields are not in bounds!!!\nCounted positions: {}\nExpected: {1}", positionCount, buildingAreaDiameter * buildingAreaDiameter);
         }
 
+        public void Show(bool shouldShow)
+        {
+            this.shouldShow = shouldShow;
+        }
     }
 }

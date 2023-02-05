@@ -11,7 +11,7 @@ public class BasicUnitScript : MonoBehaviour
     public float unitSpeed = 10f;
 
     private Material outlineMaterial;
-    private Command<BasicUnitScript> executedCommand;
+    private Command<object,BasicUnitScript> executedCommand;
         
 
     // Start is called before the first frame update
@@ -24,30 +24,40 @@ public class BasicUnitScript : MonoBehaviour
     void Update()
     {
         outlineMaterial.SetInteger("_IsSelected", isSelected ? 1 : 0);
-
-        HandleCommandExecution();
+        if(executedCommand != default)
+            HandleCommandExecution();
     }
 
     private void HandleCommandExecution()
     {
-        if (executedCommand == null)
-            return;
-
-        if (executedCommand.GetCurentState.IsActiveState())
-            executedCommand.ExecuteOnUpdate();
-        
-        switch(executedCommand.GetCurentState)
+        switch(executedCommand.GetCurrentState())
         {
+            case CommandState.Starting:
+            case CommandState.InProgress:
+            case CommandState.Ending:
+                break;
+            case CommandState.Cold:
             case CommandState.Queued:
-                executedCommand.StartCommand();
+                StartCoroutine(executedCommand.CommandCoroutine(CommandEnded, CommandUpdated));
                 break;
             case CommandState.Ended:
                 executedCommand = null;
                 break;
         }
+
     }
 
-    public virtual void SetCommand(Command<BasicUnitScript> command)
+    private void CommandEnded(CommandResult commandResult)
+    {
+
+    }
+
+    private void CommandUpdated(CommandState commandResult)
+    {
+
+    }
+
+    public virtual void SetCommand(Command<object,BasicUnitScript> command)
     {
         this.executedCommand = command;
     }
