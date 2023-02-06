@@ -320,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_9
+      name: IconMarker
       rect:
         serializedVersion: 2
         x: 84
@@ -341,7 +341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_10
+      name: IconLock
       rect:
         serializedVersion: 2
         x: 100
@@ -551,7 +551,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_20
+      name: IconHelmet
       rect:
         serializedVersion: 2
         x: 85
@@ -969,7 +969,6 @@ TextureImporter:
       GUI_75: 312765658
       GUI_47: -849622363
       GUI_49: -1353032928
-      GUI_9: -1368008793
       ButtonDisabled: 194168571
       GUI_57: -531499479
       GUI_43: -772434952
@@ -990,7 +989,6 @@ TextureImporter:
       GUI_85: -1508456542
       GUI_53: -938265387
       GUI_29: -253768278
-      GUI_20: -203978916
       GUI_36: 711737041
       PortraitPanelBackground: -918267168
       GUI_66: 176359453
@@ -1000,9 +998,12 @@ TextureImporter:
       GUI_17: 994979552
       GUI_46: 1040228619
       GUI_86: 75633842
+      IconMarker: -1368008793
+      IconHelmet: -203978916
       GUI_84: 825148682
       GUI_18: 1449970627
       Board: 657249774
+      IconLock: 594374997
       GUI_73: -554285082
       GUI_3: 1410460051
       GUI_81: -62148937
@@ -1024,7 +1025,6 @@ TextureImporter:
       GUI_62: -1111723214
       GUI_70: -831794338
       GUI_7: 1947494886
-      GUI_10: 594374997
       GUI_31: -1100150007
       GUI_91: 1549323265
       GUI_39: 1589973104

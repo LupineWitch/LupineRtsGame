@@ -24,6 +24,12 @@ public class BasicCommandControler : MonoBehaviour
     [SerializeField]
     private AvailableBuidlingSpaceManager buildSpaceManager;
 
+    #region TempTesting properties to be moved to other classes
+    [SerializeField]
+    private GameObject UnitContainer;
+    [SerializeField]
+    private GameObject UnitPrefab;
+    #endregion
     private Vector2 startPosition;
     private BasicControls basicControls;
     private InputAction pointerPosition;
@@ -32,6 +38,21 @@ public class BasicCommandControler : MonoBehaviour
     private ContextCommandDelegator currentContextDelegator;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
+
+    public void SetCurrentAction(int actionId)
+    {
+        switch (actionId)
+        {
+            case 1:
+                currentContextDelegator = SpawnUnitFromPrefab;
+                break;
+            default:
+                currentContextDelegator= BasicMovementOrder;
+                break;
+
+        }
+    }    
+
 
     private void Awake()
     {
@@ -42,6 +63,7 @@ public class BasicCommandControler : MonoBehaviour
         selectedObjects = new List<BasicUnitScript>();
         topCellSelector = new TopCellSelector(mainTilemap);
         previousCellColor = mainTilemap.GetColor(previousCell);
+        currentContextDelegator = BasicMovementOrder;
     }
 
     private void OnEnable()
@@ -127,7 +149,6 @@ public class BasicCommandControler : MonoBehaviour
     private void SendCommandForSelectedEntities(CallbackContext obj)
     {
         //TODO: Get click context, UI etc.
-        currentContextDelegator = BasicMovementOrder;
         currentContextDelegator(obj, selectedObjects);
     }
 
@@ -150,6 +171,15 @@ public class BasicCommandControler : MonoBehaviour
                 unit.unitSpeed);
             unit.SetCommand(moveOrder);
         }
+    }
+
+    private void SpawnUnitFromPrefab(CallbackContext obj, List<BasicUnitScript> selectedObjects)
+    {
+        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldPos.z = 0.2f;
+
+        Instantiate(this.UnitPrefab, worldPos, Quaternion.identity, UnitContainer.transform);
     }
 
 }
