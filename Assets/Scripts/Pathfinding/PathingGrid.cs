@@ -66,7 +66,6 @@ namespace Assets.Scripts.Pathfinding
             var pathFinder = new PathFinder();
             GridPosition astarGridPosStart = start.ToAstarGridPosition();
             GridPosition astarGridPosTarget = target.ToAstarGridPosition();
-            Debug.LogFormat("Start: {0} ; End: {1}", astarGridPosStart, astarGridPosTarget);
             Path foundPath = pathFinder.FindPath(astarGridPosStart, astarGridPosTarget, this.grid);
             Queue<Vector3Int> positionsToGoTo = new Queue<Vector3Int>(foundPath.Edges.Count);
 

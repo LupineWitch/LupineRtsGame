@@ -1,5 +1,6 @@
 using Assets.Scripts.Classes.Commands;
 using Assets.Scripts.Classes.Helpers;
+using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using System;
@@ -20,13 +21,15 @@ public class BasicCommandControler : MonoBehaviour
     private GameObject selectionBox;
     [SerializeField]
     private MapManager mapManager;
+    [SerializeField]
+    private AvailableBuidlingSpaceManager buildSpaceManager;
 
     private Vector2 startPosition;
     private BasicControls basicControls;
     private InputAction pointerPosition;
     private List<BasicUnitScript> selectedObjects;
     private ITopCellSelector topCellSelector;
-
+    private ContextCommandDelegator currentContextDelegator;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
 
@@ -48,7 +51,7 @@ public class BasicCommandControler : MonoBehaviour
         basicControls.CommandControls.MainPointerDrag.performed += MainPointerDrag_performed;
         basicControls.CommandControls.MainPointerDrag.canceled += MainPointerDrag_canceled;
 
-        basicControls.CommandControls.SendCommand.performed += SendCommand;
+        basicControls.CommandControls.SendCommand.performed += SendCommandForSelectedEntities;
         pointerPosition = basicControls.CommandControls.PointerPosition;
         selectionBox.SetActive(false);
     }
@@ -73,7 +76,7 @@ public class BasicCommandControler : MonoBehaviour
     private void MainPointerDrag_started(CallbackContext obj)
     {
         foreach (var unit in selectedObjects)
-            unit.isSelected = false;
+            _ = unit.TryUnselect(this);
 
         selectedObjects.Clear();
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
@@ -112,7 +115,7 @@ public class BasicCommandControler : MonoBehaviour
                 continue;
 
             selectedObjects.Add(unitScript);
-            unitScript.isSelected = true;
+            _ = unitScript.TrySelect(this);
             //Debug.Log(hit.gameObject.name);
         }
 
@@ -121,7 +124,14 @@ public class BasicCommandControler : MonoBehaviour
     }
 
 
-    private void SendCommand(CallbackContext obj)
+    private void SendCommandForSelectedEntities(CallbackContext obj)
+    {
+        //TODO: Get click context, UI etc.
+        currentContextDelegator = BasicMovementOrder;
+        currentContextDelegator(obj, selectedObjects);
+    }
+
+    private void BasicMovementOrder(CallbackContext obj, List<BasicUnitScript> selectedObjects)
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -132,7 +142,7 @@ public class BasicCommandControler : MonoBehaviour
 
         foreach (BasicUnitScript unit in selectedObjects)
         {
-            AStarMoveCommand<object,BasicUnitScript> moveOrder = new AStarMoveCommand<object, BasicUnitScript>(
+            AStarMoveCommand<object, BasicUnitScript> moveOrder = new AStarMoveCommand<object, BasicUnitScript>(
                 this,
                 unit,
                 cellResult.topCell,

@@ -79,9 +79,9 @@ namespace Assets.Scripts.Classes.Commands
             return CommandCoroutine(SetResult, SetState);
         }
 
-        private void SetState(CommandState state) => this.currentState = state;
+        private void SetState(CommandState state) => _currentState = state;
 
-        private void SetResult(CommandResult result) => this.commandResult = result;
+        private void SetResult(CommandResult result) => _commandResult = result;
 
         public virtual CommandState GetCurrentState() => currentState;
 

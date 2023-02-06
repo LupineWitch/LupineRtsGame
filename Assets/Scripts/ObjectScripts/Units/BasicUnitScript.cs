@@ -1,13 +1,14 @@
 using Assets.Scripts.Classes.Commands;
+using Assets.Scripts.Classes.Enitities;
 using Assets.Scripts.Classes.Helpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BasicUnitScript : MonoBehaviour
+public class BasicUnitScript : MonoBehaviour, ISelectableEntity
 {
-    public bool isSelected { get; set; } = false;
+    private bool isSelected { get; set; } = false;
     public float unitSpeed = 10f;
 
     private Material outlineMaterial;
@@ -38,7 +39,7 @@ public class BasicUnitScript : MonoBehaviour
                 break;
             case CommandState.Cold:
             case CommandState.Queued:
-                StartCoroutine(executedCommand.CommandCoroutine(CommandEnded, CommandUpdated));
+                StartCoroutine(executedCommand.CommandCoroutine());
                 break;
             case CommandState.Ended:
                 executedCommand = null;
@@ -47,18 +48,27 @@ public class BasicUnitScript : MonoBehaviour
 
     }
 
-    private void CommandEnded(CommandResult commandResult)
-    {
-
-    }
-
-    private void CommandUpdated(CommandState commandResult)
-    {
-
-    }
-
     public virtual void SetCommand(Command<object,BasicUnitScript> command)
     {
         this.executedCommand = command;
+    }
+
+    public bool IsSelectedBy(BasicCommandControler possibleOwner) => isSelected;
+
+    public bool CanBeSelectedBy(BasicCommandControler selector) => true;
+
+    public bool TrySelect(BasicCommandControler selector)
+    {
+        this.isSelected = true;
+        return true;
+    }
+
+    public bool TryUnselect(BasicCommandControler selector)
+    {
+        if(!isSelected)
+            return false;
+
+        this.isSelected = false;
+        return true;
     }
 }
