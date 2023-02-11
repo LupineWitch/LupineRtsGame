@@ -16,10 +16,8 @@ using GridUnity = UnityEngine.Grid;
 
 namespace Assets.Scripts.Pathfinding
 {
-    public class PathingGrid
+    public sealed class PathingGrid : PathingGridBase
     {
-        //private readonly PathFinder pathFinder;
-        private Grid grid;
 
         /// <summary>
         /// Initialises new <see cref="PathingGrid"/> instance.
@@ -34,7 +32,7 @@ namespace Assets.Scripts.Pathfinding
             this.grid = Grid.CreateGridWithLateralAndDiagonalConnections(gridSize, cellSize, Velocity.FromKilometersPerHour(10));
         }
 
-        public void PruneInvalidConnectionsBetweenNodesBasedOnHeigth(Tilemap fromTilemap)
+        public override void PruneInvalidConnectionsBetweenNodesBasedOnHeigth(Tilemap fromTilemap)
         {
             //assume 0 is tilemap min(as it should)
             for (int x = 0; x < fromTilemap.cellBounds.xMax; x++)
@@ -61,7 +59,7 @@ namespace Assets.Scripts.Pathfinding
                 }
         }
 
-        public Queue<Vector3Int> GetFastestPath(Vector3Int start, Vector3Int target)
+        public override Queue<Vector3Int> GetFastestPath(Vector3Int start, Vector3Int target)
         {
             var pathFinder = new PathFinder();
             GridPosition astarGridPosStart = start.ToAstarGridPosition();
