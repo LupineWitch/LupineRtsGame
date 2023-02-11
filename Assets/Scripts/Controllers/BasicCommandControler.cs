@@ -177,7 +177,7 @@ public class BasicCommandControler : MonoBehaviour
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPos.z = 0.2f;
+        worldPos.z = 2.2f;
 
         Instantiate(this.UnitPrefab, worldPos, Quaternion.identity, UnitContainer.transform);
     }
