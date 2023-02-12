@@ -14,7 +14,7 @@ namespace Assets.Scripts.Managers
 {
     public class MapManager : MonoBehaviour
     {
-        public PathingGrid PathingGrid { get { return pathingGrid; } }
+        public PathingGridBase PathingGrid { get { return pathingGrid; } }
         public Tilemap UsedTilemap { get { return mainTilemap; } }
 
         [SerializeField]
@@ -24,7 +24,7 @@ namespace Assets.Scripts.Managers
         [SerializeField]
         private bool loadMapFromFile = true;
 
-        private PathingGrid pathingGrid;
+        private PathingGridBase pathingGrid;
 
         private void Awake()
         {
@@ -36,7 +36,7 @@ namespace Assets.Scripts.Managers
                 mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel);
             }
             //Generate path based on map
-            pathingGrid = new PathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
+            pathingGrid = new SingleLayerPathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
             pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);
         }
 

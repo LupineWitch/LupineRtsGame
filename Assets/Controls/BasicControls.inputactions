@@ -1,5 +1,5 @@
 {
-    "name": "CameraControls",
+    "name": "BasicControls",
     "maps": [
         {
             "name": "DefaultCameraControls",
@@ -194,6 +194,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Increase/Decrease",
+                    "type": "Value",
+                    "id": "1327fbc2-8b7b-4155-92e0-61a5163c2f63",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -258,7 +267,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "PCSontrolScheme",
                     "action": "Select",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -269,10 +278,43 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "PCSontrolScheme",
                     "action": "SendCommand",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "ByKeyboard",
+                    "id": "5a536443-66fb-4f3e-b677-5a308c1fb15d",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Increase/Decrease",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "47e72c56-4d50-49b9-8a1a-4199401358bc",
+                    "path": "<Keyboard>/minus",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PCSontrolScheme",
+                    "action": "Increase/Decrease",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "7838d886-02a4-4b73-89fa-2f3f7713f5b5",
+                    "path": "<Keyboard>/#(+)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PCSontrolScheme",
+                    "action": "Increase/Decrease",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

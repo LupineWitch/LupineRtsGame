@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Managers;
+﻿using Assets.Scripts.Classes.TileOverlays;
+using Assets.Scripts.Managers;
 using Assets.Scripts.Pathfinding;
 using System;
 using System.Collections;
@@ -26,12 +27,16 @@ namespace Assets.Scripts.Classes.Commands
         private Vector3 targetPos;
         private Vector3 currentTargetPos;
         private Vector3 currentPosition;
-        private PathingGrid pathingGrid;
+        private PathingGridBase pathingGrid;
         private float movingSpeed = 1f;
         private bool shouldDequeueNextPoint = true;
 
         private GameObject movingGameObject;
         private Rigidbody2D rigidbody2D;
+
+        #region DEBUG fields
+        private OverlayAstarPath overlay;
+        #endregion
 
         public AStarMoveCommand(SenderType sender,MovingType reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver,sender)
         {
@@ -52,6 +57,7 @@ namespace Assets.Scripts.Classes.Commands
             currentState = CommandState.Queued;
         }
 
+        public void SetDebugOverlay(OverlayAstarPath overlay) => this.overlay = overlay;
 
         public override IEnumerator CommandCoroutine(Action<CommandResult> resultCallback, Action<CommandState> stateCallback)
         {
@@ -60,8 +66,8 @@ namespace Assets.Scripts.Classes.Commands
             bool shouldKeepGoing = true;
             Vector3 pos = movingGameObject.transform.position;
             startCell = tilemap.WorldToCell(pos);
-
             positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
+
             if (positionsToVisit == null || !positionsToVisit.Any())
             {
                 Debug.LogFormat("Pathing from {0} to {1} yielded empty path", pos, targetCell);
@@ -70,6 +76,9 @@ namespace Assets.Scripts.Classes.Commands
                 shouldKeepGoing = false;
                 yield break;
             }
+
+            //A Queue can be enumerated without distrubing its contents
+            overlay?.DrawPath(positionsToVisit);
             this.currentPosition = movingGameObject.transform.position;
             currentState = CommandState.InProgress;
             yield return new WaitForFixedUpdate();
@@ -81,9 +90,10 @@ namespace Assets.Scripts.Classes.Commands
                     if (!positionsToVisit.TryDequeue(out Vector3Int nextPoint))
                     {
                         shouldKeepGoing = false;
-                        yield return null;
+                        continue;
                     }
 
+                    Debug.LogFormat("Going from {0} to {1}", this.currentTargetCell, nextPoint);
                     this.currentTargetCell = nextPoint;
                     this.currentTargetPos = tilemap.CellToWorld(this.currentTargetCell);
                     shouldDequeueNextPoint = false;
@@ -104,6 +114,7 @@ namespace Assets.Scripts.Classes.Commands
             }
             currentState = CommandState.Ended;
             commandResult = CommandResult.Success;
+            overlay?.Dispose();
             yield break; //make sure we exited the coroutine
         }
 

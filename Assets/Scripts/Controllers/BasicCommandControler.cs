@@ -1,11 +1,13 @@
 using Assets.Scripts.Classes.Commands;
 using Assets.Scripts.Classes.Helpers;
+using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -39,6 +41,12 @@ public class BasicCommandControler : MonoBehaviour
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
 
+    private GameObject overlayParent;
+    private Tile tileToSet;
+    private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
+    private const string buildAccessTileName = "BasicWhiteTile";
+
+
     public void SetCurrentAction(int actionId)
     {
         switch (actionId)
@@ -64,6 +72,9 @@ public class BasicCommandControler : MonoBehaviour
         topCellSelector = new TopCellSelector(mainTilemap);
         previousCellColor = mainTilemap.GetColor(previousCell);
         currentContextDelegator = BasicMovementOrder;
+        overlayParent = GameObject.Find("Overlays");
+        tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, buildAccessTileName));
+
     }
 
     private void OnEnable()
@@ -75,6 +86,7 @@ public class BasicCommandControler : MonoBehaviour
 
         basicControls.CommandControls.SendCommand.performed += SendCommandForSelectedEntities;
         pointerPosition = basicControls.CommandControls.PointerPosition;
+        basicControls.CommandControls.IncreaseDecrease.performed += ChangeTimeScale;
         selectionBox.SetActive(false);
     }
 
@@ -169,6 +181,8 @@ public class BasicCommandControler : MonoBehaviour
                 cellResult.topCell,
                 mapManager,
                 unit.unitSpeed);
+
+            moveOrder.SetDebugOverlay(new OverlayAstarPath(this.mainTilemap, overlayParent, tileToSet));
             unit.SetCommand(moveOrder);
         }
     }
@@ -182,4 +196,12 @@ public class BasicCommandControler : MonoBehaviour
         Instantiate(this.UnitPrefab, worldPos, Quaternion.identity, UnitContainer.transform);
     }
 
+    private void ChangeTimeScale(CallbackContext context)
+    {
+        
+        float deltaTimeScale = context.ReadValue<float>() * Time.deltaTime;
+
+        Time.timeScale *= (1 + deltaTimeScale);
+        Debug.LogFormat("Timescale is now: {0}", Time.timeScale);
+    }
 }

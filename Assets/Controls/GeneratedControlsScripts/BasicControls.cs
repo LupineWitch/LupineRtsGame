@@ -216,6 +216,15 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Increase/Decrease"",
+                    ""type"": ""Value"",
+                    ""id"": ""1327fbc2-8b7b-4155-92e0-61a5163c2f63"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -280,7 +289,7 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PCSontrolScheme"",
                     ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -291,10 +300,43 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""PCSontrolScheme"",
                     ""action"": ""SendCommand"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""ByKeyboard"",
+                    ""id"": ""5a536443-66fb-4f3e-b677-5a308c1fb15d"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase/Decrease"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""47e72c56-4d50-49b9-8a1a-4199401358bc"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PCSontrolScheme"",
+                    ""action"": ""Increase/Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""7838d886-02a4-4b73-89fa-2f3f7713f5b5"",
+                    ""path"": ""<Keyboard>/#(+)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PCSontrolScheme"",
+                    ""action"": ""Increase/Decrease"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -330,6 +372,7 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
         m_CommandControls_MainPointerDrag = m_CommandControls.FindAction("MainPointerDrag", throwIfNotFound: true);
         m_CommandControls_Select = m_CommandControls.FindAction("Select", throwIfNotFound: true);
         m_CommandControls_SendCommand = m_CommandControls.FindAction("SendCommand", throwIfNotFound: true);
+        m_CommandControls_IncreaseDecrease = m_CommandControls.FindAction("Increase/Decrease", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -450,6 +493,7 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_CommandControls_MainPointerDrag;
     private readonly InputAction m_CommandControls_Select;
     private readonly InputAction m_CommandControls_SendCommand;
+    private readonly InputAction m_CommandControls_IncreaseDecrease;
     public struct CommandControlsActions
     {
         private @BasicControls m_Wrapper;
@@ -458,6 +502,7 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
         public InputAction @MainPointerDrag => m_Wrapper.m_CommandControls_MainPointerDrag;
         public InputAction @Select => m_Wrapper.m_CommandControls_Select;
         public InputAction @SendCommand => m_Wrapper.m_CommandControls_SendCommand;
+        public InputAction @IncreaseDecrease => m_Wrapper.m_CommandControls_IncreaseDecrease;
         public InputActionMap Get() { return m_Wrapper.m_CommandControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -479,6 +524,9 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
                 @SendCommand.started -= m_Wrapper.m_CommandControlsActionsCallbackInterface.OnSendCommand;
                 @SendCommand.performed -= m_Wrapper.m_CommandControlsActionsCallbackInterface.OnSendCommand;
                 @SendCommand.canceled -= m_Wrapper.m_CommandControlsActionsCallbackInterface.OnSendCommand;
+                @IncreaseDecrease.started -= m_Wrapper.m_CommandControlsActionsCallbackInterface.OnIncreaseDecrease;
+                @IncreaseDecrease.performed -= m_Wrapper.m_CommandControlsActionsCallbackInterface.OnIncreaseDecrease;
+                @IncreaseDecrease.canceled -= m_Wrapper.m_CommandControlsActionsCallbackInterface.OnIncreaseDecrease;
             }
             m_Wrapper.m_CommandControlsActionsCallbackInterface = instance;
             if (instance != null)
@@ -495,6 +543,9 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
                 @SendCommand.started += instance.OnSendCommand;
                 @SendCommand.performed += instance.OnSendCommand;
                 @SendCommand.canceled += instance.OnSendCommand;
+                @IncreaseDecrease.started += instance.OnIncreaseDecrease;
+                @IncreaseDecrease.performed += instance.OnIncreaseDecrease;
+                @IncreaseDecrease.canceled += instance.OnIncreaseDecrease;
             }
         }
     }
@@ -521,5 +572,6 @@ public partial class @BasicControls : IInputActionCollection2, IDisposable
         void OnMainPointerDrag(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnSendCommand(InputAction.CallbackContext context);
+        void OnIncreaseDecrease(InputAction.CallbackContext context);
     }
 }

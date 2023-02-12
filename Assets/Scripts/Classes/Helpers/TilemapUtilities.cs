@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.Classes.Helpers
@@ -24,6 +25,8 @@ namespace Assets.Scripts.Classes.Helpers
             Vector3Int.down + Vector3Int.left
         };
 
+        public static ReadOnlyArray<Vector3Int> GetNeighbourDirections { get => NeighbourDirections; }
+
         /// <summary>
         /// Finds the top tile with specified position in the given tilemap.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Assets.Scripts.Classes.Helpers
             Vector3Int topTile = position;
             Vector3Int tempTile = topTile;
 
-            for(int z = 0; z < tilemap.cellBounds.zMax; z++)
+            for(int z = 0; z <= tilemap.cellBounds.zMax; z++)
             {
                 tempTile.z = z;
                 if(tilemap.HasTile(tempTile))
@@ -45,29 +48,26 @@ namespace Assets.Scripts.Classes.Helpers
         }
 
         /// <summary>
-        /// Gets the dictionary of (topmost) neighbouring tiles and if they're directly pathable from given <paramref name="position"/>
+        /// Gets the dictionary of (topmost) neighbouring tiles and if heigth difference betwween them and given <paramref name="position"/>
         /// </summary>
         /// <param name="position">Position of tiles to find neighbours of</param>
-        /// <returns>Dictionary of tiles and if they are directly pathable to.</returns>
-        public static Dictionary<Vector3Int, bool> GetNeighbouringNodes(this Tilemap tilemap, Vector3Int position)
+        /// <returns>Dictionary of heigth differences between  <paramref name="position"/> and its neighbours, keyed by neighbour.</returns>
+        public static Dictionary<Vector3Int, int> GetNeighbouringNodes(this Tilemap tilemap, Vector3Int position)
         {
-            Dictionary<Vector3Int, bool> pathableNeigbours = new Dictionary<Vector3Int, bool>(); 
-            Vector3Int topTilePosition = tilemap.GetTopTilePosition(position);
-            bool isPathableTo = true;
+            Dictionary<Vector3Int, int> neighbours = new Dictionary<Vector3Int, int>(); 
+           Vector3Int topTilePosition = tilemap.GetTopTilePosition(position);
+
             foreach(Vector3Int direction in NeighbourDirections)
             {
-                Vector3Int currentNeighbour = tilemap.GetTopTilePosition(topTilePosition + direction);
+                Vector3Int currentNeighbour = tilemap.GetTopTilePosition(position + direction);
                 //is this tile in the expected bounds??
                 if (!tilemap.cellBounds.Contains(currentNeighbour))
                     continue;                    
 
                 int heigthDiff = currentNeighbour.z - topTilePosition.z;
-                if(Math.Abs(heigthDiff) >= 2)
-                    isPathableTo = false;
-
-                pathableNeigbours.Add(currentNeighbour, isPathableTo);
+                neighbours.Add(currentNeighbour, Math.Abs(heigthDiff));
             }
-            return pathableNeigbours;
+            return neighbours;
         }
     }
 }
