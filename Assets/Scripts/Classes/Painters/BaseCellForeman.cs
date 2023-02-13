@@ -17,51 +17,39 @@ namespace Assets.Scripts.Classes.Painters
             this.tilemap = tilemap;
         }
 
-        public virtual bool TryPaintCell(Vector3Int coords, Color color, bool force = false)
+        public virtual bool TryPaintCell(Vector3Int coords, Color color)
         {
             if (!tilemap.HasTile(coords))
                 return false;
 
             TileFlags tileFlags = tilemap.GetTileFlags(coords);
-            if(force)
-                tilemap.SetTileFlags(coords, TileFlags.None);
-
-            if (tileFlags.HasFlag(TileFlags.LockColor))
-                return false;
-
+            tilemap.SetTileFlags(coords, TileFlags.None);
             tilemap.SetColor(coords, color);
-            if (force)
-                tilemap.SetTileFlags(coords, tileFlags);
+            tilemap.SetTileFlags(coords, tileFlags);
             
             return true;
         }
 
-        public virtual void PaintCells(IEnumerable<Vector3Int> cells, Color color, bool force = false)
+        public virtual void PaintCells(IEnumerable<Vector3Int> cells, Color color)
         {
             foreach (var cell in cells)
-                _ = TryPaintCell(cell, color, force);
+                _ = TryPaintCell(cell, color);
         }
 
-        public virtual void CreatePaintedCells(IEnumerable<Vector3Int> cells, TileBase tile, Color color, bool force = false)
+        public virtual void CreatePaintedCells(IEnumerable<Vector3Int> cells, TileBase tile, Color color)
         {
             foreach (var cell in cells)
-                _ = TryCreatePaintedCell(cell, color, tile, force);
+                _ = TryCreatePaintedCell(cell, color, tile);
         }
 
-        public virtual bool TryCreatePaintedCell(Vector3Int coords, Color color, TileBase tile, bool force = false)
+        public virtual bool TryCreatePaintedCell(Vector3Int coords, Color color, TileBase tile)
         {
-
             TileFlags tileFlags = tilemap.GetTileFlags(coords);
-            if (force)
-                tilemap.SetTileFlags(coords, TileFlags.None);
-
-            if (tileFlags.HasFlag(TileFlags.LockColor) || tileFlags.HasFlag(TileFlags.LockTransform))
-                return false;
-
+            tilemap.SetTileFlags(coords, TileFlags.None);
             tilemap.SetTile(coords, tile);
+            tilemap.SetTileFlags(coords, TileFlags.None);
             tilemap.SetColor(coords, color);
-            if (force)
-                tilemap.SetTileFlags(coords, tileFlags);
+            tilemap.SetTileFlags(coords, tileFlags);
 
             return true;
         }

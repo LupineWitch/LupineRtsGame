@@ -8640,6 +8640,18 @@ PrefabInstance:
       propertyPath: m_Color.a
       value: 0.6392157
       objectReference: {fileID: 0}
+    - target: {fileID: 1651343980714024552, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_CellGap.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651343980714024552, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_CellGap.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651343980714024552, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_CellGap.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.039
@@ -8648,21 +8660,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.53
       objectReference: {fileID: 0}
-    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
-      propertyPath: m_FlipX
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
-      propertyPath: m_FlipY
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6531197690605297487, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_fontSize
-      value: 23.75
+      value: 26.55
       objectReference: {fileID: 0}
     - target: {fileID: 6531197691764922396, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_fontSize
-      value: 21.15
+      value: 23.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

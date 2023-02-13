@@ -170,7 +170,7 @@ public class BasicCommandControler : MonoBehaviour
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         TopCellResult cellResult = topCellSelector.GetTopCell(mousePos);
 
-        if (!cellResult.found)
+        if (!cellResult.found || cellResult.topCell.HasNegativeComponent())
             return;
 
         foreach (BasicUnitScript unit in selectedObjects)

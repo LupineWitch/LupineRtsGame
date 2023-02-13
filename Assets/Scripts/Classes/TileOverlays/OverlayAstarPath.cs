@@ -12,13 +12,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.WSA;
+using static UnityEngine.Tilemaps.TilemapRenderer;
 
 namespace Assets.Scripts.Classes.TileOverlays
 {
     public class OverlayAstarPath : IDisposable, ICloneable
     {
         public Color PathColor { get; set; } = Color.green;
-        public Color PathStartColor { get; set; } = Color.yellow;
+        public Color PathStartColor { get; set; } = Color.cyan;
         public Color PathEndColor { get; set; } = Color.blue;
         public TileBase OverlayTile { get; }
 
@@ -28,13 +29,18 @@ namespace Assets.Scripts.Classes.TileOverlays
         private readonly BaseCellForeman overlayPainter;
         private bool disposedValue;
 
-        public OverlayAstarPath(Tilemap terrainLayer, GameObject overlaysObject, TileBase tile)
+        public OverlayAstarPath(Tilemap terrainLayer, GameObject overlaysParent, TileBase tile)
         {
             this.terrainLayer = terrainLayer;
-            this.overlaysObject = overlaysObject;
-            overlayLayer = new GameObject("pathOverlay").AddComponent<TilemapRenderer>().GetComponent<Tilemap>();
-            overlayLayer.color = new Color(1, 1, 1, 0.70f);
-            overlayLayer.gameObject.transform.SetParent(overlaysObject.transform);
+            this.overlaysObject = overlaysParent;
+            TilemapRenderer tilemapRenderer = new GameObject("pathOverlay").AddComponent<TilemapRenderer>();
+            tilemapRenderer.sortOrder = SortOrder.TopRight;
+            tilemapRenderer.sortingOrder = 3;
+            tilemapRenderer.mode = Mode.Individual;
+            tilemapRenderer.material = terrainLayer.GetComponent<TilemapRenderer>().material;
+            overlayLayer = tilemapRenderer.GetComponent<Tilemap>();
+            overlayLayer.color = new Color(1, 1, 1, 0.50f);
+            overlayLayer.gameObject.transform.SetParent(overlaysParent.transform);
             OverlayTile = tile;
             overlayPainter = new BaseCellForeman(overlayLayer);
         }
@@ -57,15 +63,16 @@ namespace Assets.Scripts.Classes.TileOverlays
             IEnumerator<Vector3Int> cellsEnumerator = pathCells.GetEnumerator();
             cellsEnumerator.MoveNext();
             Vector3Int tempCell = cellsEnumerator.Current;
-            overlayPainter.TryCreatePaintedCell(terrainLayer.GetTopTilePosition(tempCell), PathStartColor, OverlayTile, true);
+            var positionWithZAdjusted = terrainLayer.GetTopTilePosition(tempCell);
+            overlayPainter.TryCreatePaintedCell(positionWithZAdjusted, PathStartColor, OverlayTile);
 
             while (cellsEnumerator.MoveNext())
             {
-                overlayPainter.TryCreatePaintedCell(terrainLayer.GetTopTilePosition(cellsEnumerator.Current), PathStartColor, OverlayTile, true);
+                overlayPainter.TryCreatePaintedCell(terrainLayer.GetTopTilePosition(cellsEnumerator.Current), PathColor, OverlayTile);
                 tempCell = cellsEnumerator.Current;
             }
 
-            overlayPainter.TryCreatePaintedCell(terrainLayer.GetTopTilePosition(tempCell), PathStartColor, OverlayTile, true);
+            overlayPainter.TryCreatePaintedCell(terrainLayer.GetTopTilePosition(tempCell), PathEndColor, OverlayTile);
         }
                
         public void DestroyOverlay() => overlayLayer.ClearAllTiles();
@@ -102,7 +109,12 @@ namespace Assets.Scripts.Classes.TileOverlays
 
         public object Clone()
         {
-            return new OverlayAstarPath(terrainLayer, overlaysObject, OverlayTile);
+            return new OverlayAstarPath(terrainLayer, overlaysObject, OverlayTile)
+            {
+                PathColor = this.PathColor,
+                PathEndColor = this.PathEndColor,
+                PathStartColor = this.PathStartColor
+            };
         }
     }
 }

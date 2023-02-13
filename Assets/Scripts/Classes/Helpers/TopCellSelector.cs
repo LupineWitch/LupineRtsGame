@@ -41,6 +41,9 @@ namespace Assets.Scripts.Helpers
                 if (tile != null)
                 {
                     //Debug.Log("grid Z" + gridCell + " found " + tile.name);
+                    if (!_tilemap.HasTile(gridCell))
+                        break;
+
                     return new TopCellResult(gridCell, true); // If you need only the first tile encountered
                 }
                 mouseWorldPos.y += halfCellHeight;
