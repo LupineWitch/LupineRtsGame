@@ -8660,6 +8660,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.53
       objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6531197690605297487, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_fontSize
       value: 26.55

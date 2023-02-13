@@ -29,7 +29,24 @@ public static class ContextMenuExtensions
 
     [MenuItem("CONTEXT/Tilemap/Export Tilemap to file", true)]
     [MenuItem("CONTEXT/Tilemap/Import File into selected Tilemap", true)]
+    [MenuItem("CONTEXT/Tilemap/Darken Layers", true)]
     private static bool ValidateTilemapSerialisation() => Selection.activeGameObject.GetComponent<Tilemap>() != default;
+
+    [MenuItem("CONTEXT/Tilemap/Darken Layers")]
+    private static void DarkenEachLayer()
+    {
+        Tilemap map = Selection.activeGameObject.GetComponent<Tilemap>();
+        foreach (UnityEngine.Vector3Int cell in map.cellBounds.allPositionsWithin)
+        {
+            if(!map.HasTile(cell))
+                continue;
+
+            map.SetTileFlags(cell, TileFlags.None);
+            float multiplyValue = 1 - ((6f - cell.z) * 0.05f);
+            var color = map.GetColor(cell).linear * new UnityEngine.Color(multiplyValue, multiplyValue, multiplyValue);
+            map.SetColor(cell, color);
+        }
+    }
 
 }
 #endif
