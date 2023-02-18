@@ -42,7 +42,8 @@ namespace Assets.Scripts.Managers
 
         private void Start()
         {
-            //eeh..
+            //Shade each cell layer
+
         }
     }
 }
