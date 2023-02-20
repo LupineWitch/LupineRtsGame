@@ -30,6 +30,13 @@ namespace Assets.Scripts.Classes.Helpers
         public static Vector3Int ToUnityVector3Int(this Position position) => new Vector3Int((int)position.X, (int)position.Y);
 
         /// <summary>
+        /// Converts <see cref="Position"/> to Unity's <see cref="Vector3Int"/>, with it's Z coordinate set to <paramref name="z"/>
+        /// </summary>
+        /// <param name="z">Value of Z coordinate resulting <see cref="Vector3Int"/> should have.</param>
+        /// <returns><see cref="Vector3Int"/> with <paramref name="position"/>'s X and Y values. Z value is set to <paramref name="z"/> parameter.</returns>
+        public static Vector3Int ToUnityVector3Int(this Position position, int z) => new Vector3Int((int)position.X, (int)position.Y, z);
+
+        /// <summary>
         /// Check if any of the <paramref name="vector"'s component is negative/>
         /// </summary>
         /// <param name="vector"></param>

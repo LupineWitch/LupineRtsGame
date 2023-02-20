@@ -31,16 +31,16 @@ namespace Assets.Scripts.Classes.Commands
 
     public abstract class Command<SenderType, RecieverType>
     {
-        public CommandState currentState { get => _currentState; protected set
+        public CommandState CurrentState { get => _currentState; protected set
             {
                 _currentState = value;
                 if (currentStateCallback != null)
                     currentStateCallback(_currentState);
                 else
-                    Debug.LogError("Changed command state without callback!");
+                    Debug.LogWarning("Changed command state without callback!");
             }
         }
-        public CommandResult commandResult
+        public CommandResult CommandResult
         {
             get => _commandResult; protected set
             {
@@ -48,7 +48,7 @@ namespace Assets.Scripts.Classes.Commands
                 if(commandResultCallback != null)
                     commandResultCallback(_commandResult);
                 else
-                    Debug.LogError("Changed command result without callback!");
+                    Debug.LogWarning("Changed command result without callback!");
             }
         }
 
@@ -74,7 +74,7 @@ namespace Assets.Scripts.Classes.Commands
         /// <returns>A coroutine which contains action the command consits of.</returns>
         public abstract IEnumerator CommandCoroutine(Action<CommandResult> resultCallback, Action<CommandState> stateCallback);
 
-        public virtual IEnumerator CommandCoroutine()
+        public IEnumerator CommandCoroutine()
         {
             return CommandCoroutine(SetResult, SetState);
         }
@@ -83,8 +83,14 @@ namespace Assets.Scripts.Classes.Commands
 
         private void SetResult(CommandResult result) => _commandResult = result;
 
-        public virtual CommandState GetCurrentState() => currentState;
+        public virtual CommandState GetCurrentState() => CurrentState;
 
-        public virtual CommandResult GetCommandResult() => commandResult;
+        public virtual CommandResult GetCommandResult() => CommandResult;
+
+        public virtual CommandResult CancelCommand()
+        {
+            CurrentState = CommandState.Ended;
+            return CommandResult.Cancelled;
+        }
     }
 }

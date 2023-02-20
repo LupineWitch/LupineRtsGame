@@ -11,21 +11,26 @@ namespace Assets.Scripts.Classes.Painters
     public class BaseCellForeman
     {
         private readonly Tilemap tilemap;
+        protected int overlayZOffset = 0;
 
-        public BaseCellForeman(Tilemap tilemap)
+        public BaseCellForeman(Tilemap tilemap, int overlayZOffset = 0)
         {
             this.tilemap = tilemap;
+            this.overlayZOffset = overlayZOffset;
         }
 
         public virtual bool TryPaintCell(Vector3Int coords, Color color)
         {
-            if (!tilemap.HasTile(coords))
+            Vector3Int tempCoords = coords;
+            tempCoords.z = coords.z + overlayZOffset;
+
+            if (!tilemap.HasTile(tempCoords))
                 return false;
 
-            TileFlags tileFlags = tilemap.GetTileFlags(coords);
-            tilemap.SetTileFlags(coords, TileFlags.None);
-            tilemap.SetColor(coords, color);
-            tilemap.SetTileFlags(coords, tileFlags);
+            TileFlags tileFlags = tilemap.GetTileFlags(tempCoords);
+            tilemap.SetTileFlags(tempCoords, TileFlags.None);
+            tilemap.SetColor(tempCoords, color);
+            tilemap.SetTileFlags(tempCoords, tileFlags);
             
             return true;
         }
@@ -44,12 +49,14 @@ namespace Assets.Scripts.Classes.Painters
 
         public virtual bool TryCreatePaintedCell(Vector3Int coords, Color color, TileBase tile)
         {
-            TileFlags tileFlags = tilemap.GetTileFlags(coords);
-            tilemap.SetTileFlags(coords, TileFlags.None);
-            tilemap.SetTile(coords, tile);
-            tilemap.SetTileFlags(coords, TileFlags.None);
-            tilemap.SetColor(coords, color);
-            tilemap.SetTileFlags(coords, tileFlags);
+            Vector3Int tempCoords = coords;
+            tempCoords.z = coords.z + overlayZOffset;
+            TileFlags tileFlags = tilemap.GetTileFlags(tempCoords);
+            tilemap.SetTileFlags(tempCoords, TileFlags.None);
+            tilemap.SetTile(tempCoords, tile);
+            tilemap.SetTileFlags(tempCoords, TileFlags.None);
+            tilemap.SetColor(tempCoords, color);
+            tilemap.SetTileFlags(tempCoords, tileFlags);
 
             return true;
         }

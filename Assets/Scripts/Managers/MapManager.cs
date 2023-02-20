@@ -9,6 +9,7 @@ using UnityEngine.Tilemaps;
 using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.DPL;
 using Assets.Scripts.Classes.Serialisers;
+using System.IO;
 
 namespace Assets.Scripts.Managers
 {
@@ -38,6 +39,17 @@ namespace Assets.Scripts.Managers
             //Generate path based on map
             pathingGrid = new SingleLayerPathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
             pathingGrid.PruneInvalidConnectionsBetweenNodesBasedOnHeigth(mainTilemap);
+            string logFilePath = Path.Combine(Environment.GetFolderPath(
+                                                      Environment.SpecialFolder.LocalApplicationData),
+                                                      "LupineLogs",
+                                                      "PathingGrid.log");
+            Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
+            StreamWriter fileHandle = File.CreateText(logFilePath);
+            Debug.LogFormat("Log path: {0}", logFilePath);
+            string temp = pathingGrid.ToString();
+            fileHandle.Write(temp);
+            fileHandle.Close();
+            fileHandle.Dispose();
         }
 
         private void Start()

@@ -8,14 +8,13 @@ using UnityEngine.UI;
 
 public class BasicUnitScript : MonoBehaviour, ISelectableEntity
 {
-    private bool isSelected { get; set; } = false;
     public float unitSpeed = 10f;
-
+    private bool isSelected { get; set; } = false;
     private Material outlineMaterial;
     private Command<object,BasicUnitScript> executedCommand;
-        
 
-    // Start is called before the first frame update
+    private Coroutine currentlyRunCommandCoroutine = null;
+    // Start is called before the first frame 
     void Start()
     {
         outlineMaterial = GetComponent<SpriteRenderer>().material;
@@ -39,7 +38,7 @@ public class BasicUnitScript : MonoBehaviour, ISelectableEntity
                 break;
             case CommandState.Cold:
             case CommandState.Queued:
-                StartCoroutine(executedCommand.CommandCoroutine());
+                currentlyRunCommandCoroutine = StartCoroutine(executedCommand.CommandCoroutine());
                 break;
             case CommandState.Ended:
                 executedCommand = null;
@@ -50,6 +49,12 @@ public class BasicUnitScript : MonoBehaviour, ISelectableEntity
 
     public virtual void SetCommand(Command<object,BasicUnitScript> command)
     {
+        if(this.executedCommand != null)
+            this.executedCommand.CancelCommand();
+
+        if(currentlyRunCommandCoroutine != null)
+            this.StopCoroutine(currentlyRunCommandCoroutine);
+            
         this.executedCommand = command;
     }
 
@@ -70,5 +75,10 @@ public class BasicUnitScript : MonoBehaviour, ISelectableEntity
 
         this.isSelected = false;
         return true;
+    }
+
+    public void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

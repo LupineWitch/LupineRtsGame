@@ -16,33 +16,15 @@ using static UnityEngine.Tilemaps.TilemapRenderer;
 
 namespace Assets.Scripts.Classes.TileOverlays
 {
-    public class OverlayAstarPath : IDisposable, ICloneable
+    public class OverlayAstarPath : OverlayBase
     {
         public Color PathColor { get; set; } = Color.green;
         public Color PathStartColor { get; set; } = Color.cyan;
         public Color PathEndColor { get; set; } = Color.blue;
-        public TileBase OverlayTile { get; }
 
-        private readonly Tilemap terrainLayer;
-        private readonly GameObject overlaysObject;
-        private readonly Tilemap overlayLayer;
-        private readonly BaseCellForeman overlayPainter;
-        private bool disposedValue;
-
-        public OverlayAstarPath(Tilemap terrainLayer, GameObject overlaysParent, TileBase tile)
+        public OverlayAstarPath(Tilemap terrainLayer, GameObject overlaysParent, TileBase tile) : base(terrainLayer, overlaysParent, tile)
         {
-            this.terrainLayer = terrainLayer;
-            this.overlaysObject = overlaysParent;
-            TilemapRenderer tilemapRenderer = new GameObject("pathOverlay").AddComponent<TilemapRenderer>();
-            tilemapRenderer.sortOrder = SortOrder.TopRight;
-            tilemapRenderer.sortingOrder = 3;
-            tilemapRenderer.mode = Mode.Individual;
-            tilemapRenderer.material = terrainLayer.GetComponent<TilemapRenderer>().material;
-            overlayLayer = tilemapRenderer.GetComponent<Tilemap>();
-            overlayLayer.color = new Color(1, 1, 1, 0.50f);
-            overlayLayer.gameObject.transform.SetParent(overlaysParent.transform);
-            OverlayTile = tile;
-            overlayPainter = new BaseCellForeman(overlayLayer);
+            this.overlayPainter = new BaseCellForeman(this.overlayLayer, 0);
         }
 
         public void DrawManyPaths(IEnumerable<IEnumerable<Vector3Int>> paths)
@@ -58,7 +40,7 @@ namespace Assets.Scripts.Classes.TileOverlays
             this.Draw(pathCells);
         }
 
-        private void Draw(IEnumerable<Vector3Int> pathCells)
+        protected override void Draw(IEnumerable<Vector3Int> pathCells)
         {
             IEnumerator<Vector3Int> cellsEnumerator = pathCells.GetEnumerator();
             cellsEnumerator.MoveNext();
@@ -74,40 +56,8 @@ namespace Assets.Scripts.Classes.TileOverlays
 
             overlayPainter.TryCreatePaintedCell(terrainLayer.GetTopTilePosition(tempCell), PathEndColor, OverlayTile);
         }
-               
-        public void DestroyOverlay() => overlayLayer.ClearAllTiles();
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    overlayLayer.ClearAllTiles();
-                    UnityEngine.Object.Destroy(overlayLayer.gameObject);
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                disposedValue = true;
-            }
-        }
-
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~OverlayAstarPath()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        public object Clone()
+        public override object Clone()
         {
             return new OverlayAstarPath(terrainLayer, overlaysObject, OverlayTile)
             {

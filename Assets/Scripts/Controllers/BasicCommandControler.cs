@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -59,8 +60,9 @@ public class BasicCommandControler : MonoBehaviour
                 break;
 
         }
-    }    
+    }
 
+    private Vector2 mousePos;
 
     private void Awake()
     {
@@ -94,7 +96,7 @@ public class BasicCommandControler : MonoBehaviour
     {
         mainTilemap.SetColor(previousCell, previousCellColor);
 
-        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
+        mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         TopCellResult topCellRes = topCellSelector.GetTopCell(mousePos);
 
@@ -164,7 +166,7 @@ public class BasicCommandControler : MonoBehaviour
         currentContextDelegator(obj, selectedObjects);
     }
 
-    private void BasicMovementOrder(CallbackContext obj, List<BasicUnitScript> selectedObjects)
+    private void BasicMovementOrder(CallbackContext context, List<BasicUnitScript> selectedObjects)
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -175,7 +177,7 @@ public class BasicCommandControler : MonoBehaviour
 
         foreach (BasicUnitScript unit in selectedObjects)
         {
-            AStarMoveCommand<object, BasicUnitScript> moveOrder = new AStarMoveCommand<object, BasicUnitScript>(
+            AStarMoveCommand<object> moveOrder = new AStarMoveCommand<object>(
                 this,
                 unit,
                 cellResult.topCell,

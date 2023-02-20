@@ -13425,16 +13425,44 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.039
+      value: -3.354
       objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.53
+      value: 7.3
       objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026374158593362177, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6531197690605297487, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_fontSize
