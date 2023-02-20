@@ -68,9 +68,6 @@ namespace Assets.Scripts.Classes.Commands
             Vector3 pos = movingGameObject.transform.position;
             startCell = tilemap.WorldToCell(pos);
 
-            //if (true || (targetCell - startCell).HasNegativeComponent())
-            //    startCell += (Vector3Int)Vector2Int.one;
-
             positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
             if (positionsToVisit == null || !positionsToVisit.Any())
             {

@@ -44,7 +44,6 @@ namespace Assets.Scripts.Pathfinding
                 return null;
 
             Queue<Vector3Int> positionsToGoTo = new Queue<Vector3Int>(foundPath.Edges.Count + 1);
-            //positionsToGoTo.Enqueue(new Vector3Int(astarGridPosStart.X, astarGridPosStart.Y));
             foreach (Roy_T.AStar.Graphs.IEdge edge in foundPath.Edges)
                 positionsToGoTo.Enqueue(edge.End.Position.ToUnityVector3Int(cachedZ));
 
