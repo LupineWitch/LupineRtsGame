@@ -67,7 +67,7 @@ namespace Assets.Scripts.Classes.Commands
             bool shouldKeepGoing = true;
             Vector3 pos = movingGameObject.transform.position;
             startCell = tilemap.WorldToCell(pos);
-            
+
             //if (true || (targetCell - startCell).HasNegativeComponent())
             //    startCell += (Vector3Int)Vector2Int.one;
 
