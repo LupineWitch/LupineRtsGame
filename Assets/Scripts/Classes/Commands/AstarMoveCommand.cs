@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.TileOverlays;
+using Assets.Scripts.Commandables;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Pathfinding;
 using System;
@@ -17,7 +18,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Classes.Commands
 {
-    public class AStarMoveCommand<SenderType>: Command<SenderType, BasicUnitScript>
+    public class AStarMoveCommand: Command<ICommander, IDeputy>
     {
         private Queue<Vector3Int> positionsToVisit;
         private Tilemap tilemap;
@@ -41,7 +42,7 @@ namespace Assets.Scripts.Classes.Commands
         private OverlayAstarPath overlay;
         #endregion
 
-        public AStarMoveCommand(SenderType sender, BasicUnitScript reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver,sender)
+        public AStarMoveCommand(ICommander sender, BasicUnitScript reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver,sender)
         {
             tilemap = mapManager.UsedTilemap;             
             this.targetCell = target;
@@ -52,7 +53,7 @@ namespace Assets.Scripts.Classes.Commands
                 movingGameObject = objectComponent.gameObject;
             else
                 throw new ArgumentException(string.Format("{0} class initialized with invalid type: {1}, valid type must derive either from {2} or {3}",
-                    nameof(AStarMoveCommand<SenderType>), reciver.GetType().Name, nameof(GameObject), nameof(MonoBehaviour)), nameof(reciver));
+                    nameof(AStarMoveCommand), reciver.GetType().Name, nameof(GameObject), nameof(MonoBehaviour)), nameof(reciver));
 
             rigidbody2D = movingGameObject.GetComponent<Rigidbody2D>();
             CurrentState = CommandState.Queued;

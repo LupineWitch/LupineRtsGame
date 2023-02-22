@@ -23,12 +23,13 @@ namespace Assets.Scripts.Managers
         private Tilemap mainTilemap;
         [SerializeField]
         private Tilemap buildingSpaceTilemap;
-
-        private bool shouldShow {get; set;}
+        [SerializeField]
+        private int buildingAreaDiameter = 11;
+        [SerializeField]
+        private bool shouldShow;
 
         private BasicControls basicControls;
         private ITopCellSelector topCellSelector;
-        private int buildingAreaDiameter = 7;
         private int buildingAreaRadius => (buildingAreaDiameter % 2 == 0 ? (buildingAreaDiameter + 1) / 2 : buildingAreaDiameter / 2);
         private BoundsInt previousBounds = default;
         Tile tileToSet;

@@ -131,6 +131,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1651343979402448754, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1651343979538811395, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_Name
       value: SceneRoot
@@ -186,6 +190,14 @@ PrefabInstance:
     - target: {fileID: 1651343980714024471, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: loadMapFromFile
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6531197690605297487, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_fontSize
+      value: 36.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 6531197691764922396, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_fontSize
+      value: 32.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

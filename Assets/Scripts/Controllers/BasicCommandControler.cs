@@ -1,6 +1,8 @@
 using Assets.Scripts.Classes.Commands;
+using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.TileOverlays;
+using Assets.Scripts.Commandables;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
@@ -16,8 +18,10 @@ using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
-public class BasicCommandControler : MonoBehaviour
+public class BasicCommandControler : MonoBehaviour, ICommander
 {
+    public event SelectionChangedEvent SelectionChanged;
+
     [SerializeField]
     private Tilemap mainTilemap;
     [SerializeField]
@@ -36,17 +40,17 @@ public class BasicCommandControler : MonoBehaviour
     private Vector2 startPosition;
     private BasicControls basicControls;
     private InputAction pointerPosition;
-    private List<BasicUnitScript> selectedObjects;
+    private List<ISelectable> selectedObjects;
     private ITopCellSelector topCellSelector;
     private ContextCommandDelegator currentContextDelegator;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
 
+    private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
+    private const string basicFlatOverlayTile = "BasicWhiteTile";
+
     private GameObject overlayParent;
     private Tile tileToSet;
-    private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
-    private const string buildAccessTileName = "BasicWhiteTile";
-
 
     public void SetCurrentAction(int actionId)
     {
@@ -62,7 +66,6 @@ public class BasicCommandControler : MonoBehaviour
         }
     }
 
-    private Vector2 mousePos;
 
     private void Awake()
     {
@@ -70,12 +73,12 @@ public class BasicCommandControler : MonoBehaviour
         _ = selectionBox ?? throw new ArgumentNullException(nameof(selectionBox) + "field is null");
 
         basicControls = new BasicControls();
-        selectedObjects = new List<BasicUnitScript>();
+        selectedObjects = new List<ISelectable>();
         topCellSelector = new TopCellSelector(mainTilemap);
         previousCellColor = mainTilemap.GetColor(previousCell);
         currentContextDelegator = BasicMovementOrder;
         overlayParent = GameObject.Find("Overlays");
-        tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, buildAccessTileName));
+        tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, basicFlatOverlayTile));
 
     }
 
@@ -96,7 +99,7 @@ public class BasicCommandControler : MonoBehaviour
     {
         mainTilemap.SetColor(previousCell, previousCellColor);
 
-        mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
+        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         TopCellResult topCellRes = topCellSelector.GetTopCell(mousePos);
 
@@ -157,6 +160,8 @@ public class BasicCommandControler : MonoBehaviour
 
         startPosition = default;
         selectionBox.SetActive(false);
+
+        SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
     }
 
 
@@ -166,7 +171,7 @@ public class BasicCommandControler : MonoBehaviour
         currentContextDelegator(obj, selectedObjects);
     }
 
-    private void BasicMovementOrder(CallbackContext context, List<BasicUnitScript> selectedObjects)
+    private void BasicMovementOrder(CallbackContext context, List<ISelectable> selectedObjects)
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -177,7 +182,7 @@ public class BasicCommandControler : MonoBehaviour
 
         foreach (BasicUnitScript unit in selectedObjects)
         {
-            AStarMoveCommand<object> moveOrder = new AStarMoveCommand<object>(
+            AStarMoveCommand moveOrder = new AStarMoveCommand(
                 this,
                 unit,
                 cellResult.topCell,
@@ -189,7 +194,7 @@ public class BasicCommandControler : MonoBehaviour
         }
     }
 
-    private void SpawnUnitFromPrefab(CallbackContext obj, List<BasicUnitScript> selectedObjects)
+    private void SpawnUnitFromPrefab(CallbackContext obj, List<ISelectable> selectedObjects)
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
