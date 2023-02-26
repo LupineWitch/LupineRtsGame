@@ -14,6 +14,8 @@ namespace Assets.Scripts.Pathfinding
     {
         public SingleLayerPathingGrid(int x, int y) : base(x, y) { }
 
+        public override bool CanTwoNodesConnect(Vector3Int fromNode, Vector3Int toNode) => fromNode.z == 2 && toNode.z == 2;
+
         public override void PruneInvalidConnectionsBetweenNodesBasedOnHeigth(Tilemap fromTilemap)
         {
             for (int x = 0; x < fromTilemap.cellBounds.xMax; x++)
@@ -29,6 +31,18 @@ namespace Assets.Scripts.Pathfinding
                         this.grid.RemoveDiagonalConnectionsIntersectingWithNode(currentPos.ToAstarGridPosition());
                     }
                 }
+        }
+
+        public override void ReaddNodesToPathingGrid(IEnumerable<Vector3> positions, Tilemap toTilemap)
+        {
+            foreach (var pos in positions)
+            {
+                var node = toTilemap.WorldToCell(pos);
+                foreach (var neighbour in toTilemap.GetNeighbouringNodes(node))
+                    if (neighbour.Value == 0 && node.z == 2)
+                        grid.AddEdge(node.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition(), this.baseVelocity);
+
+            }
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using Assets.Scripts.Classes.Helpers;
 using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEngine.GraphicsBuffer;
 using Grid = Roy_T.AStar.Grids.Grid;
 
 namespace Assets.Scripts.Pathfinding
@@ -15,6 +18,8 @@ namespace Assets.Scripts.Pathfinding
     {
         //private readonly PathFinder pathFinder;
         protected Grid grid;
+
+        protected Velocity baseVelocity = Velocity.FromKilometersPerHour(10);
 
         /// <summary>
         /// Initialises new <see cref="PathingGridBase"/> instance.
@@ -49,6 +54,25 @@ namespace Assets.Scripts.Pathfinding
 
             return positionsToGoTo;
         }
+
+
+        public virtual bool PathExistsBetweenNodes(Vector3Int from, Vector3Int to)
+        {
+            if (from.HasNegativeComponent() || to.HasNegativeComponent())
+                return false;
+
+            var pathFinder = new PathFinder();
+            GridPosition astarGridPosStart = from.ToAstarGridPosition();
+            GridPosition astarGridPosTarget = to.ToAstarGridPosition();
+            Path foundPath = pathFinder.FindPath(astarGridPosStart, astarGridPosTarget, this.grid);
+
+            if (foundPath.Type == PathType.ClosestApproach || foundPath.Edges.Count == 0)
+                return false;
+            else
+                return true;
+
+        }
+
         public abstract void PruneInvalidConnectionsBetweenNodesBasedOnHeigth(Tilemap fromTilemap);
 
         public virtual bool CheckIfTwoNodesAreConnected(Vector3Int firstPosition, Vector3Int secondPosition)
@@ -67,6 +91,20 @@ namespace Assets.Scripts.Pathfinding
             return true;
         }
 
+        public virtual void RemoveNodesFromPathingGrid(IEnumerable<Vector3> worldPositions, Tilemap fromTilemap)
+        {
+            foreach (var pos in worldPositions)
+            {
+                var node = fromTilemap.WorldToCell(pos);
+                grid.RemoveDiagonalConnectionsIntersectingWithNode(node.ToAstarGridPosition());
+                grid.DisconnectNode(node.ToAstarGridPosition());
+            }
+        }
+
+        public abstract void ReaddNodesToPathingGrid(IEnumerable<Vector3> nodes, Tilemap toTilemap);
+
+        public abstract bool CanTwoNodesConnect(Vector3Int fromNode, Vector3Int toNode);
+        
         public override string ToString()
         {
             string connectedLeft = "|##<##|";

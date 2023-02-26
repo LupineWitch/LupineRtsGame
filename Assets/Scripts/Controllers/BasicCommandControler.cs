@@ -30,6 +30,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private MapManager mapManager;
     [SerializeField]
     private AvailableBuidlingSpaceManager buildSpaceManager;
+    [SerializeField]
+    private BuildingManager buildingManager;
 
     #region TempTesting properties to be moved to other classes
     [SerializeField]
@@ -37,6 +39,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     [SerializeField]
     private GameObject UnitPrefab;
     #endregion
+
     private Vector2 startPosition;
     private BasicControls basicControls;
     private InputAction pointerPosition;
@@ -45,12 +48,12 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private ContextCommandDelegator currentContextDelegator;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
+    private GameObject overlayParent;
+    private Tile tileToSet;
 
     private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
     private const string basicFlatOverlayTile = "BasicWhiteTile";
 
-    private GameObject overlayParent;
-    private Tile tileToSet;
 
     public void SetCurrentAction(int actionId)
     {
@@ -59,8 +62,11 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             case 1:
                 currentContextDelegator = SpawnUnitFromPrefab;
                 break;
+            case 2:
+                currentContextDelegator = PlaceBuilding;
+                break;
             default:
-                currentContextDelegator= BasicMovementOrder;
+                currentContextDelegator = BasicMovementOrder;
                 break;
 
         }
@@ -201,6 +207,14 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         worldPos.z = 2.2f;
 
         Instantiate(this.UnitPrefab, worldPos, Quaternion.identity, UnitContainer.transform);
+    }
+
+    private void PlaceBuilding(CallbackContext obj, List<ISelectable> selectedObjects)
+    {
+        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
+        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        TopCellResult cellResult = topCellSelector.GetTopCell(mousePos);
+        buildingManager.TryToPlaceBuildingInWorld(cellResult.topCell);
     }
 
     private void ChangeTimeScale(CallbackContext context)

@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Helpers
 {
+    [Obsolete("This Implementation doesnt work correctly", true)]
     internal class CursorTileSelector : ITopCellSelector
     {
         //Tweak based on you tile origin; constant offset applied to mouse coordinates

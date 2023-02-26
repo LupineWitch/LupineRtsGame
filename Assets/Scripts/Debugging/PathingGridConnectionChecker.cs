@@ -19,6 +19,8 @@ public class PathingGridConnectionChecker : MonoBehaviour
     private bool shouldShow = false;
     [SerializeField]
     private MapManager mapManager;
+    [SerializeField]
+    private int CheckRadius = 4;
 
     private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
     private const string buildAccessTileName = "BasicWhiteTile";
@@ -26,7 +28,7 @@ public class PathingGridConnectionChecker : MonoBehaviour
     private TopCellSelector topCellSelector;
     private Tile tileToSet;
     InputAction pointerPosition;
-    private int CheckRadius = 8;
+
 
     private TopCellResult GetTopCellAtMousePos(Vector2 mousePosition) => topCellSelector.GetTopCell(Camera.main.ScreenToWorldPoint(mousePosition));
 
@@ -83,7 +85,7 @@ public class PathingGridConnectionChecker : MonoBehaviour
                 continue;
 
             var positionWithZAdjusted = mainTilemap.GetTopTilePosition(position);
-            Color colorOfTile = mapManager.PathingGrid.CheckIfTwoNodesAreConnected(targetCell, position) ? Color.green : Color.red;
+            Color colorOfTile = mapManager.PathingGrid.PathExistsBetweenNodes(targetCell, position) ?  Color.green : Color.red;
             pathingDebugTilemap.SetTile(positionWithZAdjusted, tileToSet);
             pathingDebugTilemap.SetTileFlags(positionWithZAdjusted, TileFlags.None);
             pathingDebugTilemap.SetColor(positionWithZAdjusted, colorOfTile);

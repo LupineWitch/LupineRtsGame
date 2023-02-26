@@ -34,10 +34,6 @@ namespace Assets.Scripts.Managers
         private BoundsInt previousBounds = default;
         Tile tileToSet;
         InputAction pointerPosition;
-        //Editor-only debug variables
-#if UNITY_EDITOR
-        private Vector2 prevMousePos;
-#endif
 
         private TopCellResult GetTopCellAtMousePos(Vector2 mousePosition) => topCellSelector.GetTopCell(Camera.main.ScreenToWorldPoint(mousePosition));        
 

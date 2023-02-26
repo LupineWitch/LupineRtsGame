@@ -22,6 +22,8 @@ namespace Assets.Scripts.Pathfinding
         {
         }
 
+        public override bool CanTwoNodesConnect(Vector3Int fromNode, Vector3Int toNode) => Math.Abs(fromNode.z - toNode.z) <= 1;
+
         public override void PruneInvalidConnectionsBetweenNodesBasedOnHeigth(Tilemap fromTilemap)
         {
             //assume 0 is tilemap min(as it should)
@@ -47,6 +49,17 @@ namespace Assets.Scripts.Pathfinding
                     }
 
                 }
+        }
+
+        public override void ReaddNodesToPathingGrid(IEnumerable<Vector3> worldPositions, Tilemap toTilemap)
+        {
+            foreach (var pos in worldPositions)
+            {
+                var node =  toTilemap.WorldToCell(pos);
+                foreach (var neighbour in toTilemap.GetNeighbouringNodes(node))
+                    if (CanTwoNodesConnect(node, neighbour.Key))
+                        grid.AddEdge(node.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition(), this.baseVelocity);
+            }
         }
     }
 }

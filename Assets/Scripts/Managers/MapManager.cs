@@ -10,6 +10,7 @@ using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.DPL;
 using Assets.Scripts.Classes.Serialisers;
 using System.IO;
+using Assets.Scripts.Classes.Events;
 
 namespace Assets.Scripts.Managers
 {
@@ -52,10 +53,8 @@ namespace Assets.Scripts.Managers
             fileHandle.Dispose();
         }
 
-        private void Start()
-        {
-            //Shade each cell layer
+        public void BuildingCreatedCallback(object sender, BuildingEventArgs args) => pathingGrid.RemoveNodesFromPathingGrid(args.OccupiedWorldPositions, mainTilemap);
 
-        }
+        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args) => pathingGrid.ReaddNodesToPathingGrid(args.OccupiedWorldPositions, mainTilemap);
     }
 }
