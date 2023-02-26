@@ -91,17 +91,16 @@ namespace Assets.Scripts.Pathfinding
             return true;
         }
 
-        public virtual void RemoveNodesFromPathingGrid(IEnumerable<Vector3> worldPositions, Tilemap fromTilemap)
+        public virtual void RemoveNodesFromPathingGrid(IEnumerable<Vector3Int> gridPositions)
         {
-            foreach (var pos in worldPositions)
+            foreach (var pos in gridPositions)
             {
-                var node = fromTilemap.WorldToCell(pos);
-                grid.RemoveDiagonalConnectionsIntersectingWithNode(node.ToAstarGridPosition());
-                grid.DisconnectNode(node.ToAstarGridPosition());
+                grid.RemoveDiagonalConnectionsIntersectingWithNode(pos.ToAstarGridPosition());
+                grid.DisconnectNode(pos.ToAstarGridPosition());
             }
         }
 
-        public abstract void ReaddNodesToPathingGrid(IEnumerable<Vector3> nodes, Tilemap toTilemap);
+        public abstract void ReaddNodesToPathingGrid(IEnumerable<Vector3Int> nodes, Tilemap toTilemap);
 
         public abstract bool CanTwoNodesConnect(Vector3Int fromNode, Vector3Int toNode);
         

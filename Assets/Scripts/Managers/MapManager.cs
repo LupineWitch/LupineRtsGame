@@ -17,7 +17,8 @@ namespace Assets.Scripts.Managers
     public class MapManager : MonoBehaviour
     {
         public PathingGridBase PathingGrid { get { return pathingGrid; } }
-        public Tilemap UsedTilemap { get { return mainTilemap; } }
+        public Tilemap MainTilemap { get { return mainTilemap; } }
+        public float CellSize { get => cellSize; }
 
         [SerializeField]
         private Tilemap mainTilemap;
@@ -27,6 +28,8 @@ namespace Assets.Scripts.Managers
         private bool loadMapFromFile = true;
 
         private PathingGridBase pathingGrid;
+        private float cellSize;
+
 
         private void Awake()
         {
@@ -51,10 +54,35 @@ namespace Assets.Scripts.Managers
             fileHandle.Write(temp);
             fileHandle.Close();
             fileHandle.Dispose();
+
+            cellSize = mainTilemap.cellSize.magnitude;
         }
 
-        public void BuildingCreatedCallback(object sender, BuildingEventArgs args) => pathingGrid.RemoveNodesFromPathingGrid(args.OccupiedWorldPositions, mainTilemap);
+        public void BuildingCreatedCallback(object sender, BuildingEventArgs args)
+        {
+            List<Vector3Int> occupiedPositions = GetOverlappingWorldPointsForBuilding(sender, args);
 
-        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args) => pathingGrid.ReaddNodesToPathingGrid(args.OccupiedWorldPositions, mainTilemap);
+            pathingGrid.RemoveNodesFromPathingGrid(occupiedPositions);
+        }
+
+        private List<Vector3Int> GetOverlappingWorldPointsForBuilding(object sender, BuildingEventArgs args)
+        {
+            BuildingBase building = sender as BuildingBase;
+            List<Vector3Int> occupiedPositions = new List<Vector3Int>();
+            foreach (Vector3Int pos in args.OccupiedBounds.allPositionsWithin)
+            {
+                var cellCenter = mainTilemap.GetCellCenterWorld(pos);
+                var distanceToCollider = Vector2.Distance(building.Collider.ClosestPoint(cellCenter), cellCenter);
+                if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
+                    occupiedPositions.Add(new Vector3Int(pos.x, pos.y, building.BuildingLayer));
+            }
+
+            return occupiedPositions;
+        }
+
+        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args)
+        {
+            pathingGrid.ReaddNodesToPathingGrid(GetOverlappingWorldPointsForBuilding(sender, args), mainTilemap);
+        }
     }
 }

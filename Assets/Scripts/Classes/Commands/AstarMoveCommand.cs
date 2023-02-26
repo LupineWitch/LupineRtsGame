@@ -44,7 +44,7 @@ namespace Assets.Scripts.Classes.Commands
 
         public AStarMoveCommand(ICommander sender, BasicUnitScript reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver,sender)
         {
-            tilemap = mapManager.UsedTilemap;             
+            tilemap = mapManager.MainTilemap;             
             this.targetCell = target;
             this.pathingGrid = mapManager.PathingGrid;
             this.movingSpeed = speed;

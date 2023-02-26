@@ -15,7 +15,7 @@ namespace Assets.Scripts.Classes.Events
 
     public class BuildingEventArgs : EventArgs
     {
-        public IEnumerable<Vector3> OccupiedWorldPositions{ get; set; }
+        public BoundsInt OccupiedBounds{ get; set; }
 
         public BuildingEventArgs() { }
     }

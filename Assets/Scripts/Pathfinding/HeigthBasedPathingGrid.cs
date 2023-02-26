@@ -51,14 +51,13 @@ namespace Assets.Scripts.Pathfinding
                 }
         }
 
-        public override void ReaddNodesToPathingGrid(IEnumerable<Vector3> worldPositions, Tilemap toTilemap)
+        public override void ReaddNodesToPathingGrid(IEnumerable<Vector3Int> worldPositions, Tilemap toTilemap)
         {
             foreach (var pos in worldPositions)
             {
-                var node =  toTilemap.WorldToCell(pos);
-                foreach (var neighbour in toTilemap.GetNeighbouringNodes(node))
-                    if (CanTwoNodesConnect(node, neighbour.Key))
-                        grid.AddEdge(node.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition(), this.baseVelocity);
+                foreach (var neighbour in toTilemap.GetNeighbouringNodes(pos))
+                    if (CanTwoNodesConnect(pos, neighbour.Key))
+                        grid.AddEdge(pos.ToAstarGridPosition(), neighbour.Key.ToAstarGridPosition(), this.baseVelocity);
             }
         }
     }
