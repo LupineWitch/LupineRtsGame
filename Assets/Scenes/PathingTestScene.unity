@@ -13419,15 +13419,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.354
+      value: 0.72
       objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.3
+      value: 4.19
       objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
