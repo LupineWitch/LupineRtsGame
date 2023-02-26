@@ -174,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathingDebugTilemap: {fileID: 305227552}
   mainTilemap: {fileID: 484157257}
-  shouldShow: 1
+  shouldShow: 0
   mapManager: {fileID: 956378556}
   CheckRadius: 7
 --- !u!1839735485 &484157257 stripped

@@ -80,9 +80,7 @@ namespace Assets.Scripts.Managers
             return occupiedPositions;
         }
 
-        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args)
-        {
+        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args) => 
             pathingGrid.ReaddNodesToPathingGrid(GetOverlappingWorldPointsForBuilding(sender, args), mainTilemap);
-        }
     }
 }
