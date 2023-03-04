@@ -57,8 +57,13 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     public void SetCurrentAction(int actionId)
     {
+        ResetControllerContext();
         switch (actionId)
         {
+            case 0:
+            default:
+                currentContextDelegator = BasicMovementOrder;
+                break;
             case 1:
                 currentContextDelegator = SpawnUnitFromPrefab;
                 break;
@@ -66,9 +71,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 buildSpaceManager.SetSelectedBuilding(buildingManager.BuildingPrefab);
                 buildSpaceManager.Show(true);
                 currentContextDelegator = PlaceBuilding;
-                break;
-            default:
-                currentContextDelegator = BasicMovementOrder;
                 break;
 
         }
@@ -88,6 +90,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         overlayParent = GameObject.Find("Overlays");
         tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, basicFlatOverlayTile));
 
+        SelectionChanged += buildSpaceManager.OnCommanderSelectionChanged;
     }
 
     private void OnEnable()
@@ -120,6 +123,12 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         mainTilemap.SetColor(topCellRes.topCell, Color.green);
     }
 
+    private void ResetControllerContext()
+    {
+        currentContextDelegator = null;
+        buildSpaceManager.Show(false);
+    }
+
     private void MainPointerDrag_started(CallbackContext obj)
     {
         foreach (var unit in selectedObjects)
@@ -150,14 +159,18 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
+        HandleSelectionUnderSelectionRect();
+    }
 
+    private void HandleSelectionUnderSelectionRect()
+    {
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
         //Debug.Log(string.Format("Start position: {0}, end position: {1}", startPosition, pointerPos));
         foreach (var hit in hits)
         {
-            BasicUnitScript unitScript = hit.gameObject.GetComponent<BasicUnitScript>() ;
+            BasicUnitScript unitScript = hit.gameObject.GetComponent<BasicUnitScript>();
             if (unitScript == null)
                 continue;
 
@@ -168,15 +181,15 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
         startPosition = default;
         selectionBox.SetActive(false);
-
+        SetCurrentAction(0);
         SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
     }
-
 
     private void SendCommandForSelectedEntities(CallbackContext obj)
     {
         //TODO: Get click context, UI etc.
-        currentContextDelegator(obj, selectedObjects);
+        if(currentContextDelegator != null)
+            currentContextDelegator(obj, selectedObjects);
     }
 
     private void BasicMovementOrder(CallbackContext context, List<ISelectable> selectedObjects)

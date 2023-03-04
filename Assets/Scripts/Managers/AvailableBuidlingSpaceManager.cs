@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Classes.Helpers;
+﻿using Assets.Scripts.Classes.Events;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Classes.TileOverlays;
@@ -107,5 +108,11 @@ namespace Assets.Scripts.Managers
             return canBePlaced ? Color.green : Color.red;
         }
 
+        public void OnCommanderSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UnsetSelectedBuilding();
+            Show(false);
+            buildingOverlay.DestroyOverlay();
+        }
     }
 }
