@@ -63,6 +63,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 currentContextDelegator = SpawnUnitFromPrefab;
                 break;
             case 2:
+                buildSpaceManager.SetSelectedBuilding(buildingManager.BuildingPrefab);
+                buildSpaceManager.Show(true);
                 currentContextDelegator = PlaceBuilding;
                 break;
             default:

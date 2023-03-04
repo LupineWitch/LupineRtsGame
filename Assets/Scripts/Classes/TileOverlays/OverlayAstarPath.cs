@@ -40,7 +40,7 @@ namespace Assets.Scripts.Classes.TileOverlays
             this.Draw(pathCells);
         }
 
-        protected override void Draw(IEnumerable<Vector3Int> pathCells)
+        protected void Draw(IEnumerable<Vector3Int> pathCells)
         {
             IEnumerator<Vector3Int> cellsEnumerator = pathCells.GetEnumerator();
             cellsEnumerator.MoveNext();
@@ -65,6 +65,11 @@ namespace Assets.Scripts.Classes.TileOverlays
                 PathEndColor = this.PathEndColor,
                 PathStartColor = this.PathStartColor
             };
+        }
+
+        public override void DrawUsingColorPredicate(IEnumerable<Vector3Int> cells, ColorPredicate colorPredicate)
+        {
+            Draw(cells);
         }
     }
 }

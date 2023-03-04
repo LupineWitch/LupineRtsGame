@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.Classes.Models.Level;
+﻿using Assets.Scripts.Classes.Helpers;
+using Assets.Scripts.Classes.Models.Level;
+using Assets.Scripts.Classes.Static;
+using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Helpers;
 using System;
 using System.Collections.Generic;
@@ -15,33 +18,52 @@ namespace Assets.Scripts.Managers
 {
     public class AvailableBuidlingSpaceManager : MonoBehaviour
     {
+        //Constants
         private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
         [SerializeField]
         private const string buildAccessTileName = "BasicWhiteTile";
         
+        //Serializable Fields
         [SerializeField]
         private Tilemap mainTilemap;
         [SerializeField]
-        private Tilemap buildingSpaceTilemap;
+        private GameObject overlaysRoot;
         [SerializeField]
         private int buildingAreaDiameter = 11;
-        [SerializeField]
-        private bool shouldShow;
 
+        //Fields
         private BasicControls basicControls;
         private ITopCellSelector topCellSelector;
-        private int buildingAreaRadius => (buildingAreaDiameter % 2 == 0 ? (buildingAreaDiameter + 1) / 2 : buildingAreaDiameter / 2);
-        private BoundsInt previousBounds = default;
-        Tile tileToSet;
-        InputAction pointerPosition;
+        private Tile tileToSet;
+        private OverlayBuildingZone buildingOverlay;
+        private InputAction pointerPosition;
+        private Dictionary<Vector3Int, bool> areCellsOccupiedByBuildings;
+        private List<Vector3Int> allPositionsWithinBounds = new List<Vector3Int>();
+        private BuildingBase currentlySelectedBuilding;
+        private bool shouldShow;
 
+        //Delegates
         private TopCellResult GetTopCellAtMousePos(Vector2 mousePosition) => topCellSelector.GetTopCell(Camera.main.ScreenToWorldPoint(mousePosition));        
+        private ColorPredicate isCellBuildable; 
+
+        public void Show(bool shouldShow)
+        {
+            this.shouldShow = shouldShow;
+        }
+
+        public void SetSelectedBuilding(BuildingBase building) => currentlySelectedBuilding = building;
+        public void UnsetSelectedBuilding() => currentlySelectedBuilding = null; 
 
         private void Awake()
         {
             basicControls = new BasicControls();
             topCellSelector = new TopCellSelector(mainTilemap);
             tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, buildAccessTileName));
+
+            buildingOverlay = new OverlayBuildingZone(buildingAreaDiameter,mainTilemap, overlaysRoot, tileToSet);
+            areCellsOccupiedByBuildings = new Dictionary<Vector3Int, bool>();
+
+            isCellBuildable = DefaultBuildingZonePredicate;
         }
 
         private void OnEnable()
@@ -52,39 +74,38 @@ namespace Assets.Scripts.Managers
 
         private void Update()
         {
+            DrawBuildingOverlay();
+        }
+
+        private void DrawBuildingOverlay()
+        {
             Vector2 currentMousePos = pointerPosition.ReadValue<Vector2>();
-            var result = GetTopCellAtMousePos(currentMousePos);
-            if (!result.found || !shouldShow)
-            {
-                buildingSpaceTilemap.ClearAllTiles();
-                return;
-            }
-            Vector3Int bottomLeftCorner = new Vector3Int(result.topCell.x - buildingAreaRadius, result.topCell.y - buildingAreaRadius, 0);
-            BoundsInt newBounds = new BoundsInt(bottomLeftCorner, new Vector3Int(buildingAreaDiameter, buildingAreaDiameter, 1));
-            DrawTilesAroundMousePosition(newBounds);
-        }
-
-        private void DrawTilesAroundMousePosition(BoundsInt bounds)
-        {
-            ///Dont draw again, if bounds are the same
-            buildingSpaceTilemap.ClearAllTiles();
-            if (bounds.Equals(previousBounds))
+            TopCellResult tileClickResult = GetTopCellAtMousePos(currentMousePos);
+            if (!tileClickResult.found || !shouldShow || currentlySelectedBuilding == null)
                 return;
 
-            int positionCount = 0;
-            foreach (var position in bounds.allPositionsWithin)
-            {
-                buildingSpaceTilemap.SetTile(position, tileToSet);
-                positionCount++;
-            }
+            Vector2Int size = currentlySelectedBuilding.BuildingSize;
+            Vector3Int bottomLeftCorner = new Vector3Int(tileClickResult.topCell.x - (size.x.GetEvenInteger() / 2), tileClickResult.topCell.y - (size.y.GetEvenInteger() / 2), tileClickResult.topCell.z);
+            BoundsInt newBounds = new BoundsInt(bottomLeftCorner, new Vector3Int(size.x, size.y, 1));
+            allPositionsWithinBounds.Clear();
+            foreach (var pos in newBounds.allPositionsWithin)
+                allPositionsWithinBounds.Add(pos);
 
-            if (positionCount != buildingAreaDiameter * buildingAreaDiameter)
-                Debug.LogErrorFormat("Some fields are not in bounds!!!\nCounted positions: {}\nExpected: {1}", positionCount, buildingAreaDiameter * buildingAreaDiameter);
+            buildingOverlay.DrawUsingColorPredicateAndCenter(allPositionsWithinBounds, tileClickResult.topCell, isCellBuildable);
         }
 
-        public void Show(bool shouldShow)
+        private Color DefaultBuildingZonePredicate(Vector3Int cell, Tilemap tilemap)
         {
-            this.shouldShow = shouldShow;
+            bool canBePlaced = true;
+
+            if (areCellsOccupiedByBuildings.TryGetValue(cell, out bool isOccupied))
+                canBePlaced &= !isOccupied;
+
+            if (!tilemap.HasTile(cell) || tilemap.GetTopTilePosition(cell).z != 2)
+                canBePlaced = false;
+
+            return canBePlaced ? Color.green : Color.red;
         }
+
     }
 }

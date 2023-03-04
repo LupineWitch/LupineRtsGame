@@ -8,6 +8,8 @@ using UnityEngine.WSA;
 
 namespace Assets.Scripts.Classes.TileOverlays
 {
+    public delegate Color ColorPredicate(Vector3Int position, Tilemap tilemap = null);
+
     public abstract class OverlayBase: IDisposable, ICloneable
     {
 
@@ -27,6 +29,8 @@ namespace Assets.Scripts.Classes.TileOverlays
 
             set => _overlayPainter = value;
         }
+
+        public TileBase OverlayTile { get; }
         protected bool disposedValue;
 
         protected OverlayBase(Tilemap terrainLayer, GameObject overlaysObject, TileBase tile)
@@ -46,8 +50,6 @@ namespace Assets.Scripts.Classes.TileOverlays
             overlayLayer.gameObject.transform.SetParent(overlaysObject.transform);
             OverlayTile = tile;
         }
-
-        public TileBase OverlayTile { get; }
 
         public abstract object Clone();
 
@@ -83,6 +85,6 @@ namespace Assets.Scripts.Classes.TileOverlays
             }
         }
 
-        protected abstract void Draw(IEnumerable<Vector3Int> pathCells);
+        public abstract void DrawUsingColorPredicate(IEnumerable<Vector3Int> cells, ColorPredicate colorPredicate);
     }
 }

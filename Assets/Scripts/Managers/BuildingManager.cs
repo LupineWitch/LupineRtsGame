@@ -12,6 +12,8 @@ using UnityEngine.Tilemaps;
 //Implement as Entity manager?
 public class BuildingManager : MonoBehaviour
 {
+    public BuildingBase BuildingPrefab => buildingPrefab;
+
     [SerializeField]
     private BuildingBase buildingPrefab;
     [SerializeField]

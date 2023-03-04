@@ -13413,6 +13413,18 @@ PrefabInstance:
       propertyPath: m_Tiles.Array.data[577].second.m_TileSpriteIndex
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1651343980703819272, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: m_Name
+      value: DebuggingOverlay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651343980714024554, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: overlaysRoot
+      value: 
+      objectReference: {fileID: 1474787378}
+    - target: {fileID: 1651343980714024554, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+      propertyPath: buildingAreaDiameter
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6026374158593362176, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
@@ -13432,3 +13444,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+--- !u!1 &1474787378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1711562517850214659, guid: 5838a960fd8652046a98514fcbd89060, type: 3}
+  m_PrefabInstance: {fileID: 1076318518}
+  m_PrefabAsset: {fileID: 0}
