@@ -13,8 +13,6 @@ namespace Assets.Scripts.Commandables
     {
         public Sprite Preview { get; protected set; }
         public string DisplayLabel { get; protected set; }
-        public IReadOnlyCollection<MenuAction> Actions { get;}
-        public Command<BasicCommandControler, ISelectable> DefaultCommand { get; protected set; }
         public bool TrySelect(BasicCommandControler selector);
         public bool TryUnselect(BasicCommandControler selector);
         public bool IsSelectedBy(BasicCommandControler possibleOwner);

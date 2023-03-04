@@ -2,6 +2,7 @@ using Assets.Scripts.Classes.Commands;
 using Assets.Scripts.Classes.Enitities;
 using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Commandables;
+using Assets.Scripts.Commandables.Directives;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -11,20 +12,21 @@ using UnityEngine.UI;
 public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
 {
     public float unitSpeed = 10f;
-    private bool isSelected { get; set; } = false;
-    private MenuAction[] menuActions = new MenuAction[9];
+    public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
+    public CommandDirective DefaultCommand { get => defaultCommand;}
 
-    public IReadOnlyCollection<MenuAction> Actions => throw new System.NotImplementedException();
-
-    private static Sprite preview;
     Sprite ISelectable.Preview { get => preview; set => preview = value; }
-    string ISelectable.DisplayLabel { get => "Placeholder Unit Label"; set => throw new System.NotImplementedException(); }
-    Command<BasicCommandControler, ISelectable> ISelectable.DefaultCommand { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+    string ISelectable.DisplayLabel { get => displayLabel; set => displayLabel = value; }
 
+    private CommandDirective defaultCommand;
     private Material outlineMaterial;
     private Command<ICommander, IDeputy> executedCommand;
-
+    private bool isSelected { get; set; } = false;
+    private CommandDirective[] menuActions = new CommandDirective[9];
+    private Sprite preview;
+    private string displayLabel = "Placeholder Unit Label";
     private Coroutine currentlyRunCommandCoroutine = null;
+
     // Start is called before the first frame 
     void Awake()
     {
@@ -34,6 +36,7 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
     void Start()
     {
         outlineMaterial = GetComponent<SpriteRenderer>().material;
+        defaultCommand = menuActions[0] = new MoveDirective();
     }
 
     // Update is called once per frame

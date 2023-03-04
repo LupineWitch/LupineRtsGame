@@ -21,6 +21,10 @@ using static UnityEngine.InputSystem.InputAction;
 public class BasicCommandControler : MonoBehaviour, ICommander
 {
     public event SelectionChangedEvent SelectionChanged;
+    public event CommandContextChangedEvent CommandContextChanged;
+
+
+    public MapManager MapManager => this.mapManager;
 
     [SerializeField]
     private Tilemap mainTilemap;
@@ -48,34 +52,15 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private ContextCommandDelegator currentContextDelegator;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
-    private GameObject overlayParent;
-    private Tile tileToSet;
-
-    private const string tilePalletsBasePath = "Graphics\\Tilepallets\\UtilityPaletteAssets";
-    private const string basicFlatOverlayTile = "BasicWhiteTile";
-
+    private IDeputy CurrentSelectionRepresentative;
 
     public void SetCurrentAction(int actionId)
     {
         ResetControllerContext();
-        switch (actionId)
-        {
-            case 0:
-            default:
-                currentContextDelegator = BasicMovementOrder;
-                break;
-            case 1:
-                currentContextDelegator = SpawnUnitFromPrefab;
-                break;
-            case 2:
-                buildSpaceManager.SetSelectedBuilding(buildingManager.BuildingPrefab);
-                buildSpaceManager.Show(true);
-                currentContextDelegator = PlaceBuilding;
-                break;
-
-        }
+        currentContextDelegator = CurrentSelectionRepresentative?.AvailableDirectives.ElementAt(actionId)?.ContextCommandDelegator ?? default;
     }
 
+    public TopCellResult GetTopCellResult(Vector2 inputValue) => topCellSelector.GetTopCell(inputValue);
 
     private void Awake()
     {
@@ -86,9 +71,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         selectedObjects = new List<ISelectable>();
         topCellSelector = new TopCellSelector(mainTilemap);
         previousCellColor = mainTilemap.GetColor(previousCell);
-        currentContextDelegator = BasicMovementOrder;
-        overlayParent = GameObject.Find("Overlays");
-        tileToSet = Resources.Load<Tile>(Path.Combine(tilePalletsBasePath, basicFlatOverlayTile));
+        currentContextDelegator = null;
 
         SelectionChanged += buildSpaceManager.OnCommanderSelectionChanged;
     }
@@ -160,6 +143,37 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
         HandleSelectionUnderSelectionRect();
+        SetCommandContextAccordingToSelection();
+    }
+
+    private void SetCommandContextAccordingToSelection()
+    {
+        if(selectedObjects.Count <= 0)
+        {
+            ResetControllerContext();
+            return;
+        }
+
+        ISelectable firstSelected = selectedObjects.First();
+        Type firstType = firstSelected.GetType();
+        CommandContextChangedArgs commandContextEventArgs;
+        if (selectedObjects.TrueForAll(selected => firstType == selected.GetType()))
+        { //Create single context
+            IDeputy deputyEntity = firstSelected as IDeputy;
+            if (deputyEntity == null)
+            {
+                Debug.LogError("deputyEntity i null");
+                return;
+            }
+            currentContextDelegator = deputyEntity.DefaultCommand.ContextCommandDelegator;
+            commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);
+
+        }else //Define shared common command context
+        {
+            commandContextEventArgs = new CommandContextChangedArgs(default);
+        }
+
+        CommandContextChanged.Invoke(this, commandContextEventArgs);
     }
 
     private void HandleSelectionUnderSelectionRect()
@@ -167,16 +181,14 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
-        //Debug.Log(string.Format("Start position: {0}, end position: {1}", startPosition, pointerPos));
         foreach (var hit in hits)
         {
-            BasicUnitScript unitScript = hit.gameObject.GetComponent<BasicUnitScript>();
+            ISelectable unitScript = hit.gameObject.GetComponent<ISelectable>();
             if (unitScript == null)
                 continue;
 
-            selectedObjects.Add(unitScript);
-            _ = unitScript.TrySelect(this);
-            //Debug.Log(hit.gameObject.name);
+            if(unitScript.TrySelect(this))
+                selectedObjects.Add(unitScript as BasicUnitScript);
         }
 
         startPosition = default;
@@ -189,30 +201,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     {
         //TODO: Get click context, UI etc.
         if(currentContextDelegator != null)
-            currentContextDelegator(obj, selectedObjects);
-    }
-
-    private void BasicMovementOrder(CallbackContext context, List<ISelectable> selectedObjects)
-    {
-        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        TopCellResult cellResult = topCellSelector.GetTopCell(mousePos);
-
-        if (!cellResult.found || cellResult.topCell.HasNegativeComponent())
-            return;
-
-        foreach (BasicUnitScript unit in selectedObjects)
-        {
-            AStarMoveCommand moveOrder = new AStarMoveCommand(
-                this,
-                unit,
-                cellResult.topCell,
-                mapManager,
-                unit.unitSpeed);
-
-            //moveOrder.SetDebugOverlay(new OverlayAstarPath(this.mainTilemap, overlayParent, tileToSet));
-            unit.SetCommand(moveOrder);
-        }
+            currentContextDelegator(obj, this, selectedObjects);
     }
 
     private void SpawnUnitFromPrefab(CallbackContext obj, List<ISelectable> selectedObjects)

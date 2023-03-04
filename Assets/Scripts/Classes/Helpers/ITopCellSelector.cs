@@ -2,7 +2,7 @@
 
 namespace Assets.Scripts.Helpers
 {
-    internal struct TopCellResult
+    public struct TopCellResult
     {
         public Vector3Int topCell;
         public bool found;
@@ -13,7 +13,7 @@ namespace Assets.Scripts.Helpers
             this.found = found;
         }
     }
-    internal interface ITopCellSelector
+    public interface ITopCellSelector
     {
         TopCellResult GetTopCell(Vector2 mouseWorldPos);
     }

@@ -488,7 +488,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_Building
+      name: IconBuilding
       rect:
         serializedVersion: 2
         x: 52
@@ -509,7 +509,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_Unknown
+      name: IconUnknown
       rect:
         serializedVersion: 2
         x: 70
@@ -962,6 +962,7 @@ TextureImporter:
     nameFileIdTable:
       GUI_74: 1633415009
       GUI_26: -1246178131
+      IconBuilding: 994979552
       GUI_2: -6447952
       GUI_11: 2043394871
       GUI_56: -961880959
@@ -986,7 +987,6 @@ TextureImporter:
       Bar_Empty: 644610480
       GUI_34: 1419021730
       PanelBackground: -1756295689
-      Button_Building: 994979552
       GUI_85: -1508456542
       GUI_53: -938265387
       GUI_29: -253768278
@@ -1001,7 +1001,6 @@ TextureImporter:
       IconMarker: -1368008793
       IconHelmet: -203978916
       GUI_84: 825148682
-      Button_Unknown: 1449970627
       Board: 657249774
       IconLock: 594374997
       GUI_73: -554285082
@@ -1034,6 +1033,7 @@ TextureImporter:
       GUI_0: 1081284364
       GUI_61: 1068787008
       GUI_79: 2097012373
+      IconUnknown: 1449970627
       GUI_33: 1973127514
       GUI_90: 304560876
       GUI_89: 32121823

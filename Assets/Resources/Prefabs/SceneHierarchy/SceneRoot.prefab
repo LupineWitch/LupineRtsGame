@@ -70758,7 +70758,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -250652169
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0b3b0a0f33a7c894286e62797639781d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -70783,7 +70783,7 @@ GameObject:
   - component: {fileID: 1651343980703819275}
   - component: {fileID: 1651343980703819274}
   m_Layer: 0
-  m_Name: BuildingGridTilemap
+  m_Name: DebuggingOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70992,9 +70992,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTilemap: {fileID: 1651343980431148982}
-  buildingSpaceTilemap: {fileID: 1651343980703819275}
-  buildingAreaDiameter: 11
-  shouldShow: 0
+  overlaysRoot: {fileID: 1711562517850214659}
+  buildingAreaDiameter: 20
 --- !u!1 &1651343980747287669
 GameObject:
   m_ObjectHideFlags: 0
