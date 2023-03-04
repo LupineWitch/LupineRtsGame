@@ -210,7 +210,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 mapManager,
                 unit.unitSpeed);
 
-            moveOrder.SetDebugOverlay(new OverlayAstarPath(this.mainTilemap, overlayParent, tileToSet));
+            //moveOrder.SetDebugOverlay(new OverlayAstarPath(this.mainTilemap, overlayParent, tileToSet));
             unit.SetCommand(moveOrder);
         }
     }

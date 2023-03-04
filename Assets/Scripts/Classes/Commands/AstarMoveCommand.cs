@@ -122,7 +122,7 @@ namespace Assets.Scripts.Classes.Commands
 
         public override CommandResult CancelCommand()
         {
-            this.overlay.Dispose();
+            this.overlay?.Dispose();
             this.overlay = null;
             return base.CancelCommand();
         }
