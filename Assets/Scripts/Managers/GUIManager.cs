@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.Classes.Events;
+using TMPro;
 
 public class GUIManager : MonoBehaviour
 {
     [SerializeField]
     private Image selectedEntityPortrait;
+    [SerializeField]
+    private TextMeshProUGUI selectedEntityLabel;
     [SerializeField]
     private BasicCommandControler commandControler;
     [SerializeField]
@@ -26,6 +29,7 @@ public class GUIManager : MonoBehaviour
         commandControler.SelectionChanged += SelectionWasUpdated;
         commandControler.CommandContextChanged += CommandContextHasChanged;
         selectedEntityPortrait.enabled = false;
+        selectedEntityLabel.enabled = false;
     }
 
     private void Start()
@@ -41,12 +45,17 @@ public class GUIManager : MonoBehaviour
     private void SelectionWasUpdated(object sender, SelectionChangedEventArgs e)
     {
         if(e.SelectedEntities.Count <= 0)
+        {
+            selectedEntityLabel.enabled = false;
             selectedEntityPortrait.enabled = false;
+        }
         else
         {
             var entity = e.SelectedEntities.First();
             selectedEntityPortrait.sprite = entity.Preview;
             selectedEntityPortrait.enabled = true;
+            selectedEntityLabel.text = entity.DisplayLabel;
+            selectedEntityLabel.enabled = true;
         }
 
     }
