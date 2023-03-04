@@ -8,6 +8,6 @@ namespace Assets.Scripts.Commandables
     {
         public void SetCommand(Command<ICommander, IDeputy> command);
         public IReadOnlyCollection<CommandDirective> AvailableDirectives { get; }
-        public CommandDirective DefaultCommand { get;}
+        public CommandDirective DefaultDirective { get;}
     }
 }

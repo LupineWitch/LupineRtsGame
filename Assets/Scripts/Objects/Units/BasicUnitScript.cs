@@ -13,7 +13,7 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
 {
     public float unitSpeed = 10f;
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
-    public CommandDirective DefaultCommand { get => defaultCommand;}
+    public CommandDirective DefaultDirective { get => defaultCommand;}
 
     Sprite ISelectable.Preview { get => preview; set => preview = value; }
     string ISelectable.DisplayLabel { get => displayLabel; set => displayLabel = value; }

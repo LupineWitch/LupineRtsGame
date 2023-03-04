@@ -72,7 +72,6 @@ namespace Assets.Scripts.Classes.Commands
             positionsToVisit = pathingGrid.GetFastestPath(startCell, targetCell);
             if (positionsToVisit == null || !positionsToVisit.Any())
             {
-                Debug.LogFormat("Pathing from {0} to {1} yielded empty path", pos, targetCell);
                 CurrentState = CommandState.Ended;
                 CommandResult = CommandResult.Failed;
                 shouldKeepGoing = false;
@@ -97,7 +96,6 @@ namespace Assets.Scripts.Classes.Commands
 
                     this.currentTargetCell = nextPoint;
                     this.currentTargetPosition = positionsToVisit.Count == 0 ? tilemap.GetCellCenterWorld(this.currentTargetCell) : tilemap.CellToWorld(this.currentTargetCell);
-                    Debug.LogFormat("Going from {0} to {1}", this.currentPosition, currentTargetPosition);
                     shouldDequeueNextPoint = false;
                 }
 

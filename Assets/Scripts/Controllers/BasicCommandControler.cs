@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
@@ -47,17 +48,25 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private Vector2 startPosition;
     private BasicControls basicControls;
     private InputAction pointerPosition;
+    private InputAction SelectAction;
     private List<ISelectable> selectedObjects;
     private ITopCellSelector topCellSelector;
     private ContextCommandDelegator currentContextDelegator;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
     private IDeputy CurrentSelectionRepresentative;
+    private bool wasGuiClickedThisFrame = false;
 
     public void SetCurrentAction(int actionId)
     {
+        Debug.LogFormat("Action ID:{0}", actionId);
         ResetControllerContext();
-        currentContextDelegator = CurrentSelectionRepresentative?.AvailableDirectives.ElementAt(actionId)?.ContextCommandDelegator ?? default;
+        if(CurrentSelectionRepresentative == default)
+        {
+            Debug.LogErrorFormat("{0} field is null when setting and action", nameof(CurrentSelectionRepresentative));
+            return;
+        }
+        currentContextDelegator = CurrentSelectionRepresentative.AvailableDirectives.ElementAt(actionId)?.ContextCommandDelegator ?? default;
     }
 
     public TopCellResult GetTopCellResult(Vector2 inputValue) => topCellSelector.GetTopCell(inputValue);
@@ -85,11 +94,19 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
         basicControls.CommandControls.SendCommand.performed += SendCommandForSelectedEntities;
         pointerPosition = basicControls.CommandControls.PointerPosition;
+        SelectAction = basicControls.CommandControls.Select;
         basicControls.CommandControls.IncreaseDecrease.performed += ChangeTimeScale;
         selectionBox.SetActive(false);
     }
 
     private void Update()
+    {
+        ColorCellAtPointer();
+        if (SelectAction.WasPerformedThisFrame())
+            wasGuiClickedThisFrame = EventSystem.current.IsPointerOverGameObject();
+    }
+
+    private void ColorCellAtPointer()
     {
         mainTilemap.SetColor(previousCell, previousCellColor);
 
@@ -97,7 +114,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         mousePos = Camera.main.ScreenToWorldPoint(mousePos);
         TopCellResult topCellRes = topCellSelector.GetTopCell(mousePos);
 
-        if(!topCellRes.found)
+        if (!topCellRes.found)
             return;
 
         previousCellColor = mainTilemap.GetColor(topCellRes.topCell);
@@ -114,6 +131,9 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void MainPointerDrag_started(CallbackContext obj)
     {
+        if (wasGuiClickedThisFrame)
+            return;
+
         foreach (var unit in selectedObjects)
             _ = unit.TryUnselect(this);
 
@@ -126,6 +146,9 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void MainPointerDrag_performed(CallbackContext obj)
     {
+        if (wasGuiClickedThisFrame)
+            return;
+
         //Draw selection box
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
@@ -142,6 +165,9 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
+        if (wasGuiClickedThisFrame)
+            return;
+
         HandleSelectionUnderSelectionRect();
         SetCommandContextAccordingToSelection();
     }
@@ -151,6 +177,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         if(selectedObjects.Count <= 0)
         {
             ResetControllerContext();
+            CommandContextChanged.Invoke(this, null);
             return;
         }
 
@@ -162,10 +189,11 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             IDeputy deputyEntity = firstSelected as IDeputy;
             if (deputyEntity == null)
             {
-                Debug.LogError("deputyEntity i null");
+                Debug.LogError("deputyEntity is null");
                 return;
             }
-            currentContextDelegator = deputyEntity.DefaultCommand.ContextCommandDelegator;
+            this.CurrentSelectionRepresentative = deputyEntity;
+            currentContextDelegator = deputyEntity.DefaultDirective.ContextCommandDelegator;
             commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);
 
         }else //Define shared common command context

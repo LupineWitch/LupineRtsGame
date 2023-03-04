@@ -53,13 +53,11 @@ public class GUIManager : MonoBehaviour
 
     private void CommandContextHasChanged(object sender, CommandContextChangedArgs args)
     {
-        IReadOnlyCollection<CommandDirective> menuCommands = args.MenuCommands;
-        if(menuCommands == default)
-            return;
+        IReadOnlyCollection<CommandDirective> menuCommands = args?.MenuCommands ?? default;
 
-        int actionsCount = menuCommands.Count();
-        int index;
-        for(index = 0; index < menuButtons.Length; index++)
+        int actionsCount = menuCommands?.Count() ?? 0;
+        int index = 0;
+        for(; menuCommands != default && index < menuButtons.Length; index++)
         {
             if (index >= actionsCount)
                 break;
@@ -80,7 +78,7 @@ public class GUIManager : MonoBehaviour
             }
         }
 
-        if (index > menuCommands.Count)
+        if (actionsCount > menuButtons.Length)
         {
             Debug.LogWarningFormat("Passed {0} menu actions, where the menu has the capacity of {1}", index, menuButtons.Length);
             return;
