@@ -38,7 +38,9 @@ namespace Assets.Scripts.Classes.Commands
             CurrentState = CommandState.Starting;
             BasicCommandControler commander = base.sender as BasicCommandControler ?? throw new InvalidCastException();
             BasicUnitScript builder = base.reciever as BasicUnitScript ?? throw new InvalidCastException();
-            AStarMoveCommand moveToBuildingPosition = new AStarMoveCommand(base.sender, builder, placementPosition, commander.MapManager, builder.unitSpeed);
+            var buildersPosition = commander.MapManager.TransformToCellPosition(builder.transform);
+            var targetPosition = buildingManager.GetClosestPointNearBuildSite(buildersPosition, placementPosition, buildingPrefab);
+            AStarMoveCommand moveToBuildingPosition = new AStarMoveCommand(base.sender, builder, targetPosition, commander.MapManager, builder.unitSpeed);
             builder.SetSubcommand(moveToBuildingPosition);
 
             //wait for command to end

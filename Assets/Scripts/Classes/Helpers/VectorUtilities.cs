@@ -11,6 +11,35 @@ namespace Assets.Scripts.Classes.Helpers
 {
     public static class VectorUtilities
     {
+        public static IReadOnlyCollection<Vector3Int> CardinalDirections = new Vector3Int[]
+        {
+            Vector3Int.up,
+            Vector3Int.right,
+            Vector3Int.down,
+            Vector3Int.left,
+        };
+        
+        public static readonly IReadOnlyCollection<Vector3Int> DiagonallDirections = new Vector3Int[]
+        {
+            Vector3Int.up + Vector3Int.right,
+            Vector3Int.up + Vector3Int.left,
+            Vector3Int.down + Vector3Int.right,
+            Vector3Int.down + Vector3Int.left
+        };
+
+
+
+        public static IEnumerable<Vector3Int> GetAllCardinalNeighbours(this Vector3Int vector)
+        {
+            foreach (var direction in CardinalDirections)
+                yield return vector + direction;
+        }
+
+        public static IEnumerable<Vector3Int> GetAllDiagonalNeighbours(this Vector3Int vector)
+        {
+            foreach (var direction in DiagonallDirections)
+                yield return vector + direction;
+        }
         /// <summary>
         /// Checks if given position vector should be considered valid on default tilemap.
         /// </summary>

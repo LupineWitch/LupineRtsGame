@@ -1,5 +1,7 @@
 using Assets.Scripts.Classes.Factories.Building;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Painters;
+using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using System.Collections;
@@ -40,5 +42,48 @@ public class BuildingManager : MonoBehaviour
     {
         buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(prefab, chosenCenterTile, buildingParent, mapManager);
         return true;
+    }
+
+    public Vector3Int GetClosestPointNearBuildSite(Vector3Int from, Vector3Int placementTile, BuildingBase prefab)
+    {
+        Vector3Int bottomLeftCorner = new Vector3Int(placementTile.x - prefab.BuildingSize.x.GetEvenInteger() / 2,
+                                                     placementTile.y - prefab.BuildingSize.y.GetEvenInteger() / 2,
+                                                     placementTile.z);
+
+        Vector3Int boundsSize = new Vector3Int(prefab.BuildingSize.x, prefab.BuildingSize.y, 1);
+        BoundsInt boundsInt = new BoundsInt(bottomLeftCorner, boundsSize);
+        float minDistance = float.MaxValue;
+        Vector3Int closestPositionNearEdge = placementTile;
+
+        foreach(var pos in boundsInt.allPositionsWithin)
+        {
+            foreach(var neighbour in pos.GetAllCardinalNeighbours())
+            {
+                if (boundsInt.Contains(neighbour))
+                    continue;
+
+                float newDistance = Vector3Int.Distance(from, neighbour);
+                if(minDistance > newDistance)
+                {
+                    minDistance = newDistance;
+                    closestPositionNearEdge = neighbour;
+                }
+            }
+            
+            foreach(var neighbour in pos.GetAllDiagonalNeighbours())
+            {
+                if (boundsInt.Contains(neighbour))
+                    continue;
+
+                float newDistance = Vector3Int.Distance(from, neighbour);
+                if(minDistance > newDistance)
+                {
+                    minDistance = newDistance;
+                    closestPositionNearEdge = neighbour;
+                }
+            }
+        }
+
+        return closestPositionNearEdge;
     }
 }

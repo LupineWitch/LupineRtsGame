@@ -82,5 +82,8 @@ namespace Assets.Scripts.Managers
 
         public void BuildingDestroyedCallback(object sender, BuildingEventArgs args) => 
             pathingGrid.ReaddNodesToPathingGrid(GetOverlappingWorldPointsForBuilding(sender, args), mainTilemap);
+    
+        public Vector3Int TransformToCellPosition(Transform transform) =>  mainTilemap.WorldToCell(transform.position);
+        
     }
 }

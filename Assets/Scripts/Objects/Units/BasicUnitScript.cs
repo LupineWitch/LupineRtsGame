@@ -70,7 +70,7 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
         int i = 0;
         while (i < currentSubcommands.Count)
         {
-            switch (executedCommand.GetCurrentState())
+            switch (currentSubcommands[i].GetCurrentState())
             {
                 case CommandState.Starting:
                 case CommandState.InProgress:
