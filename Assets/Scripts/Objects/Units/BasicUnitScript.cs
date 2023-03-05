@@ -26,6 +26,8 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
     private Sprite preview;
     private string displayLabel = "Placeholder Unit Label";
     private Coroutine currentlyRunCommandCoroutine = null;
+    private List<Command<ICommander, IDeputy>> currentSubcommands = new List<Command<ICommander, IDeputy>>();
+    private List<Coroutine> currentSubcoroutines = new List<Coroutine>();
 
     // Start is called before the first frame 
     void Awake()
@@ -37,6 +39,7 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
     {
         outlineMaterial = GetComponent<SpriteRenderer>().material;
         defaultCommand = menuActions[0] = new MoveDirective();
+        menuActions[1] = new BuildDirective();
     }
 
     // Update is called once per frame
@@ -64,6 +67,24 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
                 break;
         }
 
+        int i = 0;
+        while (i < currentSubcommands.Count)
+        {
+            switch (executedCommand.GetCurrentState())
+            {
+                case CommandState.Starting:
+                case CommandState.InProgress:
+                case CommandState.Ending:
+                case CommandState.Cold:
+                case CommandState.Queued:
+                    break;
+                case CommandState.Ended:
+                    currentSubcommands.RemoveAt(i);
+                    continue;
+            }
+            i++;
+        } 
+
     }
 
     public void SetCommand(Command<ICommander, IDeputy> command)
@@ -74,6 +95,10 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
         if (currentlyRunCommandCoroutine != null)
             this.StopCoroutine(currentlyRunCommandCoroutine);
 
+        foreach(var coroutine in currentSubcoroutines)
+            this.StopCoroutine(coroutine);
+
+        this.currentSubcoroutines.Clear();
         this.executedCommand = command;
     }
 
@@ -96,7 +121,13 @@ public sealed class BasicUnitScript : MonoBehaviour, ISelectable, IDeputy
         return true;
     }
 
-    public void OnDestroy()
+    public void SetSubcommand(Command<ICommander, IDeputy> command)
+    {
+        currentSubcommands.Add(command);
+        currentSubcoroutines.Add(StartCoroutine(command.CommandCoroutine()));
+    }
+
+     public void OnDestroy()
     {
         StopAllCoroutines();
     }

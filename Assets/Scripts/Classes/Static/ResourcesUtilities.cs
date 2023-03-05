@@ -11,9 +11,6 @@ namespace Assets.Scripts.Classes.Static
 {
     public static class ResourcesUtilities
     {
-        public const string ButtonIconsResourcePath = "Graphics/UI/Sprites/";
-        public const string GUISpriteSheet = "GUI";
-    
         public static Sprite LoadSpriteFromSpritesheet(string sheetPath, string spriteName)
         {
             Sprite[] spritesFromSheet = Resources.LoadAll<Sprite>(sheetPath);

@@ -35,4 +35,10 @@ public class BuildingManager : MonoBehaviour
         buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(buildingPrefab, chosenCenterTile, buildingParent, mapManager);
         return true;
     }
+    
+    public bool TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile, BuildingBase prefab) 
+    {
+        buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(prefab, chosenCenterTile, buildingParent, mapManager);
+        return true;
+    }
 }

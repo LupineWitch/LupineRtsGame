@@ -24,7 +24,7 @@ namespace Assets.Scripts.Commandables.Directives
         {
             get 
             {
-                string path = Path.Join(ResourcesUtilities.ButtonIconsResourcePath, ResourcesUtilities.GUISpriteSheet);
+                string path = Path.Join(ResourceNames.ButtonIconsResourcePath, ResourceNames.GUISpriteSheet);
                 return ResourcesUtilities.LoadSpriteFromSpritesheet(path, "IconMarker");
             }
         }

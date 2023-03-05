@@ -26,6 +26,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
 
     public MapManager MapManager => this.mapManager;
+    public BuildingManager BuildingsManager => this.buildingManager;
 
     [SerializeField]
     private Tilemap mainTilemap;
