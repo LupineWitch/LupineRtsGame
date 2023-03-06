@@ -22,8 +22,8 @@ namespace Assets.Scripts.Classes.Factories.Building
 
             BoundsInt gridBounds = new BoundsInt(bottomLeftCorner, new Vector3Int(newBuilding.BuildingSize.x, newBuilding.BuildingSize.y, 1));
 
-            newBuilding.OnCreated += map.BuildingCreatedCallback;
-            newBuilding.OnDestroyed += map.BuildingDestroyedCallback;
+            newBuilding.Created += map.BuildingCreatedCallback;
+            newBuilding.Destroyed += map.BuildingDestroyedCallback;
             newBuilding.Initialize(tilePosition.z, gridBounds);
 
             return newBuilding;

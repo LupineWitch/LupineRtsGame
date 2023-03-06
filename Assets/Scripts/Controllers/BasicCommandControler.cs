@@ -103,8 +103,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private void Update()
     {
         ColorCellAtPointer();
-        if (SelectAction.WasPerformedThisFrame())
-            wasGuiClickedThisFrame = EventSystem.current.IsPointerOverGameObject();
+        wasGuiClickedThisFrame = EventSystem.current.IsPointerOverGameObject();
     }
 
     private void ColorCellAtPointer()
@@ -166,11 +165,13 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
-        if (wasGuiClickedThisFrame)
-            return;
-
-        HandleSelectionUnderSelectionRect();
-        SetCommandContextAccordingToSelection();
+        if (!wasGuiClickedThisFrame)
+        {
+            HandleSelectionUnderSelectionRect();
+            SetCommandContextAccordingToSelection();
+        }
+        startPosition = default;
+        selectionBox.SetActive(false);
     }
 
     private void SetCommandContextAccordingToSelection()
@@ -220,8 +221,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 selectedObjects.Add(unitScript as BasicUnitScript);
         }
 
-        startPosition = default;
-        selectionBox.SetActive(false);
         SetCurrentAction(0);
         SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
     }

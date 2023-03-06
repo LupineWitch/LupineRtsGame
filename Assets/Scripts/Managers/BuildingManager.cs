@@ -32,16 +32,15 @@ public class BuildingManager : MonoBehaviour
         buildingsFactory = new PrefabbedBuildingFactory();
     }
 
-    public bool TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile) 
+    public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile) 
     {
-        buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(buildingPrefab, chosenCenterTile, buildingParent, mapManager);
-        return true;
+       
+        return buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(buildingPrefab, chosenCenterTile, buildingParent, mapManager);
     }
     
-    public bool TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile, BuildingBase prefab) 
-    {
-        buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(prefab, chosenCenterTile, buildingParent, mapManager);
-        return true;
+    public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile, BuildingBase prefab) 
+    {   
+        return buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(prefab, chosenCenterTile, buildingParent, mapManager);
     }
 
     public Vector3Int GetClosestPointNearBuildSite(Vector3Int from, Vector3Int placementTile, BuildingBase prefab)

@@ -11,10 +11,10 @@ namespace Assets.Scripts.Classes.Commands
 {
     public class BuildCommand : Command<ICommander, IDeputy>
     {
-        public float Progress => buildTime == 0 ? 0f : (elapsedBuildTime / buildTime);
+        public float Progress => buildProgress;
 
         private float buildTime = 10.0f;//seconds
-        private float elapsedBuildTime = 0f;
+        private float buildProgress = 0f;
         private BuildingBase buildingPrefab;
         Vector3Int placementPosition;
         private BuildingManager buildingManager;
@@ -49,15 +49,16 @@ namespace Assets.Scripts.Classes.Commands
             
             CurrentState = CommandState.InProgress;
             
-            while(elapsedBuildTime < buildTime)
+            var newBuilding = buildingManager.TryToPlaceBuildingInWorld(placementPosition, buildingPrefab);
+            while(newBuilding.BuildProgress < 1.0f)
             {
-                elapsedBuildTime += Time.deltaTime;
+                newBuilding.BuildProgress += Time.deltaTime / buildTime;
+                buildProgress = newBuilding.BuildProgress;
                 currentStateCallback(CommandState.InProgress);
                 yield return null;
             }
 
             //Finished building
-            buildingManager.TryToPlaceBuildingInWorld(placementPosition, buildingPrefab);
             CurrentState = CommandState.Ending;
             base.CommandResult = CommandResult.Success;
             CurrentState = CommandState.Ended;

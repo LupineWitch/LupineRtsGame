@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_2
+      name: ValueFillBar
       rect:
         serializedVersion: 2
         x: 135
@@ -182,7 +182,7 @@ TextureImporter:
         height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 2, y: 0, z: 5, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -761,7 +761,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_28
+      name: InfoFill
       rect:
         serializedVersion: 2
         x: 72
@@ -770,7 +770,7 @@ TextureImporter:
         height: 3
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 3, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -963,7 +963,6 @@ TextureImporter:
       GUI_74: 1633415009
       GUI_26: -1246178131
       IconBuilding: 994979552
-      GUI_2: -6447952
       GUI_11: 2043394871
       GUI_56: -961880959
       GUI_54: -591999561
@@ -993,10 +992,12 @@ TextureImporter:
       GUI_36: 711737041
       PortraitPanelBackground: -918267168
       GUI_66: 176359453
-      Banner: 898218229
-      GUI_38: 2075861208
       GUI_35: 1589115299
+      GUI_38: 2075861208
+      ValueFillBar: -6447952
+      Banner: 898218229
       GUI_46: 1040228619
+      InfoFill: 1889748059
       GUI_86: 75633842
       IconMarker: -1368008793
       IconHelmet: -203978916
@@ -1027,7 +1028,6 @@ TextureImporter:
       GUI_31: -1100150007
       GUI_91: 1549323265
       GUI_39: 1589973104
-      GUI_28: 1889748059
       GUI_42: -720710032
       GUI_76: 1083948699
       GUI_0: 1081284364

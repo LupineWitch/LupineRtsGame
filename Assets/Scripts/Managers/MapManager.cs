@@ -69,7 +69,7 @@ namespace Assets.Scripts.Managers
         {
             BuildingBase building = sender as BuildingBase;
             List<Vector3Int> occupiedPositions = new List<Vector3Int>();
-            foreach (Vector3Int pos in args.OccupiedBounds.allPositionsWithin)
+            foreach (Vector3Int pos in args.OccupiedBounds?.allPositionsWithin)
             {
                 var cellCenter = mainTilemap.GetCellCenterWorld(pos);
                 var distanceToCollider = Vector2.Distance(building.Collider.ClosestPoint(cellCenter), cellCenter);

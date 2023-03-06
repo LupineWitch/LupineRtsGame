@@ -15,8 +15,14 @@ namespace Assets.Scripts.Classes.Events
 
     public class BuildingEventArgs : EventArgs
     {
-        public BoundsInt OccupiedBounds{ get; set; }
+        public BuildingEventArgs(BoundsInt? occupiedBounds = null, float? buildProgress = null)
+        {
+            OccupiedBounds = occupiedBounds;
+            BuildProgress = buildProgress;
+        }
 
-        public BuildingEventArgs() { }
+        public BoundsInt? OccupiedBounds { get; private set; }
+        public float? BuildProgress { get; private set; }
+
     }
 }
