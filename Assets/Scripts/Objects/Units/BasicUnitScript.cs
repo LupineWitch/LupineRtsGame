@@ -15,7 +15,8 @@ public sealed class BasicUnitScript : EntityBase
 
     private void Start()
     {
-        defaultCommand = menuActions[0] = new MoveDirective();
+        defaultCommand = new ContextDirective();
+        menuActions[0] = new MoveDirective();
         menuActions[1] = new BuildDirective();
     }
 }

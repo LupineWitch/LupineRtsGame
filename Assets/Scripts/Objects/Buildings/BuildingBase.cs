@@ -20,6 +20,7 @@ public class BuildingBase : EntityBase
     public float SpriteHeigth { get; private set; }
     public BoundsInt OccupiedBounds { get; private set; }
     public Vector2Int BuildingSize { get => buildingSize; protected set => buildingSize = value; }
+    public Vector3Int TilePosition { get => tilePosition; protected set => tilePosition = value; }
     public Collider2D Collider { get => buildingCollider; }
 
     ///On Created - get nodes to disconnect from pathing grid
@@ -34,6 +35,7 @@ public class BuildingBase : EntityBase
     private ProgressBar buildingProgressBar;
 
     private Collider2D buildingCollider;
+    private Vector3Int tilePosition;
     private float buildProgress = 0f;
 
     public void Awake()
@@ -46,10 +48,11 @@ public class BuildingBase : EntityBase
         this.StateChanged += buildingProgressBar.RespondToUpdatedProgress;
     }
 
-    public void Initialize(int builidngLayer, BoundsInt occupiedBounds)
+    public void Initialize(int builidngLayer, BoundsInt occupiedBounds, Vector3Int tilePosition)
     {
         BuildingLayer = builidngLayer;
         OccupiedBounds = occupiedBounds;
+        this.TilePosition = tilePosition;
         this.Created.Invoke(this, new BuildingEventArgs(occupiedBounds = OccupiedBounds));
     }
 
@@ -58,7 +61,7 @@ public class BuildingBase : EntityBase
         this.Destroyed?.Invoke(this, new BuildingEventArgs(this.OccupiedBounds));
     }
 
-    public void OnDestroy()
+    void OnDestroy()
     {
         BuildingDestroy();
     }

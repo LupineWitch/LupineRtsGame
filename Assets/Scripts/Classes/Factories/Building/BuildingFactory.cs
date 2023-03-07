@@ -24,7 +24,7 @@ namespace Assets.Scripts.Classes.Factories.Building
 
             newBuilding.Created += map.BuildingCreatedCallback;
             newBuilding.Destroyed += map.BuildingDestroyedCallback;
-            newBuilding.Initialize(tilePosition.z, gridBounds);
+            newBuilding.Initialize(tilePosition.z, gridBounds, tilePosition);
 
             return newBuilding;
         }

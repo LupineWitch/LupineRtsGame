@@ -43,6 +43,13 @@ public class BuildingManager : MonoBehaviour
         return buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(prefab, chosenCenterTile, buildingParent, mapManager);
     }
 
+    public Vector3Int GetClosestPointNearBuildSite(Transform from, Vector3Int placementTile, BuildingBase prefab)
+    {
+        Vector3Int tilePosition = mainTilemap.WorldToCell(from.position);
+        return GetClosestPointNearBuildSite(tilePosition, placementTile, prefab);
+    }
+
+
     public Vector3Int GetClosestPointNearBuildSite(Vector3Int from, Vector3Int placementTile, BuildingBase prefab)
     {
         Vector3Int bottomLeftCorner = new Vector3Int(placementTile.x - prefab.BuildingSize.x.GetEvenInteger() / 2,

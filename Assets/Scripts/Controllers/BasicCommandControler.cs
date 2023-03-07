@@ -24,7 +24,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     public event SelectionChangedEvent SelectionChanged;
     public event CommandContextChangedEvent CommandContextChanged;
 
-
     public MapManager MapManager => this.mapManager;
     public BuildingManager BuildingsManager => this.buildingManager;
 
