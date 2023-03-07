@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4525816622110628377}
   - component: {fileID: 2599596788473568248}
   - component: {fileID: -763237471366239001}
+  - component: {fileID: 2535488633895955983}
   m_Layer: 0
   m_Name: TestBuilding
   m_TagString: Untagged
@@ -55,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 21594824fdb79e444bb0e31a29cbda23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingSize: {x: 7, y: 6}
   buildingProgressBar: {fileID: 848799515538443117}
+--- !u!114 &2535488633895955983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4525816622110628379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9209f10d3f1357e43a4feb63a4979fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &848799516333802226
 PrefabInstance:
   m_ObjectHideFlags: 0

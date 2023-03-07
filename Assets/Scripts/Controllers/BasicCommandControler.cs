@@ -195,7 +195,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 return;
             }
             this.CurrentSelectionRepresentative = deputyEntity;
-            currentContextDelegator = deputyEntity.DefaultDirective.ContextCommandDelegator;
+            currentContextDelegator = deputyEntity.DefaultDirective?.ContextCommandDelegator ?? null;
             commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);
 
         }else //Define shared common command context
@@ -213,12 +213,12 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
         foreach (var hit in hits)
         {
-            ISelectable unitScript = hit.gameObject.GetComponent<ISelectable>();
-            if (unitScript == null)
+            ISelectable selected = hit.gameObject.GetComponent<ISelectable>();
+            if (selected == null)
                 continue;
 
-            if(unitScript.TrySelect(this))
-                selectedObjects.Add(unitScript as BasicUnitScript);
+            if(selected.TrySelect(this))
+                selectedObjects.Add(selected);
         }
 
         SetCurrentAction(0);
@@ -239,14 +239,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         worldPos.z = 2.2f;
 
         Instantiate(this.UnitPrefab, worldPos, Quaternion.identity, UnitContainer.transform);
-    }
-
-    private void PlaceBuilding(CallbackContext obj, List<ISelectable> selectedObjects)
-    {
-        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
-        mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-        TopCellResult cellResult = topCellSelector.GetTopCell(mousePos);
-        buildingManager.TryToPlaceBuildingInWorld(cellResult.topCell);
     }
 
     private void ChangeTimeScale(CallbackContext context)

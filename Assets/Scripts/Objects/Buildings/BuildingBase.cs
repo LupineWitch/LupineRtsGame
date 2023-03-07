@@ -1,13 +1,7 @@
 using Assets.Scripts.Classes.Events;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Unity.Burst;
-using System;
-using UnityEngine.Tilemaps;
 
-public class BuildingBase : MonoBehaviour
+public class BuildingBase : EntityBase
 {
     public float BuildProgress 
     { 
@@ -19,6 +13,7 @@ public class BuildingBase : MonoBehaviour
             buildProgress = value;
         }
     }
+
 
     public int BuildingLayer { get; protected set; } = 2;
     public float SpriteWidth { get; private set; }
@@ -67,4 +62,5 @@ public class BuildingBase : MonoBehaviour
     {
         BuildingDestroy();
     }
+
 }

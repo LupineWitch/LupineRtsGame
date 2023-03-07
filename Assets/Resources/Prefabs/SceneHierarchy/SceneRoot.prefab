@@ -73681,6 +73681,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1651343980280405051}
     m_Modifications:
+    - target: {fileID: 2932506177616684557, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 1651343980160881602}
     - target: {fileID: 4993150341364685332, guid: 13dee6a51fc9681499d368922d1e78cc, type: 3}
       propertyPath: m_Name
       value: TestEntity

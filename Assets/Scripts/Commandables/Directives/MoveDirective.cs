@@ -39,7 +39,7 @@ namespace Assets.Scripts.Commandables.Directives
             if (!cellResult.found || cellResult.topCell.HasNegativeComponent())
                 return;
 
-            foreach (BasicUnitScript unit in selectedObjects)
+            foreach (BasicUnitScript unit in selectedObjects.Where(obj => obj is BasicUnitScript))
             {
                 AStarMoveCommand moveOrder = new AStarMoveCommand(
                 commander,
