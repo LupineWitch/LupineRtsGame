@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Assets.Scripts.Classes.Events;
 using TMPro;
+using Assets.Scripts.Commandables.Directives;
 
 public class GUIManager : MonoBehaviour
 {

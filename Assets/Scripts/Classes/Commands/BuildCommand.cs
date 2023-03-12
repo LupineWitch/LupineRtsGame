@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Commandables;
+using Assets.Scripts.Objects.Buildings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -50,6 +51,8 @@ namespace Assets.Scripts.Classes.Commands
             CurrentState = CommandState.InProgress;
             
             var newBuilding = buildingManager.TryToPlaceBuildingInWorld(placementPosition, buildingPrefab);
+            newBuilding.GetComponent<SpriteRenderer>().enabled = false;
+            ConstructionSiteBase constructionSite = ConstructionSiteBase.GetConstructionSite(newBuilding, buildingManager.ConstructionSitePrefab);
             while(newBuilding.BuildProgress < 1.0f)
             {
                 newBuilding.BuildProgress += Time.deltaTime / buildTime;
@@ -59,6 +62,8 @@ namespace Assets.Scripts.Classes.Commands
             }
 
             //Finished building
+            newBuilding.GetComponent<SpriteRenderer>().enabled = true;
+            MonoBehaviour.Destroy(constructionSite.gameObject);
             CurrentState = CommandState.Ending;
             base.CommandResult = CommandResult.Success;
             CurrentState = CommandState.Ended;

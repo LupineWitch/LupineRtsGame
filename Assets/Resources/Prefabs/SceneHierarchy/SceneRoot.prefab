@@ -71394,7 +71394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3898c8fc63bcfa04789ca3f37e270375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: -763237471366239001, guid: cefa86c65f17f6f4bb58906760d19635, type: 3}
+  defaultPrefab: {fileID: -763237471366239001, guid: cefa86c65f17f6f4bb58906760d19635, type: 3}
   buildingParent: {fileID: 9200162363142255313}
   mainTilemap: {fileID: 1651343980431148982}
   mapManager: {fileID: 1651343980714024471}

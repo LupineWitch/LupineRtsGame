@@ -4,6 +4,7 @@ using Assets.Scripts.Classes.Painters;
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Objects.Buildings;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,16 +15,20 @@ using UnityEngine.Tilemaps;
 //Implement as Entity manager?
 public class BuildingManager : MonoBehaviour
 {
-    public BuildingBase BuildingPrefab => buildingPrefab;
+    public BuildingBase BuildingPrefab => defaultPrefab;
+
+    public ConstructionSiteBase ConstructionSitePrefab { get => constructionSitePrefab; private set => constructionSitePrefab = value; }
 
     [SerializeField]
-    private BuildingBase buildingPrefab;
+    private BuildingBase defaultPrefab;
     [SerializeField]
     private GameObject buildingParent;
     [SerializeField]
     private Tilemap mainTilemap;
     [SerializeField]
     private MapManager mapManager;
+    [SerializeField]
+    private ConstructionSiteBase constructionSitePrefab;
 
     private IBuildingFactory buildingsFactory;
 
@@ -32,14 +37,14 @@ public class BuildingManager : MonoBehaviour
         buildingsFactory = new PrefabbedBuildingFactory();
     }
 
-    public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile) 
+    public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile)
     {
-       
-        return buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(buildingPrefab, chosenCenterTile, buildingParent, mapManager);
+
+        return buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(defaultPrefab, chosenCenterTile, buildingParent, mapManager);
     }
-    
-    public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile, BuildingBase prefab) 
-    {   
+
+    public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile, BuildingBase prefab)
+    {
         return buildingsFactory.CreateAndPlaceBuildingBasedOnPrefab(prefab, chosenCenterTile, buildingParent, mapManager);
     }
 
@@ -61,28 +66,28 @@ public class BuildingManager : MonoBehaviour
         float minDistance = float.MaxValue;
         Vector3Int closestPositionNearEdge = placementTile;
 
-        foreach(var pos in boundsInt.allPositionsWithin)
+        foreach (var pos in boundsInt.allPositionsWithin)
         {
-            foreach(var neighbour in pos.GetAllCardinalNeighbours())
+            foreach (var neighbour in pos.GetAllCardinalNeighbours())
             {
                 if (boundsInt.Contains(neighbour))
                     continue;
 
                 float newDistance = Vector3Int.Distance(from, neighbour);
-                if(minDistance > newDistance)
+                if (minDistance > newDistance)
                 {
                     minDistance = newDistance;
                     closestPositionNearEdge = neighbour;
                 }
             }
-            
-            foreach(var neighbour in pos.GetAllDiagonalNeighbours())
+
+            foreach (var neighbour in pos.GetAllDiagonalNeighbours())
             {
                 if (boundsInt.Contains(neighbour))
                     continue;
 
                 float newDistance = Vector3Int.Distance(from, neighbour);
-                if(minDistance > newDistance)
+                if (minDistance > newDistance)
                 {
                     minDistance = newDistance;
                     closestPositionNearEdge = neighbour;

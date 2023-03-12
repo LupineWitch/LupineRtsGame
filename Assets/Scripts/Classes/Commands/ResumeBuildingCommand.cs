@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Commandables;
+using Assets.Scripts.Objects.Buildings;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,6 +44,11 @@ namespace Assets.Scripts.Classes.Commands
                 currentStateCallback(CommandState.InProgress);
                 yield return null;
             }
+
+            target.GetComponent<SpriteRenderer>().enabled = true;
+            var constructionSite = target.GetComponentInChildren<ConstructionSiteBase>();
+            if(constructionSite != null)
+                UnityEngine.Object.Destroy(constructionSite.gameObject);
 
             CurrentState = CommandState.Ending;
             CommandResult = CommandResult.Success;
