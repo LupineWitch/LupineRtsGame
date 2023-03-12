@@ -8,12 +8,13 @@ public class BuildingBase : EntityBase
         get => buildProgress;
         set
         {
-            BuildingEventArgs buildingEventArgs = new BuildingEventArgs(buildProgress: value);
-            this.StateChanged?.Invoke(this, buildingEventArgs);
+            ProgressEventArgs buildingEventArgs = new ProgressEventArgs(value);
+            this.BuildingProgressChanged?.Invoke(this, buildingEventArgs);
             buildProgress = value;
         }
     }
 
+    public event ProgressEvent BuildingProgressChanged;
 
     public int BuildingLayer { get; protected set; } = 2;
     public float SpriteWidth { get; private set; }
@@ -32,7 +33,7 @@ public class BuildingBase : EntityBase
     [SerializeField]
     private Vector2Int buildingSize;
     [SerializeField]
-    private ProgressBar buildingProgressBar;
+    protected ProgressBar buildingProgressBar;
 
     private Collider2D buildingCollider;
     private Vector3Int tilePosition;
@@ -45,7 +46,7 @@ public class BuildingBase : EntityBase
         SpriteHeigth = spriteRenderer.bounds.size.y;
 
         buildingCollider = gameObject.GetComponent<Collider2D>();
-        this.StateChanged += buildingProgressBar.RespondToUpdatedProgress;
+        this.BuildingProgressChanged += buildingProgressBar.RespondToUpdatedProgress;
     }
 
     public void Initialize(int builidngLayer, BoundsInt occupiedBounds, Vector3Int tilePosition)

@@ -49,9 +49,9 @@ public class ProgressBar : MonoBehaviour
         RefreshFillBarPosition();
     }
 
-    public void RespondToUpdatedProgress(object sender, EventArgs args)
+    public void RespondToUpdatedProgress(object sender, ProgressEventArgs args)
     {
-        if (args is BuildingEventArgs buildingArgs)
-            SetProgress(buildingArgs.BuildProgress ?? 1f);
+        if(args != null)   
+            SetProgress(args.Progress);
     }
 }

@@ -3,6 +3,7 @@ using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Commandables;
+using Assets.Scripts.Commandables.Directives;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
@@ -27,6 +28,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     public MapManager MapManager => this.mapManager;
     public BuildingManager BuildingsManager => this.buildingManager;
 
+    public GameObject UnitsContainer => unitsContainer; 
+
     [SerializeField]
     private Tilemap mainTilemap;
     [SerializeField]
@@ -37,13 +40,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private AvailableBuidlingSpaceManager buildSpaceManager;
     [SerializeField]
     private BuildingManager buildingManager;
-
-    #region TempTesting properties to be moved to other classes
     [SerializeField]
-    private GameObject UnitContainer;
-    [SerializeField]
-    private GameObject UnitPrefab;
-    #endregion
+    private GameObject unitsContainer;
 
     private Vector2 startPosition;
     private BasicControls basicControls;
@@ -51,7 +49,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private InputAction SelectAction;
     private List<ISelectable> selectedObjects;
     private ITopCellSelector topCellSelector;
-    private ContextCommandDelegator currentContextDelegator;
+    private CommandDirective currentCommandDirective;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
     private IDeputy CurrentSelectionRepresentative;
@@ -66,7 +64,11 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             Debug.LogErrorFormat("{0} field is null when setting and action", nameof(CurrentSelectionRepresentative));
             return;
         }
-        currentContextDelegator = CurrentSelectionRepresentative.AvailableDirectives.ElementAt(actionId)?.ContextCommandDelegator ?? default;
+        CommandDirective directive = CurrentSelectionRepresentative.AvailableDirectives.ElementAt(actionId);
+        if (directive is ImmidiateDirective action)
+            action.ExecuteImmidiatly(this, selectedObjects);
+        else
+            currentCommandDirective = directive;
     }
 
     public TopCellResult GetTopCellResult(Vector2 inputValue) => topCellSelector.GetTopCell(inputValue);
@@ -80,7 +82,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         selectedObjects = new List<ISelectable>();
         topCellSelector = new TopCellSelector(mainTilemap);
         previousCellColor = mainTilemap.GetColor(previousCell);
-        currentContextDelegator = null;
+        currentCommandDirective = null;
 
         SelectionChanged += buildSpaceManager.OnCommanderSelectionChanged;
     }
@@ -124,7 +126,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void ResetControllerContext()
     {
-        currentContextDelegator = null;
+        currentCommandDirective = null;
         buildSpaceManager.Show(false);
     }
 
@@ -193,8 +195,10 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 Debug.LogError("deputyEntity is null");
                 return;
             }
+
             this.CurrentSelectionRepresentative = deputyEntity;
-            currentContextDelegator = deputyEntity.DefaultDirective?.ContextCommandDelegator ?? null;
+
+            currentCommandDirective = deputyEntity.DefaultDirective;
             commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);
 
         }else //Define shared common command context
@@ -227,17 +231,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private void SendCommandForSelectedEntities(CallbackContext obj)
     {
         //TODO: Get click context, UI etc.
-        if(currentContextDelegator != null)
-            currentContextDelegator(obj, this, selectedObjects);
-    }
-
-    private void SpawnUnitFromPrefab(CallbackContext obj, List<ISelectable> selectedObjects)
-    {
-        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        worldPos.z = 2.2f;
-
-        Instantiate(this.UnitPrefab, worldPos, Quaternion.identity, UnitContainer.transform);
+        if(currentCommandDirective?.ContextCommandDelegator != null)
+            currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);
     }
 
     private void ChangeTimeScale(CallbackContext context)
