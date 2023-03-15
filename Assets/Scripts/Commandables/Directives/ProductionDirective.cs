@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Commandables.Directives
 {
-    public class ProductionDirective : ImmidiateDirective
+    public class ProductionDirective : ImmediateDirective
     {
         private EntityBase unitPrefab;
         private float buildTime = 5.0f;
@@ -21,7 +21,7 @@ namespace Assets.Scripts.Commandables.Directives
             this.buildTime = buildTime;
         }
 
-        public override void ExecuteImmidiatly(BasicCommandControler commander, List<ISelectable> selectedObjects)
+        public override void ExecuteImmediately(BasicCommandControler commander, List<ISelectable> selectedObjects)
         {
             foreach (ISelectable selectedObj in selectedObjects)
             {

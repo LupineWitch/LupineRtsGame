@@ -7,9 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
-public sealed class BasicUnitScript : EntityBase
+public class BasicUnitScript : EntityBase
 {
     public float unitSpeed = 10f;
 
@@ -17,6 +19,6 @@ public sealed class BasicUnitScript : EntityBase
     {
         defaultCommand = new ContextDirective();
         menuActions[0] = new MoveDirective();
-        menuActions[1] = new BuildDirective();
+        //menuActions[1] = new BuildDirective();
     }
 }

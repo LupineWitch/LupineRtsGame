@@ -71583,7 +71583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -71731,7 +71731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -72208,7 +72208,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -72452,7 +72452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -72604,7 +72604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -72871,7 +72871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -73015,7 +73015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -73415,7 +73415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -73559,7 +73559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetCurrentAction
+      value: SetCurrentCommandDirective
       objectReference: {fileID: 0}
     - target: {fileID: 3008791315842360054, guid: ce34259a768e0624285a7b1e3c96b672, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

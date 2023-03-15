@@ -55,18 +55,24 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     private IDeputy CurrentSelectionRepresentative;
     private bool wasGuiClickedThisFrame = false;
 
-    public void SetCurrentAction(int actionId)
+    public void SetCurrentCommandDirective(int actionId)
     {
+        if(actionId < 0 )
+        {
+            currentCommandDirective = null;
+            return;
+        }
+
         Debug.LogFormat("Action ID:{0}", actionId);
         ResetControllerContext();
         if(CurrentSelectionRepresentative == default)
         {
-            Debug.LogErrorFormat("{0} field is null when setting and action", nameof(CurrentSelectionRepresentative));
+            Debug.LogErrorFormat("{0} field is null when setting an action", nameof(CurrentSelectionRepresentative));
             return;
         }
         CommandDirective directive = CurrentSelectionRepresentative.AvailableDirectives.ElementAt(actionId);
-        if (directive is ImmidiateDirective action)
-            action.ExecuteImmidiatly(this, selectedObjects);
+        if (directive is ImmediateDirective action)
+            action.ExecuteImmediately(this, selectedObjects);
         else
             currentCommandDirective = directive;
     }
@@ -224,7 +230,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
                 selectedObjects.Add(selected);
         }
 
-        SetCurrentAction(0);
+        SetCurrentCommandDirective(-1);
         SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
     }
 

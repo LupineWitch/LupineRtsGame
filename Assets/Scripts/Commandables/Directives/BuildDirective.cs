@@ -15,10 +15,18 @@ namespace Assets.Scripts.Commandables.Directives
 {
     public class BuildDirective : CommandDirective
     {
+
+        BuildingBase buildingPrefab;
+
         public BuildDirective()
         {
             string path = Path.Combine(ResourceNames.ButtonIconsResourcePath, ResourceNames.GUISpriteSheet);
             base.ButtonIcon = ResourcesUtilities.LoadSpriteFromSpritesheet(path, ResourceNames.BuildingIcon);
+        }
+        
+        public BuildDirective(BuildingBase prefab) : this()
+        {
+            buildingPrefab = prefab;
         }
 
         public override ContextCommandDelegator ContextCommandDelegator => DelegateBuildCommand;
@@ -36,7 +44,7 @@ namespace Assets.Scripts.Commandables.Directives
             
             foreach (BasicUnitScript unit in selectedObjects)
             {
-                unit.SetCommand(new BuildCommand(unit, commander, clickResult.topCell, commander.BuildingsManager.BuildingPrefab, commander.BuildingsManager));
+                unit.SetCommand(new BuildCommand(unit, commander, clickResult.topCell, buildingPrefab ?? commander.BuildingsManager.BuildingPrefab, commander.BuildingsManager));
             }    
 
         }
