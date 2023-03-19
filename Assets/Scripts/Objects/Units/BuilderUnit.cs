@@ -13,11 +13,13 @@ namespace Assets.Scripts.Objects.Units
     public class BuilderUnit : BasicUnitScript
     {
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             defaultCommand = new ContextDirective();
             var asyncLoadHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/ProductionBuilding.prefab");
             asyncLoadHandle.Completed += AsyncLoadHandle_Completed;
+            DisplayLabel = "Builder";
         }
 
         private void AsyncLoadHandle_Completed(AsyncOperationHandle<GameObject> loadHandle)

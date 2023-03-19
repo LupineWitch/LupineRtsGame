@@ -24,20 +24,19 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
     private Sprite preview;
     private string displayLabel = "Placeholder Entity Label";
 
-    void Awake()
+    protected virtual void Awake()
     {
-        Debug.Log("Entity is awake");
         preview = gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (executedCommand != default)
             HandleCommandExecution();
     }
 
-    void OnDestroy()
+    protected virtual void OnDestroy()
     {
         StopAllCoroutines();
     }

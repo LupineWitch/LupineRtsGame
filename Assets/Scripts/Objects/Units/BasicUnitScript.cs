@@ -15,10 +15,10 @@ public class BasicUnitScript : EntityBase
 {
     public float unitSpeed = 10f;
 
+
     private void Start()
     {
         defaultCommand = new ContextDirective();
         menuActions[0] = new MoveDirective();
-        (this as EntityBase).DisplayLabel = "Soldier";
     }
 }
