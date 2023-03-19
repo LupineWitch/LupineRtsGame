@@ -9,8 +9,8 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
 {
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
     public CommandDirective DefaultDirective { get => defaultCommand; }
-    Sprite ISelectable.Preview { get => preview; set => preview = value; }
-    string ISelectable.DisplayLabel { get => displayLabel; set => displayLabel = value; }
+    public Sprite Preview { get => preview; set => preview = value; }
+    public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
 
     protected CommandDirective defaultCommand;
@@ -26,6 +26,7 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
 
     void Awake()
     {
+        Debug.Log("Entity is awake");
         preview = gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 

@@ -19,6 +19,6 @@ public class BasicUnitScript : EntityBase
     {
         defaultCommand = new ContextDirective();
         menuActions[0] = new MoveDirective();
-        //menuActions[1] = new BuildDirective();
+        (this as EntityBase).DisplayLabel = "Soldier";
     }
 }

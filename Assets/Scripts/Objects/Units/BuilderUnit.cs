@@ -16,14 +16,15 @@ namespace Assets.Scripts.Objects.Units
         private void Awake()
         {
             defaultCommand = new ContextDirective();
-            var asyncLoadHandle = Addressables.LoadAssetAsync<BuildingBase>("Assets/Prefabs/Buildings/ProductionBuilding.prefab");
+            var asyncLoadHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/ProductionBuilding.prefab");
             asyncLoadHandle.Completed += AsyncLoadHandle_Completed;
         }
 
-        private void AsyncLoadHandle_Completed(AsyncOperationHandle<BuildingBase> obj)
+        private void AsyncLoadHandle_Completed(AsyncOperationHandle<GameObject> loadHandle)
         {
+            BuildingBase buildingBase = loadHandle.Result.GetComponent<BuildingBase>(); 
             menuActions[0] = new MoveDirective();
-            menuActions[1] = new BuildDirective(obj.Result);
+            menuActions[1] = new BuildDirective(buildingBase);
         }
     }
 }
