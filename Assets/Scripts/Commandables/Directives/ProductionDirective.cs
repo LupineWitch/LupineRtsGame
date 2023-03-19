@@ -12,6 +12,7 @@ namespace Assets.Scripts.Commandables.Directives
 {
     public class ProductionDirective : ImmediateDirective
     {
+        protected string UnitName => unitPrefab.DisplayLabel;
         private EntityBase unitPrefab;
         private float buildTime = 5.0f;
 
@@ -33,6 +34,16 @@ namespace Assets.Scripts.Commandables.Directives
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is ProductionDirective directive &&
+                   base.Equals(obj) &&
+                   UnitName == directive.UnitName;
+        }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), UnitName);
+        }
     }
 }

@@ -203,13 +203,14 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             }
 
             this.CurrentSelectionRepresentative = deputyEntity;
-
             currentCommandDirective = deputyEntity.DefaultDirective;
             commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);
 
         }else //Define shared common command context
         {
-            commandContextEventArgs = new CommandContextChangedArgs(default);
+            SharedCommandContext newSharedContext = new SharedCommandContext(selectedObjects.Cast<IDeputy>());
+            this.CurrentSelectionRepresentative = newSharedContext;
+            commandContextEventArgs = new CommandContextChangedArgs(CurrentSelectionRepresentative.AvailableDirectives);
         }
 
         CommandContextChanged.Invoke(this, commandContextEventArgs);

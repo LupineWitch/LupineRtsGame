@@ -39,8 +39,9 @@ public class BuildingBase : EntityBase
     private Vector3Int tilePosition;
     private float buildProgress = 0f;
 
-    public void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         SpriteWidth = spriteRenderer.bounds.size.x;
         SpriteHeigth = spriteRenderer.bounds.size.y;
@@ -62,8 +63,9 @@ public class BuildingBase : EntityBase
         this.Destroyed?.Invoke(this, new BuildingEventArgs(this.OccupiedBounds));
     }
 
-    void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         BuildingDestroy();
     }
 

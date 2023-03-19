@@ -3,6 +3,7 @@ using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Commandables.Directives;
 using Mono.Cecil;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Assets.Scripts.Objects.Buildings
 {
@@ -40,11 +43,12 @@ namespace Assets.Scripts.Objects.Buildings
 
         private float productionProgress = 0f;
 
-        new public void Awake()
+        protected override void Awake()
         {
             base.Awake();
+            AsyncOperationHandle<GameObject> unitAssetHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Units/BaseUnit.prefab");
+            unitAssetHandle.Completed += (opHandle) => this.menuActions[0] = new ProductionDirective(opHandle.Result.GetComponent<EntityBase>(), 5.0f);
             ProductionProgressed += buildingProgressBar.RespondToUpdatedProgress;
-            this.menuActions[0] = new ProductionDirective(Resources.Load<EntityBase>(Path.Combine(ResourceNames.TestPrefabsPath, ResourceNames.TestUnit)), 5.0f);
         }
     }
 }

@@ -11,9 +11,25 @@ namespace Assets.Scripts.Commandables.Directives
 {
     public abstract class CommandDirective
     {
-        public virtual string Name { get; protected set; } = "Default Command Name";
+        public virtual string Name { get; protected set; }
         public virtual string Description { get; protected set; } = String.Empty;
         public virtual Sprite ButtonIcon { get; protected set; } = null;
         public abstract ContextCommandDelegator ContextCommandDelegator { get; }
+
+        public CommandDirective()
+        {
+            Name = this.GetType().Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is CommandDirective directive &&
+                   Name == directive.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name);
+        }
     }
 }

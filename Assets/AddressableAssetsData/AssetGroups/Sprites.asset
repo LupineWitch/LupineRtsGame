@@ -23,6 +23,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - baseUnit
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3815ba6cf44cf94ba22adecd789cd05
+    m_Address: Assets/Sprites/Entities/Units/IsometricTRPGAssetPack_Entities.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - baseUnit
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dca91341924f447b6ea0f4abfe783f, type: 2}
   m_SchemaSet:
