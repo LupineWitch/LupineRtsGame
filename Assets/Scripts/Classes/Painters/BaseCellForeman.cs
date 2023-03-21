@@ -25,7 +25,10 @@ namespace Assets.Scripts.Classes.Painters
             tempCoords.z = coords.z + overlayZOffset;
 
             if (!tilemap.HasTile(tempCoords))
+            {
+                Debug.LogWarningFormat("No tile: {0}!", coords);
                 return false;
+            }
 
             TileFlags tileFlags = tilemap.GetTileFlags(tempCoords);
             tilemap.SetTileFlags(tempCoords, TileFlags.None);
@@ -49,6 +52,8 @@ namespace Assets.Scripts.Classes.Painters
 
         public virtual bool TryCreatePaintedCell(Vector3Int coords, Color color, TileBase tile)
         {
+            _ = tile ?? throw new ArgumentNullException(nameof(tile));
+
             Vector3Int tempCoords = coords;
             tempCoords.z = coords.z + overlayZOffset;
             TileFlags tileFlags = tilemap.GetTileFlags(tempCoords);

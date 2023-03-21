@@ -21,6 +21,10 @@ namespace Assets.Scripts.Commandables.Directives
             Name = this.GetType().Name;
         }
 
+        public abstract void OnDirectiveSelection(BasicCommandControler controller);
+        
+        public abstract void OnDirectiveDeselection(BasicCommandControler controller); 
+
         public override bool Equals(object obj)
         {
             return obj is CommandDirective directive &&

@@ -27,6 +27,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     public MapManager MapManager => this.mapManager;
     public BuildingManager BuildingsManager => this.buildingManager;
+    public AvailableBuidlingSpaceManager BuildingSpaceManager => this.buildSpaceManager;
 
     public GameObject UnitsContainer => unitsContainer; 
 
@@ -63,7 +64,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             return;
         }
 
-        Debug.LogFormat("Action ID:{0}", actionId);
         ResetControllerContext();
         if(CurrentSelectionRepresentative == default)
         {
@@ -75,6 +75,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             action.ExecuteImmediately(this, selectedObjects);
         else
             currentCommandDirective = directive;
+
+        directive?.OnDirectiveSelection(this);
     }
 
     public TopCellResult GetTopCellResult(Vector2 inputValue) => topCellSelector.GetTopCell(inputValue);
@@ -179,6 +181,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         }
         startPosition = default;
         selectionBox.SetActive(false);
+
+        currentCommandDirective?.OnDirectiveDeselection(this);
     }
 
     private void SetCommandContextAccordingToSelection()
@@ -237,7 +241,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void SendCommandForSelectedEntities(CallbackContext obj)
     {
-        //TODO: Get click context, UI etc.
         if(currentCommandDirective?.ContextCommandDelegator != null)
             currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);
     }

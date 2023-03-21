@@ -36,5 +36,15 @@ namespace Assets.Scripts.Commandables.Directives
                 foreach (BasicUnitScript deputy in selectedObjects.Where(o => o is BasicUnitScript))
                     deputy.SetCommand(new ResumeBuildingCommand( deputy, commander, building, commander.BuildingsManager));
         }
+
+        public override void OnDirectiveDeselection(BasicCommandControler controler)
+        {
+            //Do nothing
+        }
+
+        public override void OnDirectiveSelection(BasicCommandControler controler)
+        {
+            //do Nothing
+        }
     }
 }

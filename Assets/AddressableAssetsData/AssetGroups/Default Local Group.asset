@@ -16,7 +16,22 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 22ab413828a7f534abedc0ca12a483fe
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 924f460fd7ea4214f97803fb02f4dfd7
+    m_Address: Assets/Tilepallets/UtilityTilePalette.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 107b23aa8455e5c4590cff0a79220779
+    m_Address: Assets/Tilepallets/UtilityPaletteAssets
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1fe5472b435f8de48a1fb5d865854e33
+    m_Address: Assets/Tilepallets/UtilityPaletteAssets/BasicWhiteTile.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dca91341924f447b6ea0f4abfe783f, type: 2}
   m_SchemaSet:

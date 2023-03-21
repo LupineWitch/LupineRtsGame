@@ -54,7 +54,8 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
             this.StopCoroutine(currentlyRunCommandCoroutine);
 
         foreach (var coroutine in currentSubcoroutines)
-            this.StopCoroutine(coroutine);
+            if(coroutine != null)
+                this.StopCoroutine(coroutine);
 
         this.currentSubcoroutines.Clear();
         this.executedCommand = command;

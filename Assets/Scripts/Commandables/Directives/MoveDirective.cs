@@ -52,5 +52,15 @@ namespace Assets.Scripts.Commandables.Directives
                 unit.SetCommand(moveOrder);
             }
         }
+
+        public override void OnDirectiveDeselection(BasicCommandControler controler)
+        {
+            //Do nothing
+        }
+
+        public override void OnDirectiveSelection(BasicCommandControler controler)
+        {
+            //do Nothing
+        }
     }
 }

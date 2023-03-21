@@ -2,6 +2,7 @@
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
+using Assets.Scripts.Managers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +16,6 @@ namespace Assets.Scripts.Commandables.Directives
 {
     public class BuildDirective : CommandDirective
     {
-
         BuildingBase buildingPrefab;
 
         public BuildDirective()
@@ -30,6 +30,18 @@ namespace Assets.Scripts.Commandables.Directives
         }
 
         public override ContextCommandDelegator ContextCommandDelegator => DelegateBuildCommand;
+
+        public override void OnDirectiveDeselection(BasicCommandControler controller)
+        {
+            controller.BuildingSpaceManager.Show(false);
+            controller.BuildingSpaceManager.UnsetSelectedBuilding();
+        }
+
+        public override void OnDirectiveSelection(BasicCommandControler controller)
+        {
+            controller.BuildingSpaceManager.SetSelectedBuilding(buildingPrefab);
+            controller.BuildingSpaceManager.Show(true);
+        }
 
         private void DelegateBuildCommand(InputAction.CallbackContext obj, BasicCommandControler commander, List<ISelectable> selectedObjects)
         {

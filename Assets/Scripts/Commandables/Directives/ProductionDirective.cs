@@ -34,6 +34,16 @@ namespace Assets.Scripts.Commandables.Directives
             }
         }
 
+        public override void OnDirectiveDeselection(BasicCommandControler controler)
+        {
+            //Do nothing
+        }
+
+        public override void OnDirectiveSelection(BasicCommandControler controler)
+        {
+            //do Nothing
+        }
+
         public override bool Equals(object obj)
         {
             return obj is ProductionDirective directive &&

@@ -1,5 +1,17 @@
 using Assets.Scripts.Classes.Events;
+using Assets.Scripts.Classes.Helpers;
+using Assets.Scripts.Classes.TileOverlays;
+using Assets.Scripts.Managers;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
+public enum CellConstructionSuitability
+{
+    Available = 0,
+    Affected = 1,
+    Unavailable = 2
+}
 
 public class BuildingBase : EntityBase
 {
@@ -39,17 +51,6 @@ public class BuildingBase : EntityBase
     private Vector3Int tilePosition;
     private float buildProgress = 0f;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        SpriteWidth = spriteRenderer.bounds.size.x;
-        SpriteHeigth = spriteRenderer.bounds.size.y;
-
-        buildingCollider = gameObject.GetComponent<Collider2D>();
-        this.BuildingProgressChanged += buildingProgressBar.RespondToUpdatedProgress;
-    }
-
     public void Initialize(int builidngLayer, BoundsInt occupiedBounds, Vector3Int tilePosition)
     {
         BuildingLayer = builidngLayer;
@@ -61,6 +62,29 @@ public class BuildingBase : EntityBase
     public void BuildingDestroy()
     {
         this.Destroyed?.Invoke(this, new BuildingEventArgs(this.OccupiedBounds));
+    }
+  
+    public virtual CellConstructionSuitability IsCellAvailableForBuilding(Vector3Int cell, AvailableBuidlingSpaceManager buildingsManager)
+    {
+        bool canBePlaced = true;
+
+        canBePlaced &= ! buildingsManager.IsCellOccupiedByBuilding(cell);
+
+        if (!buildingsManager.GetTilemap.HasTile(cell) || buildingsManager.GetTilemap.GetTopTilePosition(cell).z != 2)
+            canBePlaced = false;
+
+        return (CellConstructionSuitability)(canBePlaced ? 0 : 2);
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        SpriteWidth = spriteRenderer.bounds.size.x;
+        SpriteHeigth = spriteRenderer.bounds.size.y;
+
+        buildingCollider = gameObject.GetComponent<Collider2D>();
+        this.BuildingProgressChanged += buildingProgressBar.RespondToUpdatedProgress;
     }
 
     protected override void OnDestroy()
