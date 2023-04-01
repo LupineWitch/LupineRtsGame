@@ -40,9 +40,6 @@ namespace Assets.Scripts.Commandables
                     if (deputyDirective == default)
                         continue;
 
-                    if (deputyDirective is ImmediateDirective)
-                        Debug.Log("Stinky");
-
                     if (!directivesCounts.ContainsKey(deputyDirective))
                         directivesCounts.Add(deputyDirective, 1);
                     else

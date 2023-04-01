@@ -53,7 +53,10 @@ namespace Assets.Scripts.Commandables.Directives
             if (!clickResult.found)
                 return;
 
-            
+            //Validate if bulding can be built here
+            if (!(buildingPrefab.ValidatePlacement(clickResult.topCell, commander.BuildingSpaceManager)))
+                return;
+
             foreach (BasicUnitScript unit in selectedObjects)
             {
                 unit.SetCommand(new BuildCommand(unit, commander, clickResult.topCell, buildingPrefab ?? commander.BuildingsManager.BuildingPrefab, commander.BuildingsManager));

@@ -1,7 +1,9 @@
 using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Classes.Helpers;
+using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Managers;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -64,12 +66,9 @@ public class BuildingBase : EntityBase
         this.Destroyed?.Invoke(this, new BuildingEventArgs(this.OccupiedBounds));
     }
   
-    public virtual CellConstructionSuitability IsCellAvailableForBuilding(Vector3Int cell, AvailableBuidlingSpaceManager buildingsManager)
+    public virtual CellConstructionSuitability IsCellAvailableForBuilding(Vector3Int cell, AvailableBuildingSpaceManager buildingsManager)
     {
-        bool canBePlaced = true;
-
-        canBePlaced &= ! buildingsManager.IsCellOccupiedByBuilding(cell);
-
+        bool canBePlaced = !buildingsManager.IsCellOccupiedByBuilding(cell);
         if (!buildingsManager.GetTilemap.HasTile(cell) || buildingsManager.GetTilemap.GetTopTilePosition(cell).z != 2)
             canBePlaced = false;
 
@@ -93,4 +92,15 @@ public class BuildingBase : EntityBase
         BuildingDestroy();
     }
 
+    public bool ValidatePlacement(Vector3Int topCell, AvailableBuildingSpaceManager buildingsManager)
+    {
+        Vector2Int size = BuildingSize;
+        Vector3Int bottomLeftCorner = new Vector3Int(topCell.x - (size.x.GetEvenInteger() / 2), topCell.y - (size.y.GetEvenInteger() / 2), topCell.z);
+        BoundsInt newBounds = new BoundsInt(bottomLeftCorner, new Vector3Int(size.x, size.y, 1));
+        foreach (var pos in newBounds.allPositionsWithin)
+            if (IsCellAvailableForBuilding(pos, buildingsManager) == CellConstructionSuitability.Unavailable)
+                return false;
+
+        return true;
+    }
 }

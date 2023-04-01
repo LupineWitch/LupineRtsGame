@@ -318,7 +318,7 @@ MonoBehaviour:
   mainTilemap: {fileID: 1651343980431148982}
   selectionBox: {fileID: 1651343979925096590}
   mapManager: {fileID: 1651343980714024471}
-  buildSpaceManager: {fileID: 1651343980714024554}
+  buildSpaceManager: {fileID: 9194913572922429468}
   buildingManager: {fileID: 2464387157375631397}
   unitsContainer: {fileID: 1651343980280405050}
 --- !u!1 &1651343980280405050
@@ -70928,7 +70928,7 @@ GameObject:
   - component: {fileID: 1651343980714024553}
   - component: {fileID: 1651343980714024552}
   - component: {fileID: 1651343980714024471}
-  - component: {fileID: 1651343980714024554}
+  - component: {fileID: 9194913572922429468}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -70981,7 +70981,8 @@ MonoBehaviour:
   mainTilemap: {fileID: 1651343980431148982}
   loadedMapData: {fileID: 0}
   loadMapFromFile: 0
---- !u!114 &1651343980714024554
+  buildingSpaceManager: {fileID: 9194913572922429468}
+--- !u!114 &9194913572922429468
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70990,12 +70991,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1651343980714024470}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55f35f32a10d11143b80d00e7ad1cc49, type: 3}
+  m_Script: {fileID: 11500000, guid: 74c475b5862461248abe258eef251caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainTilemap: {fileID: 1651343980431148982}
   overlaysRoot: {fileID: 1711562517850214659}
-  buildingAreaDiameter: 20
+  buildingAreaDiameter: 11
 --- !u!1 &1651343980747287669
 GameObject:
   m_ObjectHideFlags: 0

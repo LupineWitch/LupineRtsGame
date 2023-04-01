@@ -26,6 +26,8 @@ namespace Assets.Scripts.Managers
         private LoadMapPersistenceData loadedMapData;
         [SerializeField]
         private bool loadMapFromFile = true;
+        [SerializeField]
+        private AvailableBuildingSpaceManager buildingSpaceManager;
 
         private PathingGridBase pathingGrid;
         private float cellSize;
@@ -63,6 +65,7 @@ namespace Assets.Scripts.Managers
             List<Vector3Int> occupiedPositions = GetOverlappingWorldPointsForBuilding(sender, args);
 
             pathingGrid.RemoveNodesFromPathingGrid(occupiedPositions);
+            buildingSpaceManager.RemoveCellsFromBuildingGrid(args.OccupiedBounds.Value.allPositionsWithin.GetEnumerator());
         }
 
         private List<Vector3Int> GetOverlappingWorldPointsForBuilding(object sender, BuildingEventArgs args)
@@ -80,9 +83,13 @@ namespace Assets.Scripts.Managers
             return occupiedPositions;
         }
 
-        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args) => 
-            pathingGrid.ReaddNodesToPathingGrid(GetOverlappingWorldPointsForBuilding(sender, args), mainTilemap);
-    
+        public void BuildingDestroyedCallback(object sender, BuildingEventArgs args)
+        {
+            List<Vector3Int> occupiedPositions = GetOverlappingWorldPointsForBuilding(sender, args);
+            pathingGrid.ReaddNodesToPathingGrid(occupiedPositions, mainTilemap);
+            buildingSpaceManager.AddCellsToBuildingGrid(args.OccupiedBounds.Value.allPositionsWithin.GetEnumerator());
+        }
+
         public Vector3Int TransformToCellPosition(Transform transform) =>  mainTilemap.WorldToCell(transform.position);
         
     }
