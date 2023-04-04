@@ -76,7 +76,7 @@ namespace Assets.Scripts.Managers
             {
                 var cellCenter = mainTilemap.GetCellCenterWorld(pos);
                 var distanceToCollider = Vector2.Distance(building.Collider.ClosestPoint(cellCenter), cellCenter);
-                if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
+                    if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
                     occupiedPositions.Add(new Vector3Int(pos.x, pos.y, building.BuildingLayer));
             }
 

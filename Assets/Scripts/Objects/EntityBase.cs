@@ -21,12 +21,14 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
     protected List<Coroutine> currentSubcoroutines = new List<Coroutine>();
     protected bool isSelected { get; set; } = false;
 
+    [SerializeField]
     private Sprite preview;
     private string displayLabel = "Placeholder Entity Label";
 
     protected virtual void Awake()
     {
-        preview = gameObject.GetComponent<SpriteRenderer>().sprite;
+        if(preview == null)
+            preview = gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
     // Update is called once per frame

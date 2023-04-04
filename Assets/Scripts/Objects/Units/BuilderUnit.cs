@@ -17,7 +17,7 @@ namespace Assets.Scripts.Objects.Units
         {
             base.Awake();
             defaultCommand = new ContextDirective();
-            var asyncLoadHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/ProductionBuilding.prefab");
+            var asyncLoadHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/Farmhouse/Farmhouse.prefab");
             asyncLoadHandle.Completed += AsyncLoadHandle_Completed;
             DisplayLabel = "Builder";
         }

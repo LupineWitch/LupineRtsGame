@@ -11,7 +11,10 @@ public class ISelectableOutline : MonoBehaviour
     
     void Awake()
     {
-        outlineMaterial = GetComponent<SpriteRenderer>().material;
+        var renderer = GetComponent<SpriteRenderer>();
+        if (renderer != null)
+            outlineMaterial = renderer.material;
+
         parent = gameObject.GetComponent<ISelectable>();
         parent.Selected += OnSelection;
     }
@@ -23,6 +26,6 @@ public class ISelectableOutline : MonoBehaviour
 
     void Update()
     {
-        outlineMaterial.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
+        outlineMaterial?.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
     }
 }

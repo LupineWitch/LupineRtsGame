@@ -39,6 +39,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3dcd0fd9f6a6d4540b76605bd3739673
+    m_Address: Assets/Prefabs/Buildings/Farmhouse/Farmhouse.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 162b1cb9b589e9648bab3da1ad5a81af
+    m_Address: Assets/Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dca91341924f447b6ea0f4abfe783f, type: 2}
   m_SchemaSet:

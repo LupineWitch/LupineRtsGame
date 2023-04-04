@@ -71,6 +71,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
+    - _TintPerZ: 0.2
     - _ZMax: 6
     m_Colors:
     - _Color: {r: 0.23584908, g: 0.099012114, b: 0.099012114, a: 1}

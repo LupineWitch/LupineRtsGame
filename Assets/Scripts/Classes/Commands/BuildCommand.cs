@@ -49,9 +49,9 @@ namespace Assets.Scripts.Classes.Commands
                 yield return null;
             
             CurrentState = CommandState.InProgress;
-            
             var newBuilding = buildingManager.TryToPlaceBuildingInWorld(placementPosition, buildingPrefab);
-            newBuilding.GetComponent<SpriteRenderer>().enabled = false;
+            newBuilding.ShowSprite(false);
+
             ConstructionSiteBase constructionSite = ConstructionSiteBase.GetConstructionSite(newBuilding, buildingManager.ConstructionSitePrefab);
             while(newBuilding.BuildProgress < 1.0f)
             {
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Classes.Commands
             }
 
             //Finished building
-            newBuilding.GetComponent<SpriteRenderer>().enabled = true;
+            newBuilding.ShowSprite(true);
             MonoBehaviour.Destroy(constructionSite.gameObject);
             CurrentState = CommandState.Ending;
             base.CommandResult = CommandResult.Success;

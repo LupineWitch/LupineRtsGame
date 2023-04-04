@@ -52,6 +52,7 @@ public class BuildingBase : EntityBase
     private Collider2D buildingCollider;
     private Vector3Int tilePosition;
     private float buildProgress = 0f;
+    private SpriteRenderer spriteRenderer;
 
     public void Initialize(int builidngLayer, BoundsInt occupiedBounds, Vector3Int tilePosition)
     {
@@ -79,8 +80,19 @@ public class BuildingBase : EntityBase
     {
         base.Awake();
         SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        SpriteWidth = spriteRenderer.bounds.size.x;
-        SpriteHeigth = spriteRenderer.bounds.size.y;
+        if(spriteRenderer != null)
+        {
+            SpriteWidth = spriteRenderer.bounds.size.x;
+            SpriteHeigth = spriteRenderer.bounds.size.y;
+        }else //Calculate bounds from multiple sprites used by building
+        {
+            Bounds calculatedBounds = new Bounds(transform.position, Vector3.zero);
+            foreach(SpriteRenderer renderer in GetComponentsInChildren<SpriteRenderer>())
+                calculatedBounds.Encapsulate(renderer.bounds);
+
+            SpriteWidth = calculatedBounds.size.x;
+            SpriteHeigth = calculatedBounds.size.y;
+        }
 
         buildingCollider = gameObject.GetComponent<Collider2D>();
         this.BuildingProgressChanged += buildingProgressBar.RespondToUpdatedProgress;
@@ -103,4 +115,6 @@ public class BuildingBase : EntityBase
 
         return true;
     }
+
+    public virtual void ShowSprite(bool show) => this.spriteRenderer.enabled = show;
 }
