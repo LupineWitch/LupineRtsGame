@@ -20,6 +20,7 @@ namespace Assets.Scripts.Commandables
         public bool TryUnselect(BasicCommandControler selector);
         public bool IsSelectedBy(BasicCommandControler possibleOwner);
         public bool CanBeSelectedBy(BasicCommandControler selector);
+        public void RaiseSelectedEvent(object sender, EventArgs e);
     }
 
 }

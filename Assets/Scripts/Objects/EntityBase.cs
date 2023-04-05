@@ -2,6 +2,7 @@
 using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Commandables.Directives;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -122,4 +123,6 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
         }
 
     }
+
+    public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
 }

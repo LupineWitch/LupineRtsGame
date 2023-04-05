@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class ISelectableOutline : MonoBehaviour
 {
-    private BasicCommandControler controller;
+    protected BasicCommandControler controller;
     private Material outlineMaterial;
-    private ISelectable parent;
+    protected ISelectable parent;
     
-    void Awake()
+    protected virtual void Awake()
     {
         var renderer = GetComponent<SpriteRenderer>();
         if (renderer != null)
@@ -24,7 +24,7 @@ public class ISelectableOutline : MonoBehaviour
         controller = e.CommandControler;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         outlineMaterial?.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
     }

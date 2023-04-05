@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3622865514106069874}
   - component: {fileID: 4015224574023759844}
   - component: {fileID: 775306550224447029}
+  - component: {fileID: 2929858280271178053}
   m_Layer: 0
   m_Name: house
   m_TagString: Untagged
@@ -53,7 +54,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 21594824fdb79e444bb0e31a29cbda23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,6 +116,18 @@ PolygonCollider2D:
       - {x: 1.625, y: 1.1666667}
       - {x: -0.10416667, y: 0.020833334}
   m_UseDelaunayMesh: 0
+--- !u!114 &2929858280271178053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4319276005067153811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544493b9991d09d4d8d4326ea0df4d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5131053985178193616
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +139,7 @@ GameObject:
   - component: {fileID: 2764190986158993504}
   - component: {fileID: 1396111219580135412}
   - component: {fileID: 195054104747879742}
+  - component: {fileID: 159789427766585441}
   m_Layer: 0
   m_Name: fence
   m_TagString: Untagged
@@ -168,7 +182,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 21594824fdb79e444bb0e31a29cbda23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -232,6 +246,18 @@ PolygonCollider2D:
       - {x: 0.84375, y: 0.7291667}
       - {x: 0.010416667, y: 0}
   m_UseDelaunayMesh: 0
+--- !u!114 &159789427766585441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5131053985178193616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544493b9991d09d4d8d4326ea0df4d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6721830166769420699
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +269,7 @@ GameObject:
   - component: {fileID: 9074417873168100031}
   - component: {fileID: 2960166481495526419}
   - component: {fileID: 4498677604341834161}
+  - component: {fileID: 6606358260195054800}
   m_Layer: 0
   m_Name: hay_heap
   m_TagString: Untagged
@@ -285,7 +312,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 21594824fdb79e444bb0e31a29cbda23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -347,6 +374,18 @@ PolygonCollider2D:
       - {x: 0.1875, y: 0.125}
       - {x: 0.25, y: 0}
   m_UseDelaunayMesh: 0
+--- !u!114 &6606358260195054800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6721830166769420699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544493b9991d09d4d8d4326ea0df4d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9042384918073192125
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +397,7 @@ GameObject:
   - component: {fileID: 614379759937631899}
   - component: {fileID: 7035956729632135185}
   - component: {fileID: 1771005808292569731}
+  - component: {fileID: 2857873392132766764}
   m_Layer: 0
   m_Name: Barn
   m_TagString: Untagged
@@ -400,7 +440,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 21594824fdb79e444bb0e31a29cbda23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -462,6 +502,18 @@ PolygonCollider2D:
       - {x: 0.9270834, y: 0.5833334}
       - {x: 0.052083336, y: 0}
   m_UseDelaunayMesh: 0
+--- !u!114 &2857873392132766764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9042384918073192125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544493b9991d09d4d8d4326ea0df4d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3523173316781737186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -526,6 +578,7 @@ PrefabInstance:
     - {fileID: 3993512676211931640, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
     - {fileID: 3294030332245932057, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
     - {fileID: 8992931114597568262, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
+    - {fileID: 3065541606502256110, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3993512676211931641, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
       insertIndex: -1
@@ -666,6 +719,18 @@ MonoBehaviour:
   preview: {fileID: 21300000, guid: 76c3e005578f11146b89e684224195fd, type: 3}
   buildingSize: {x: 8, y: 6}
   buildingProgressBar: {fileID: 3640730928651676782}
+--- !u!114 &2850327142311580098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544686970178682136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b2eebc19403e3428030dfd736a5efd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &544686970178682139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3993512676211931641, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
