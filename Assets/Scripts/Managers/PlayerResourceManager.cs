@@ -38,7 +38,7 @@ namespace Assets.Scripts.Managers
             if (resourceCounts.ContainsKey(resource))
                 resourceCounts[resource] += value;
             else
-                Debug.LogWarningFormat("Resource {0} doesn't exists", string.IsNullOrEmpty(resource.DisplayName) ? resource.IdName : resource.DisplayName);
+                Debug.LogWarningFormat("Resource {0} doesn't exist", string.IsNullOrEmpty(resource.DisplayName) ? resource.IdName : resource.DisplayName);
         }
     }
 }
