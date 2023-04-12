@@ -13,6 +13,8 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
     public Sprite Preview { get => preview; set => preview = value; }
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
+    public event OwnerChangedEvent OwnerChanged;
+    public BasicCommandControler Owner { get; protected set; } 
 
     protected CommandDirective defaultCommand;
     protected Command<ICommander, IDeputy> executedCommand;
@@ -125,4 +127,10 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
     }
 
     public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
+
+    public virtual void ChangeOwner(BasicCommandControler newOwner)
+    {
+        this.Owner = newOwner;
+        OwnerChanged?.Invoke(this, EventArgs.Empty);
+    }
 }

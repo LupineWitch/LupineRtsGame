@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: buildingsSheet_2
+      name: building_lumber
       rect:
         serializedVersion: 2
         x: 300
@@ -163,7 +163,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -84.5, y: -27}
+        - {x: -13.5, y: 35}
+        - {x: 66.5, y: -11}
+        - {x: 0.5, y: -81}
       tessellationDetail: 0
       bones: []
       spriteID: 73a1dbdd2bdc0684987b607d0f3f5203
@@ -338,13 +342,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      buildingsSheet_2: -1486867892
       buildingsSheet_1: 609620782
       buildingsSheet_9: -2136996216
       building_farm: 144675119
       buildingsSheet_5: -432329257
       buildingsSheet_0: 228067566
       buildingsSheet_7: -2099712563
+      building_lumber: -1486867892
       buildingsSheet_8: 805931179
       buildingsSheet_4: -1105625996
       buildingsSheet_6: 129158870

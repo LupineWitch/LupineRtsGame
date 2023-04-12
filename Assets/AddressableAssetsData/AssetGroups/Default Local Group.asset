@@ -37,6 +37,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f97f0b1c4925a8648ab69746344543c8
+    m_Address: Assets/Sprites/UI/Icons/Resources
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dca91341924f447b6ea0f4abfe783f, type: 2}
   m_SchemaSet:

@@ -28,7 +28,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     public MapManager MapManager => this.mapManager;
     public BuildingManager BuildingsManager => this.buildingManager;
     public AvailableBuildingSpaceManager BuildingSpaceManager => this.buildSpaceManager;
-
     public GameObject UnitsContainer => unitsContainer; 
 
     [SerializeField]
