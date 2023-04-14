@@ -18,6 +18,7 @@ public class BuildingManager : MonoBehaviour
     public BuildingBase BuildingPrefab => defaultPrefab;
 
     public ConstructionSiteBase ConstructionSitePrefab { get => constructionSitePrefab; private set => constructionSitePrefab = value; }
+    public GameObject BuildingsContainer { get => buildingParent; }
 
     [SerializeField]
     private BuildingBase defaultPrefab;
@@ -53,7 +54,6 @@ public class BuildingManager : MonoBehaviour
         Vector3Int tilePosition = mainTilemap.WorldToCell(from.position);
         return GetClosestPointNearBuildSite(tilePosition, placementTile, prefab);
     }
-
 
     public Vector3Int GetClosestPointNearBuildSite(Vector3Int from, Vector3Int placementTile, BuildingBase prefab)
     {
@@ -97,4 +97,5 @@ public class BuildingManager : MonoBehaviour
 
         return closestPositionNearEdge;
     }
+
 }

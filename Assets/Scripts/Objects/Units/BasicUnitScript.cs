@@ -18,7 +18,7 @@ public class BasicUnitScript : EntityBase
 
     private void Start()
     {
-        defaultCommand = new ContextDirective();
+        defaultDirective = new ContextDirective();
         menuActions[0] = new MoveDirective();
     }
 }

@@ -1559,7 +1559,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: IsometricTRPGAssetPack_Entities_8
+      name: Spearperson_0
       rect:
         serializedVersion: 2
         x: 0
@@ -2939,7 +2939,6 @@ TextureImporter:
       IsometricTRPGAssetPack_Entities_94: 1802984242
       IsometricTRPGAssetPack_Entities_129: 641852609
       IsometricTRPGAssetPack_Entities_108: 1860354569
-      IsometricTRPGAssetPack_Entities_8: 1149348137
       IsometricTRPGAssetPack_Entities_100: -944384707
       IsometricTRPGAssetPack_Entities_21: -860369479
       IsometricTRPGAssetPack_Entities_57: -1345924388
@@ -2986,6 +2985,7 @@ TextureImporter:
       IsometricTRPGAssetPack_Entities_24: 155935193
       IsometricTRPGAssetPack_Entities_75: 1586508898
       IsometricTRPGAssetPack_Entities_4: -1646042999
+      Spearperson_0: 1149348137
       IsometricTRPGAssetPack_Entities_44: -1565400052
       IsometricTRPGAssetPack_Entities_93: 1601743167
       IsometricTRPGAssetPack_Entities_46: -558281992

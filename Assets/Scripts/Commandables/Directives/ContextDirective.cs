@@ -18,9 +18,7 @@ namespace Assets.Scripts.Commandables.Directives
 
         private void DelegateOnContext(InputAction.CallbackContext inputActionContext, BasicCommandControler commander, List<ISelectable> selectedObjects)
         {
-            InputAction pointerAction = inputActionContext.action.actionMap.FindAction(nameof(BasicControls.CommandControls.PointerPosition));
-            Vector2 mousePos = pointerAction.ReadValue<Vector2>();
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            Vector2 mousePos = GetCurrentMousePosition(inputActionContext);
             Collider2D possibleBuilding = Physics2D.OverlapPoint(mousePos);
             TopCellResult cellResult = commander.GetTopCellResult(mousePos);
 
@@ -30,11 +28,12 @@ namespace Assets.Scripts.Commandables.Directives
                 if (!cellResult.found)
                     return;
 
-                foreach(BasicUnitScript deputy in selectedObjects.Where(o => o is BasicUnitScript))
-                    deputy.SetCommand(new AStarMoveCommand(commander, deputy, cellResult.topCell, commander.MapManager, deputy.unitSpeed));
-            }else
                 foreach (BasicUnitScript deputy in selectedObjects.Where(o => o is BasicUnitScript))
-                    deputy.SetCommand(new ResumeBuildingCommand( deputy, commander, building, commander.BuildingsManager));
+                    deputy.SetCommand(new AStarMoveCommand(commander, deputy, cellResult.topCell, commander.MapManager, deputy.unitSpeed));
+            }
+            else
+                foreach (BasicUnitScript deputy in selectedObjects.Where(o => o is BasicUnitScript))
+                    deputy.SetCommand(new ResumeBuildingCommand(deputy, commander, building, commander.BuildingsManager));
         }
 
         public override void OnDirectiveDeselection(BasicCommandControler controler)

@@ -51,6 +51,7 @@ namespace Assets.Scripts.Classes.Commands
             CurrentState = CommandState.InProgress;
             var newBuilding = buildingManager.TryToPlaceBuildingInWorld(placementPosition, buildingPrefab);
             newBuilding.ShowSprite(false);
+            newBuilding.ChangeOwner(commander);
 
             ConstructionSiteBase constructionSite = ConstructionSiteBase.GetConstructionSite(newBuilding, buildingManager.ConstructionSitePrefab);
             while(newBuilding.BuildProgress < 1.0f)

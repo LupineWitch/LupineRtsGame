@@ -9,14 +9,14 @@ using UnityEngine;
 public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
 {
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
-    public CommandDirective DefaultDirective { get => defaultCommand; }
+    public CommandDirective DefaultDirective { get => defaultDirective; }
     public Sprite Preview { get => preview; set => preview = value; }
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;
     public BasicCommandControler Owner { get; protected set; } 
 
-    protected CommandDirective defaultCommand;
+    protected CommandDirective defaultDirective;
     protected Command<ICommander, IDeputy> executedCommand;
     protected CommandDirective[] menuActions = new CommandDirective[9];
     protected Coroutine currentlyRunCommandCoroutine = null;

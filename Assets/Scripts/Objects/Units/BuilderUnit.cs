@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using Assets.Scripts.Objects.Buildings;
 
 namespace Assets.Scripts.Objects.Units
 {
@@ -16,8 +17,13 @@ namespace Assets.Scripts.Objects.Units
         protected override void Awake()
         {
             base.Awake();
-            defaultCommand = new ContextDirective();
+            defaultDirective = new ContextDirective();
             var asyncLoadHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/Farmhouse/Farmhouse.prefab");
+            Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/LumberHut.prefab").Completed += (loadHandle) =>
+            {
+                ResourceBuilding storage = loadHandle.Result.GetComponent<ResourceBuilding>();
+                menuActions[2] = new BuildDirective(storage);
+            };
             asyncLoadHandle.Completed += AsyncLoadHandle_Completed;
             DisplayLabel = "Builder";
         }

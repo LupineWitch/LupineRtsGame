@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Commandables.Directives
 {
@@ -34,6 +35,14 @@ namespace Assets.Scripts.Commandables.Directives
         public override int GetHashCode()
         {
             return HashCode.Combine(Name);
+        }
+
+        protected static Vector2 GetCurrentMousePosition(InputAction.CallbackContext inputActionContext)
+        {
+            InputAction pointerAction = inputActionContext.action.actionMap.FindAction(nameof(BasicControls.CommandControls.PointerPosition));
+            Vector2 mousePos = pointerAction.ReadValue<Vector2>();
+            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+            return mousePos;
         }
     }
 }
