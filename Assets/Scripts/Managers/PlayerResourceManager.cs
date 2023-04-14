@@ -36,7 +36,10 @@ namespace Assets.Scripts.Managers
         public void ChangeResourceLevel(RtsResource resource, int value)
         {
             if (resourceCounts.ContainsKey(resource))
+            {
                 resourceCounts[resource] += value;
+                resourceGauges.Find(g => g.ForResource == resource.IdName).ResourceValueChanged(resourceCounts[resource]);
+            }
             else
                 Debug.LogWarningFormat("Resource {0} doesn't exist", string.IsNullOrEmpty(resource.DisplayName) ? resource.IdName : resource.DisplayName);
         }

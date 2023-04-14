@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 162207073627138096}
   - component: {fileID: 162207073627138097}
   - component: {fileID: 162207073627138110}
-  - component: {fileID: 162207073627138111}
   - component: {fileID: 162207073627138108}
   m_Layer: 0
   m_Name: lush_pine_1
@@ -129,18 +128,6 @@ PolygonCollider2D:
       - {x: 0.7375, y: 1.0333334}
       - {x: 0.38750002, y: 0.9416667}
   m_UseDelaunayMesh: 0
---- !u!114 &162207073627138111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 162207073627138099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9209f10d3f1357e43a4feb63a4979fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &162207073627138108
 MonoBehaviour:
   m_ObjectHideFlags: 0

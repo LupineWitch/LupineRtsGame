@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Commandables.Directives;
+﻿using Assets.Scripts.Classes.GameData;
+using Assets.Scripts.Commandables.Directives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,15 @@ namespace Assets.Scripts.Objects.Units
     public class WorkerUnit : BasicUnitScript
     {
         public int Capacity { get; set; } = 15;
+        public Tuple<RtsResource, int> CarriedResource { get; set; }
         public float GatheringEfficiency { get; set; } = 1f;
 
-        protected override void Awake()
+        protected override void Start()
         {
             base.Awake();
             DisplayLabel = "Worker";
             defaultDirective = new MoveCollectDirective();
-            menuActions[1] = DefaultDirective;
-
-            //TODO:
-            //default action: move/collect
-            //0 move/collect
-            //1 collect
+            menuActions[0] = defaultDirective;
         }
     }
 }

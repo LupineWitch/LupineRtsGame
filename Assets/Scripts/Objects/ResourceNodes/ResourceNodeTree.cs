@@ -20,6 +20,11 @@ namespace Assets.Scripts.Objects.ResourceNodes
         [SerializeField]
         private int amount;
 
+        protected void Awake()
+        {
+            Resource = new RtsResource(resourceId);
+        }
+
         public int TryGather(int howMuch)
         {
             int ableToGet = Math.Min(Amount, howMuch);

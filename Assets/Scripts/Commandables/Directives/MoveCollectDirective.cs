@@ -3,6 +3,7 @@ using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Objects.Buildings;
 using Assets.Scripts.Objects.ResourceNodes;
+using Assets.Scripts.Objects.Units;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Assets.Scripts.Commandables.Directives
             TopCellResult cellResult = commander.GetTopCellResult(mousePos);
 
             ResourceNodeTree node = gameObject?.GetComponent<ResourceNodeTree>() ?? null;
+            Debug.LogAssertion(gameObject == null ? "doesnt exist" : "Exists", gameObject);
             if(node == null || !node.CanBeMined)
             {
                 if (!cellResult.found)
@@ -50,7 +52,7 @@ namespace Assets.Scripts.Commandables.Directives
                     }
                 }
 
-                foreach (BasicUnitScript deputy in selectedObjects.Where(o => o is BasicUnitScript))
+                foreach (WorkerUnit deputy in selectedObjects.Where(o => o is WorkerUnit))
                     deputy.SetCommand(new CollectResourceCommand(closestStorage, node, deputy, commander));
             }
         }

@@ -16,7 +16,7 @@ public class BasicUnitScript : EntityBase
     public float unitSpeed = 10f;
 
 
-    private void Start()
+    protected virtual void Start()
     {
         defaultDirective = new ContextDirective();
         menuActions[0] = new MoveDirective();

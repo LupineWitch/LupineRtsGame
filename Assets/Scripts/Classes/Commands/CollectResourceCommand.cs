@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Classes.Helpers;
+﻿using Assets.Scripts.Classes.GameData;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Objects.Buildings;
 using Assets.Scripts.Objects.ResourceNodes;
@@ -34,6 +35,7 @@ namespace Assets.Scripts.Classes.Commands
             WorkerUnit worker = reciever as WorkerUnit;
             //Assuming this doesnt change
             var cellPosOfStorage = controler.MapManager.TransformToCellPosition(targetStorage.transform);
+            cellPosOfStorage = controler.BuildingsManager.GetClosestPointNearBuildSite(worker.transform, cellPosOfStorage, targetStorage);
             while(targetNode.CanBeMined)
             {
                 AStarMoveCommand aStarMoveCommand = new AStarMoveCommand(this.sender, worker, cellPosOfTargetNode, controler.MapManager, worker.unitSpeed);
@@ -49,12 +51,15 @@ namespace Assets.Scripts.Classes.Commands
                 }
 
                 yield return new WaitForSeconds(targetNode.TimeToGather / worker.GatheringEfficiency);
-                worker.Capacity = targetNode.TryGather(worker.Capacity);
+                worker.CarriedResource = new Tuple<RtsResource,int>(targetNode.Resource, targetNode.TryGather(worker.Capacity));
                 AStarMoveCommand depositToStorage = new AStarMoveCommand(this.sender, worker, cellPosOfStorage, controler.MapManager, worker.unitSpeed);
                 worker.SetSubcommand(depositToStorage);
 
                 while (aStarMoveCommand.CurrentState.IsActiveState())
                     yield return null;
+
+                if (targetStorage.TryToDepositResource(worker.CarriedResource.Item1, worker.CarriedResource.Item2))
+                    worker.CarriedResource = null;
             }
 
             this.CurrentState = CommandState.Ended;

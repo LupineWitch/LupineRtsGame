@@ -9,6 +9,7 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro.EditorUtilities;
+using UnityEngine;
 
 namespace Assets.Scripts.Objects.Buildings
 {
@@ -28,14 +29,9 @@ namespace Assets.Scripts.Objects.Buildings
             base.Awake();
         }
 
-        private async void AssignResourceManager(object sender, EventArgs e)
+        private void AssignResourceManager(object sender, EventArgs e)
         {
-            PlayerResourceManager[] resourceManagers = await Task.Run( () =>
-            {
-                Task.Yield();
-                return GetComponentsInParent<PlayerResourceManager>();
-            });
-
+            PlayerResourceManager[] resourceManagers = GameObject.FindObjectsOfType<PlayerResourceManager>();    
             this.ResourceManager = resourceManagers.FirstOrDefault(manager => manager.OwnerId == this.Owner.GetInstanceID());
         }
     }

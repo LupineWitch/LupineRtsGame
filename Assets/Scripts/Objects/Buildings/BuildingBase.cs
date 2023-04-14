@@ -79,11 +79,11 @@ public class BuildingBase : EntityBase
     protected override void Awake()
     {
         base.Awake();
-        SpriteRenderer spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        if(spriteRenderer != null)
+        this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        if(this.spriteRenderer != null)
         {
-            SpriteWidth = spriteRenderer.bounds.size.x;
-            SpriteHeigth = spriteRenderer.bounds.size.y;
+            SpriteWidth = this.spriteRenderer.bounds.size.x;
+            SpriteHeigth = this.spriteRenderer.bounds.size.y;
         }else //Calculate bounds from multiple sprites used by building
         {
             Bounds calculatedBounds = new Bounds(transform.position, Vector3.zero);
