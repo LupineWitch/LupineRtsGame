@@ -89,8 +89,9 @@ namespace Assets.Scripts.Classes.Commands
 
         public virtual CommandResult CancelCommand()
         {
+            CommandResult = CommandResult.Cancelled;
             CurrentState = CommandState.Ended;
-            return CommandResult.Cancelled;
+            return CommandResult;
         }
     }
 }

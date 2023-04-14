@@ -13,7 +13,7 @@ namespace Assets.Scripts.Objects.ResourceNodes
         public RtsResource Resource { get; protected set; }
         public int Amount { get => amount; protected set => amount = value; }
         public bool CanBeMined => Resource != null && Amount > 0;
-        public float TimeToGather = 8f;//s
+        public float TimeToGather = 4f;//s
 
         [SerializeField]
         private string resourceId;

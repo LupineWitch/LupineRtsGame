@@ -26,7 +26,6 @@ namespace Assets.Scripts.Commandables.Directives
             TopCellResult cellResult = commander.GetTopCellResult(mousePos);
 
             ResourceNodeTree node = gameObject?.GetComponent<ResourceNodeTree>() ?? null;
-            Debug.LogAssertion(gameObject == null ? "doesnt exist" : "Exists", gameObject);
             if(node == null || !node.CanBeMined)
             {
                 if (!cellResult.found)
