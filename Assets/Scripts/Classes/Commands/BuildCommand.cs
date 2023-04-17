@@ -2,10 +2,6 @@
 using Assets.Scripts.Objects.Buildings;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Commands
@@ -47,14 +43,14 @@ namespace Assets.Scripts.Classes.Commands
             //wait for command to end
             while (moveToBuildingPosition.CurrentState != CommandState.Ended)
                 yield return null;
-            
+
             CurrentState = CommandState.InProgress;
             var newBuilding = buildingManager.TryToPlaceBuildingInWorld(placementPosition, buildingPrefab);
             newBuilding.ShowSprite(false);
             newBuilding.ChangeOwner(commander);
 
             ConstructionSiteBase constructionSite = ConstructionSiteBase.GetConstructionSite(newBuilding, buildingManager.ConstructionSitePrefab);
-            while(newBuilding.BuildProgress < 1.0f)
+            while (newBuilding.BuildProgress < 1.0f)
             {
                 newBuilding.BuildProgress += Time.deltaTime / buildTime;
                 buildProgress = newBuilding.BuildProgress;
@@ -68,6 +64,6 @@ namespace Assets.Scripts.Classes.Commands
             CurrentState = CommandState.Ending;
             base.CommandResult = CommandResult.Success;
             CurrentState = CommandState.Ended;
-        }        
+        }
     }
 }

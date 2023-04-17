@@ -2,10 +2,6 @@
 using Assets.Scripts.Objects.Buildings;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Commands
@@ -31,7 +27,7 @@ namespace Assets.Scripts.Classes.Commands
             CurrentState = CommandState.InProgress;
             BasicCommandControler commander = sender as BasicCommandControler;
             var producer = reciever as ProductionBuilding;
-            while(elapsedTime < buildTime)
+            while (elapsedTime < buildTime)
             {
                 producer.ProductionProgress = elapsedTime / buildTime;
                 elapsedTime += Time.deltaTime;

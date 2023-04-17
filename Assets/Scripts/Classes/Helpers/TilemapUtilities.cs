@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.Tilemaps;
@@ -37,10 +33,10 @@ namespace Assets.Scripts.Classes.Helpers
             Vector3Int topTile = position;
             Vector3Int tempTile = topTile;
 
-            for(int z = 0; z <= tilemap.cellBounds.zMax; z++)
+            for (int z = 0; z <= tilemap.cellBounds.zMax; z++)
             {
                 tempTile.z = z;
-                if(tilemap.HasTile(tempTile))
+                if (tilemap.HasTile(tempTile))
                     topTile = tempTile;
             }
 
@@ -54,15 +50,15 @@ namespace Assets.Scripts.Classes.Helpers
         /// <returns>Dictionary of heigth differences between  <paramref name="position"/> and its neighbours, keyed by neighbour.</returns>
         public static Dictionary<Vector3Int, int> GetNeighbouringNodes(this Tilemap tilemap, Vector3Int position)
         {
-            Dictionary<Vector3Int, int> neighbours = new Dictionary<Vector3Int, int>(); 
-           Vector3Int topTilePosition = tilemap.GetTopTilePosition(position);
+            Dictionary<Vector3Int, int> neighbours = new Dictionary<Vector3Int, int>();
+            Vector3Int topTilePosition = tilemap.GetTopTilePosition(position);
 
-            foreach(Vector3Int direction in NeighbourDirections)
+            foreach (Vector3Int direction in NeighbourDirections)
             {
                 Vector3Int currentNeighbour = tilemap.GetTopTilePosition(position + direction);
                 //is this tile in the expected bounds??
                 if (!tilemap.cellBounds.Contains(currentNeighbour))
-                    continue;                    
+                    continue;
 
                 int heigthDiff = currentNeighbour.z - topTilePosition.z;
                 neighbours.Add(currentNeighbour, Math.Abs(heigthDiff));

@@ -1,13 +1,8 @@
 using Assets.Scripts.Classes.Factories.Building;
 using Assets.Scripts.Classes.Helpers;
-using Assets.Scripts.Classes.Painters;
 using Assets.Scripts.Classes.Static;
-using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Objects.Buildings;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

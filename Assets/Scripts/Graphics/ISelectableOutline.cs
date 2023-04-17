@@ -1,6 +1,4 @@
 using Assets.Scripts.Commandables;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ISelectableOutline : MonoBehaviour
@@ -8,7 +6,7 @@ public class ISelectableOutline : MonoBehaviour
     protected BasicCommandControler controller;
     private Material outlineMaterial;
     protected ISelectable parent;
-    
+
     protected virtual void Awake()
     {
         var renderer = GetComponent<SpriteRenderer>();

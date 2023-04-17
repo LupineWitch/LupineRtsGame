@@ -1,9 +1,4 @@
 ﻿using Assets.Scripts.Commandables.Directives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
 using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -30,7 +25,7 @@ namespace Assets.Scripts.Objects.Units
 
         private void AsyncLoadHandle_Completed(AsyncOperationHandle<GameObject> loadHandle)
         {
-            BuildingBase buildingBase = loadHandle.Result.GetComponent<BuildingBase>(); 
+            BuildingBase buildingBase = loadHandle.Result.GetComponent<BuildingBase>();
             menuActions[0] = new MoveDirective();
             menuActions[1] = new BuildDirective(buildingBase);
         }

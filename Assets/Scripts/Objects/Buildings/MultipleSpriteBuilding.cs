@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Objects.Buildings
 {
@@ -12,10 +7,10 @@ namespace Assets.Scripts.Objects.Buildings
         private SpriteRenderer[] renderers;
         public override void ShowSprite(bool show)
         {
-            if(renderers == null || renderers.Length == 0)
+            if (renderers == null || renderers.Length == 0)
                 renderers = GetComponentsInChildren<SpriteRenderer>();
 
-            foreach(var renderer in renderers)
+            foreach (var renderer in renderers)
                 renderer.enabled = show;
         }
     }

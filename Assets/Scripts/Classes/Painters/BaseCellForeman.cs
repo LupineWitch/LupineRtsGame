@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -34,7 +31,7 @@ namespace Assets.Scripts.Classes.Painters
             tilemap.SetTileFlags(tempCoords, TileFlags.None);
             tilemap.SetColor(tempCoords, color);
             tilemap.SetTileFlags(tempCoords, tileFlags);
-            
+
             return true;
         }
 

@@ -1,10 +1,6 @@
 ﻿using Assets.Scripts.Classes.GameData;
 using Assets.Scripts.GUI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Managers
@@ -32,7 +28,7 @@ namespace Assets.Scripts.Managers
                 { new RtsResource("stone"){ DisplayName = "Stone"}, 0 },
             };
         }
-    
+
         public void ChangeResourceLevel(RtsResource resource, int value)
         {
             if (resourceCounts.ContainsKey(resource))

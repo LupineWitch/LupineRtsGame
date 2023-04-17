@@ -1,5 +1,3 @@
-using Assets.Scripts.Commandables;
-using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,7 +43,7 @@ public class GUIManager : MonoBehaviour
 
     private void SelectionWasUpdated(object sender, SelectionChangedEventArgs e)
     {
-        if(e.SelectedEntities.Count <= 0)
+        if (e.SelectedEntities.Count <= 0)
         {
             selectedEntityLabel.enabled = false;
             selectedEntityPortrait.enabled = false;
@@ -67,7 +65,7 @@ public class GUIManager : MonoBehaviour
 
         int actionsCount = menuCommands?.Count() ?? 0;
         int index = 0;
-        for(; menuCommands != default && index < menuButtons.Length; index++)
+        for (; menuCommands != default && index < menuButtons.Length; index++)
         {
             if (index >= actionsCount)
                 break;
@@ -75,8 +73,8 @@ public class GUIManager : MonoBehaviour
             CommandDirective directiveAtIndex = menuCommands.ElementAt(index);
             Transform child = menuButtons[index].transform.GetChild(0);
             var buttonIcon = child.gameObject.GetComponent<Image>();
-            
-            if(directiveAtIndex == null)
+
+            if (directiveAtIndex == null)
             {
                 menuButtons[index].interactable = false;
                 buttonIcon.sprite = emptyButtonIcon;
@@ -94,7 +92,7 @@ public class GUIManager : MonoBehaviour
             return;
         }
 
-        for(;index < menuButtons.Length; index++)
+        for (; index < menuButtons.Length; index++)
         {
             menuButtons[index].interactable = false;
             Transform child = menuButtons[index].transform.GetChild(0);

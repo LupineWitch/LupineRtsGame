@@ -1,15 +1,9 @@
 ﻿using Assets.Scripts.Managers;
-using Assets.Scripts.Classes.Models.Level;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Data.SqlTypes;
-using Unity.VisualScripting;
+using Assets.Scripts.Classes.Models.Level.Map;
 
 namespace Assets.Scripts.Classes.Serialisers
 {

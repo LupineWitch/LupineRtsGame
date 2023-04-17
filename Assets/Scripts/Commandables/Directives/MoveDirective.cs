@@ -3,13 +3,9 @@ using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
-using Assets.Scripts.Managers;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,7 +18,7 @@ namespace Assets.Scripts.Commandables.Directives
 
         public override Sprite ButtonIcon
         {
-            get 
+            get
             {
                 string path = Path.Join(ResourceNames.ButtonIconsResourcePath, ResourceNames.GUISpriteSheet);
                 return ResourcesUtilities.LoadSpriteFromSpritesheet(path, "IconMarker");

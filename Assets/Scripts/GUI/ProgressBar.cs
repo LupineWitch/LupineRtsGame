@@ -1,9 +1,5 @@
 using Assets.Scripts.Classes.Events;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ProgressBar : MonoBehaviour
 {
@@ -51,7 +47,7 @@ public class ProgressBar : MonoBehaviour
 
     public void RespondToUpdatedProgress(object sender, ProgressEventArgs args)
     {
-        if(args != null)   
+        if (args != null)
             SetProgress(args.Progress);
     }
 }

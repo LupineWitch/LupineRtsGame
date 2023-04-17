@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Classes.Helpers;
-using Assets.Scripts.Classes.TileOverlays;
+﻿using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Pathfinding;
@@ -7,10 +6,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Vector2 = UnityEngine.Vector2;
@@ -18,12 +13,12 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Assets.Scripts.Classes.Commands
 {
-    public class AStarMoveCommand: Command<ICommander, IDeputy>
+    public class AStarMoveCommand : Command<ICommander, IDeputy>
     {
         private Queue<Vector3Int> positionsToVisit;
         private Tilemap tilemap;
 
-        private Vector3Int startCell; 
+        private Vector3Int startCell;
         private Vector3 startPos;
         private Vector3Int targetCell;
         private Vector3 currentPosition;
@@ -42,9 +37,9 @@ namespace Assets.Scripts.Classes.Commands
         private OverlayAstarPath overlay;
         #endregion
 
-        public AStarMoveCommand(ICommander sender, BasicUnitScript reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver,sender)
+        public AStarMoveCommand(ICommander sender, BasicUnitScript reciver, Vector3Int target, MapManager mapManager, float speed) : base(reciver, sender)
         {
-            tilemap = mapManager.MainTilemap;             
+            tilemap = mapManager.MainTilemap;
             this.targetCell = target;
             this.pathingGrid = mapManager.PathingGrid;
             this.movingSpeed = speed;
@@ -84,7 +79,7 @@ namespace Assets.Scripts.Classes.Commands
             CurrentState = CommandState.InProgress;
             yield return new WaitForFixedUpdate();
 
-            while(shouldKeepGoing)
+            while (shouldKeepGoing)
             {
                 if (shouldDequeueNextPoint)
                 {

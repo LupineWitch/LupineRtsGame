@@ -1,12 +1,8 @@
 using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Static;
-using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Managers;
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public enum CellConstructionSuitability
 {
@@ -17,8 +13,8 @@ public enum CellConstructionSuitability
 
 public class BuildingBase : EntityBase
 {
-    public float BuildProgress 
-    { 
+    public float BuildProgress
+    {
         get => buildProgress;
         set
         {
@@ -66,7 +62,7 @@ public class BuildingBase : EntityBase
     {
         this.Destroyed?.Invoke(this, new BuildingEventArgs(this.OccupiedBounds));
     }
-  
+
     public virtual CellConstructionSuitability IsCellAvailableForBuilding(Vector3Int cell, AvailableBuildingSpaceManager buildingsManager)
     {
         bool canBePlaced = !buildingsManager.IsCellOccupiedByBuilding(cell);
@@ -80,14 +76,15 @@ public class BuildingBase : EntityBase
     {
         base.Awake();
         this.spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        if(this.spriteRenderer != null)
+        if (this.spriteRenderer != null)
         {
             SpriteWidth = this.spriteRenderer.bounds.size.x;
             SpriteHeigth = this.spriteRenderer.bounds.size.y;
-        }else //Calculate bounds from multiple sprites used by building
+        }
+        else //Calculate bounds from multiple sprites used by building
         {
             Bounds calculatedBounds = new Bounds(transform.position, Vector3.zero);
-            foreach(SpriteRenderer renderer in GetComponentsInChildren<SpriteRenderer>())
+            foreach (SpriteRenderer renderer in GetComponentsInChildren<SpriteRenderer>())
                 calculatedBounds.Encapsulate(renderer.bounds);
 
             SpriteWidth = calculatedBounds.size.x;

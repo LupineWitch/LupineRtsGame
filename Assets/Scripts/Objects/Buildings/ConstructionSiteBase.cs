@@ -1,15 +1,4 @@
-﻿using Assets.Scripts.Classes.Commands;
-using Assets.Scripts.Classes.Events;
-using Assets.Scripts.Commandables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using ISelectable = Assets.Scripts.Commandables.ISelectable;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Objects.Buildings
 {

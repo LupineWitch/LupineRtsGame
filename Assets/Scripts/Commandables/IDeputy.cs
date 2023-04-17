@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Classes.Commands;
 using Assets.Scripts.Commandables.Directives;
-using Assets.Scripts.Controllers;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.Commandables
@@ -10,6 +9,6 @@ namespace Assets.Scripts.Commandables
         public void SetCommand(Command<ICommander, IDeputy> command);
         public void SetSubcommand(Command<ICommander, IDeputy> command);
         public IReadOnlyCollection<CommandDirective> AvailableDirectives { get; }
-        public CommandDirective DefaultDirective { get;}
+        public CommandDirective DefaultDirective { get; }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Graphics

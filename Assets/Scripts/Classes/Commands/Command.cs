@@ -1,11 +1,6 @@
-﻿using Assets.Scripts.Classes.Helpers;
-using System;
+﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using System.Linq;
 
 namespace Assets.Scripts.Classes.Commands
 {
@@ -18,7 +13,7 @@ namespace Assets.Scripts.Classes.Commands
         Interrupted,
         Failed
     }
-    
+
     public enum CommandState
     {
         Cold = 0,
@@ -31,7 +26,9 @@ namespace Assets.Scripts.Classes.Commands
 
     public abstract class Command<SenderType, RecieverType>
     {
-        public CommandState CurrentState { get => _currentState; protected set
+        public CommandState CurrentState
+        {
+            get => _currentState; protected set
             {
                 _currentState = value;
                 if (currentStateCallback != null)
@@ -45,7 +42,7 @@ namespace Assets.Scripts.Classes.Commands
             get => _commandResult; protected set
             {
                 _commandResult = value;
-                if(commandResultCallback != null)
+                if (commandResultCallback != null)
                     commandResultCallback(_commandResult);
                 else
                     Debug.LogWarning("Changed command result without callback!");
@@ -58,7 +55,7 @@ namespace Assets.Scripts.Classes.Commands
         protected Action<CommandState> currentStateCallback;
 
         private CommandResult _commandResult = CommandResult.Invalid;
-        private CommandState _currentState = CommandState.Cold;       
+        private CommandState _currentState = CommandState.Cold;
 
         protected Command(RecieverType recieverType, SenderType sender)
         {

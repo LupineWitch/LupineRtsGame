@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Commandables;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Classes.Events
 {

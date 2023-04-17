@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
+public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 {
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
     public CommandDirective DefaultDirective { get => defaultDirective; }
@@ -14,7 +14,7 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;
-    public BasicCommandControler Owner { get; protected set; } 
+    public BasicCommandControler Owner { get; protected set; }
 
     protected CommandDirective defaultDirective;
     protected Command<ICommander, IDeputy> executedCommand;
@@ -30,7 +30,7 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
 
     protected virtual void Awake()
     {
-        if(preview == null)
+        if (preview == null)
             preview = gameObject.GetComponent<SpriteRenderer>().sprite;
     }
 
@@ -59,7 +59,7 @@ public class EntityBase :  MonoBehaviour, ISelectable, IDeputy
             this.StopCoroutine(currentlyRunCommandCoroutine);
 
         foreach (var coroutine in currentSubcoroutines)
-            if(coroutine != null)
+            if (coroutine != null)
                 this.StopCoroutine(coroutine);
 
         this.currentSubcoroutines.Clear();

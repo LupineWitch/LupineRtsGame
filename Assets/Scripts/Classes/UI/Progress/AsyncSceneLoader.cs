@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace Assets.Scripts.Classes.UI.Progress
 {
     public interface AsyncSceneLoader
     {
-        public  IEnumerator LoadSceneAsync(string sceneName);
+        public IEnumerator LoadSceneAsync(string sceneName);
     }
 }

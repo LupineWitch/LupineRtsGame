@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEngine.Tilemaps.TilemapRenderer;
-using UnityEngine.WSA;
 
 namespace Assets.Scripts.Classes.TileOverlays
 {
     public delegate Color ColorPredicate(Vector3Int position, Tilemap tilemap = null);
 
-    public abstract class OverlayBase: IDisposable, ICloneable
+    public abstract class OverlayBase : IDisposable, ICloneable
     {
 
         protected readonly Tilemap terrainLayer;

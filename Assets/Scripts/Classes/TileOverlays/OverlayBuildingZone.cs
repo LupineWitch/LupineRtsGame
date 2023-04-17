@@ -1,11 +1,5 @@
-﻿using Assets.Scripts.Classes.Painters;
-using Assets.Scripts.Classes.Static;
-using System;
+﻿using Assets.Scripts.Classes.Static;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -27,7 +21,7 @@ namespace Assets.Scripts.Classes.TileOverlays
         public override void DrawUsingColorPredicate(IEnumerable<Vector3Int> cells, ColorPredicate colorPredicate)
         {
             this.DestroyOverlay();
-            
+
             foreach (var cell in cells)
                 overlayPainter.TryCreatePaintedCell(cell, colorPredicate(cell), OverlayTile);
         }
@@ -38,7 +32,7 @@ namespace Assets.Scripts.Classes.TileOverlays
 
             Vector3Int bottomLeftCorner = new Vector3Int(center.x - buildingAreaRadius, center.y - buildingAreaRadius, center.z);
             BoundsInt overlayBounds = new BoundsInt(bottomLeftCorner, new Vector3Int(buildingAreaDiameter, buildingAreaDiameter, 1));
-            
+
             foreach (var cell in overlayBounds.allPositionsWithin)
                 overlayPainter.TryCreatePaintedCell(cell, Color.gray, OverlayTile);
 

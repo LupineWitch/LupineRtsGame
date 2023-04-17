@@ -6,11 +6,6 @@ using Assets.Scripts.Objects.ResourceNodes;
 using Assets.Scripts.Objects.Units;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Commands
@@ -57,10 +52,10 @@ namespace Assets.Scripts.Classes.Commands
             while (timePassed < (targetNode.TimeToGather / worker.GatheringEfficiency))
             {
                 timePassed += Time.deltaTime;
-                yield return null; 
+                yield return null;
             }
 
-            worker.CarriedResource = new Tuple<RtsResource,int>(targetNode.Resource, targetNode.TryGather(worker.Capacity));
+            worker.CarriedResource = new Tuple<RtsResource, int>(targetNode.Resource, targetNode.TryGather(worker.Capacity));
             AStarMoveCommand depositToStorage = new AStarMoveCommand(this.sender, worker, cellPosOfStorage, controler.MapManager, worker.unitSpeed);
             worker.SetSubcommand(depositToStorage);
 
@@ -78,7 +73,7 @@ namespace Assets.Scripts.Classes.Commands
         private void SetNewCommand(CommandState state)
         {
             orginalCallback(state);
-            if(state == CommandState.Ended && CommandResult != CommandResult.Cancelled)
+            if (state == CommandState.Ended && CommandResult != CommandResult.Cancelled)
             {
                 this.reciever.SetCommand(new CollectResourceCommand(this.targetStorage, targetNode, reciever, sender));
             }

@@ -1,15 +1,11 @@
 ﻿using Assets.Scripts.Classes.Helpers;
 using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEngine.GraphicsBuffer;
 using Grid = Roy_T.AStar.Grids.Grid;
 
 namespace Assets.Scripts.Pathfinding
@@ -103,7 +99,7 @@ namespace Assets.Scripts.Pathfinding
         public abstract void ReaddNodesToPathingGrid(IEnumerable<Vector3Int> nodes, Tilemap toTilemap);
 
         public abstract bool CanTwoNodesConnect(Vector3Int fromNode, Vector3Int toNode);
-        
+
         public override string ToString()
         {
             string connectedLeft = "|##<##|";
@@ -120,16 +116,16 @@ namespace Assets.Scripts.Pathfinding
 
             for (int i = 0; i < cells.GetLength(0); i++)
                 for (int j = 0; j < cells.GetLength(1); j++)
-                    cells[i,j] = "|XX-XX|";
+                    cells[i, j] = "|XX-XX|";
 
-            int textY = 0; 
+            int textY = 0;
             for (int y = 0; y < grid.Rows; y++)
             {
                 int textX = 0;
                 for (int x = 0; x < grid.Columns; x++)
                 {
                     var node = grid.GetNode(new GridPosition(x, y));
-                    cells[textY + 1, textX + 1] = string.Format("{0, 3:D3};{1, 3:D3}",x, y);
+                    cells[textY + 1, textX + 1] = string.Format("{0, 3:D3};{1, 3:D3}", x, y);
                     foreach (var edge in node.Outgoing)
                     {
                         if (edge.End.Position.X > node.Position.X)
@@ -164,10 +160,10 @@ namespace Assets.Scripts.Pathfinding
             }
 
             StringBuilder gridTextbuilder = new StringBuilder();
-            for(int y = 0; y < cells.GetLength(0); y++)
+            for (int y = 0; y < cells.GetLength(0); y++)
             {
-                for(int x = 0; x < cells.GetLength(1); x++)
-                    gridTextbuilder.Append(cells[y,x]);
+                for (int x = 0; x < cells.GetLength(1); x++)
+                    gridTextbuilder.Append(cells[y, x]);
 
                 gridTextbuilder.Append('\n');
             }

@@ -9,7 +9,7 @@ using UnityEditor;
 #endif
 
 #if UNITY_EDITOR
-    [InitializeOnLoad]
+[InitializeOnLoad]
 #endif
 public class MouseDragComposite : InputBindingComposite<Vector2>
 {

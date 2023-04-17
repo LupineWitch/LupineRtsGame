@@ -1,22 +1,14 @@
-using Assets.Scripts.Classes.Commands;
 using Assets.Scripts.Classes.Events;
-using Assets.Scripts.Classes.Helpers;
-using Assets.Scripts.Classes.TileOverlays;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Commandables.Directives;
-using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -28,7 +20,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
     public MapManager MapManager => this.mapManager;
     public BuildingManager BuildingsManager => this.buildingManager;
     public AvailableBuildingSpaceManager BuildingSpaceManager => this.buildSpaceManager;
-    public GameObject UnitsContainer => unitsContainer; 
+    public GameObject UnitsContainer => unitsContainer;
 
     [SerializeField]
     private Tilemap mainTilemap;
@@ -57,14 +49,14 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     public void SetCurrentCommandDirective(int actionId)
     {
-        if(actionId < 0 )
+        if (actionId < 0)
         {
             currentCommandDirective = null;
             return;
         }
 
         ResetControllerContext();
-        if(CurrentSelectionRepresentative == default)
+        if (CurrentSelectionRepresentative == default)
         {
             Debug.LogErrorFormat("{0} field is null when setting an action", nameof(CurrentSelectionRepresentative));
             return;
@@ -186,7 +178,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void SetCommandContextAccordingToSelection()
     {
-        if(selectedObjects.Count <= 0)
+        if (selectedObjects.Count <= 0)
         {
             ResetControllerContext();
             CommandContextChanged.Invoke(this, null);
@@ -209,7 +201,8 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             currentCommandDirective = deputyEntity.DefaultDirective;
             commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);
 
-        }else //Define shared common command context
+        }
+        else //Define shared common command context
         {
             SharedCommandContext newSharedContext = new SharedCommandContext(selectedObjects.Cast<IDeputy>());
             this.CurrentSelectionRepresentative = newSharedContext;
@@ -230,7 +223,7 @@ public class BasicCommandControler : MonoBehaviour, ICommander
             if (selected == null)
                 continue;
 
-            if(selected.TrySelect(this))
+            if (selected.TrySelect(this))
                 selectedObjects.Add(selected);
         }
 
@@ -240,13 +233,13 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
     private void SendCommandForSelectedEntities(CallbackContext obj)
     {
-        if(currentCommandDirective?.ContextCommandDelegator != null)
+        if (currentCommandDirective?.ContextCommandDelegator != null)
             currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);
     }
 
     private void ChangeTimeScale(CallbackContext context)
     {
-        
+
         float deltaTimeScale = context.ReadValue<float>() * Time.deltaTime;
 
         Time.timeScale *= (1 + deltaTimeScale);

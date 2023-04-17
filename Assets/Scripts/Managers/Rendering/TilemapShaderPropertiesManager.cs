@@ -1,6 +1,4 @@
 using Assets.Scripts.Classes.Static;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

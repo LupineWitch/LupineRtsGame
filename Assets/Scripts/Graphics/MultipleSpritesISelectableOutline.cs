@@ -1,11 +1,4 @@
-﻿using Assets.Scripts.Classes.Events;
-using Assets.Scripts.Commandables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Graphics
 {
@@ -24,7 +17,7 @@ namespace Assets.Scripts.Graphics
 
         protected override void Update()
         {
-            foreach(var material in  instancedSubMaterials)
+            foreach (var material in instancedSubMaterials)
                 material.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
         }
     }

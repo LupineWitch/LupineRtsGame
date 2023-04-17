@@ -1,10 +1,5 @@
-﻿using Assets.Scripts.Classes.Commands;
-using Assets.Scripts.Controllers;
+﻿using Assets.Scripts.Controllers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,8 +18,8 @@ namespace Assets.Scripts.Commandables.Directives
         }
 
         public abstract void OnDirectiveSelection(BasicCommandControler controller);
-        
-        public abstract void OnDirectiveDeselection(BasicCommandControler controller); 
+
+        public abstract void OnDirectiveDeselection(BasicCommandControler controller);
 
         public override bool Equals(object obj)
         {

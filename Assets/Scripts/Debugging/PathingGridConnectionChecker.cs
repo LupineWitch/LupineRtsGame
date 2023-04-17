@@ -1,10 +1,7 @@
 using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -45,7 +42,7 @@ public class PathingGridConnectionChecker : MonoBehaviour
         basicControls.CommandControls.Enable();
         pointerPosition = basicControls.CommandControls.PointerPosition;
     }
-    
+
     public void Toggle()
     {
         shouldShow = !this.shouldShow;
@@ -85,7 +82,7 @@ public class PathingGridConnectionChecker : MonoBehaviour
                 continue;
 
             var positionWithZAdjusted = mainTilemap.GetTopTilePosition(position);
-            Color colorOfTile = mapManager.PathingGrid.PathExistsBetweenNodes(targetCell, position) ?  Color.green : Color.red;
+            Color colorOfTile = mapManager.PathingGrid.PathExistsBetweenNodes(targetCell, position) ? Color.green : Color.red;
             pathingDebugTilemap.SetTile(positionWithZAdjusted, tileToSet);
             pathingDebugTilemap.SetTileFlags(positionWithZAdjusted, TileFlags.None);
             pathingDebugTilemap.SetColor(positionWithZAdjusted, colorOfTile);

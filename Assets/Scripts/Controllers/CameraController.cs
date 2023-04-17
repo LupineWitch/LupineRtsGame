@@ -1,12 +1,8 @@
 using Assets.Scripts.Helpers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using static UnityEngine.InputSystem.InputAction;
 
 public class CameraController : MonoBehaviour
 {
@@ -88,7 +84,7 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraPosition()
     {
-        if(targetPosition.sqrMagnitude > 0.1f)
+        if (targetPosition.sqrMagnitude > 0.1f)
         {
             currentSpeed = Mathf.Lerp(currentSpeed, maxSpeed, Time.deltaTime * acceleration);
             transform.position += targetPosition * currentSpeed * Time.deltaTime;
@@ -106,7 +102,7 @@ public class CameraController : MonoBehaviour
     {
         cameraVelocity = (this.transform.position - lastPosition) / Time.deltaTime;
         lastPosition = this.transform.position;
-    }    
+    }
 
     private void SetTargetPosition()
     {

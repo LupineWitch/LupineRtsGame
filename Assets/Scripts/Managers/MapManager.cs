@@ -1,12 +1,8 @@
 ﻿using Assets.Scripts.Pathfinding;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.DPL;
 using Assets.Scripts.Classes.Serialisers;
 using System.IO;
@@ -36,8 +32,8 @@ namespace Assets.Scripts.Managers
         private void Awake()
         {
             //load map from the model
-            if(loadMapFromFile)
-            { 
+            if (loadMapFromFile)
+            {
                 IMapSerialiser mapDeserialiser = new JsonMapSerialiser();
                 mainTilemap.ClearAllTiles();
                 mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel);
@@ -76,7 +72,7 @@ namespace Assets.Scripts.Managers
             {
                 var cellCenter = mainTilemap.GetCellCenterWorld(pos);
                 var distanceToCollider = Vector2.Distance(building.Collider.ClosestPoint(cellCenter), cellCenter);
-                    if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
+                if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
                     occupiedPositions.Add(new Vector3Int(pos.x, pos.y, building.BuildingLayer));
             }
 
@@ -90,7 +86,11 @@ namespace Assets.Scripts.Managers
             buildingSpaceManager.AddCellsToBuildingGrid(args.OccupiedBounds.Value.allPositionsWithin.GetEnumerator());
         }
 
-        public Vector3Int TransformToCellPosition(Transform transform) =>  mainTilemap.WorldToCell(transform.position);
-        
+        public Vector3Int TransformToCellPosition(Transform transform) => mainTilemap.WorldToCell(transform.position);
+
+        public IEnumerable<object> SerializeEntities()
+        {
+
+        }
     }
 }

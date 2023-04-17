@@ -2,13 +2,8 @@
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
-using Assets.Scripts.Managers;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,7 +18,7 @@ namespace Assets.Scripts.Commandables.Directives
             string path = Path.Combine(ResourceNames.ButtonIconsResourcePath, ResourceNames.GUISpriteSheet);
             base.ButtonIcon = ResourcesUtilities.LoadSpriteFromSpritesheet(path, ResourceNames.BuildingIcon);
         }
-        
+
         public BuildDirective(BuildingBase prefab) : this()
         {
             buildingPrefab = prefab;
@@ -60,7 +55,7 @@ namespace Assets.Scripts.Commandables.Directives
             foreach (BasicUnitScript unit in selectedObjects)
             {
                 unit.SetCommand(new BuildCommand(unit, commander, clickResult.topCell, buildingPrefab ?? commander.BuildingsManager.BuildingPrefab, commander.BuildingsManager));
-            }    
+            }
 
         }
     }

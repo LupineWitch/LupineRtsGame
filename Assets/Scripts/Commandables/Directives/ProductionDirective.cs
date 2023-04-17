@@ -1,12 +1,7 @@
 ﻿using Assets.Scripts.Classes.Commands;
-using Assets.Scripts.Controllers;
 using Assets.Scripts.Objects.Buildings;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Commandables.Directives
 {

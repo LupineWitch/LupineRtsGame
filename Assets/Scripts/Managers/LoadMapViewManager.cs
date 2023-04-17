@@ -1,14 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Assets.Scripts.Classes.DPL;
 using Assets.Scripts.Classes.Models.Level;
+using Assets.Scripts.Classes.Models.Level.Map;
 using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Classes.UI.Progress;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadMapViewManager : MonoBehaviour
@@ -47,8 +46,9 @@ public class LoadMapViewManager : MonoBehaviour
 
         loadingModal.SetActive(false);
 
-        IEnumerable<string> filesEnumerator =  Directory.EnumerateFiles(MapsDirectory,"*.json",SearchOption.AllDirectories);
-        var settings = new JsonSerializerSettings{
+        IEnumerable<string> filesEnumerator = Directory.EnumerateFiles(MapsDirectory, "*.json", SearchOption.AllDirectories);
+        var settings = new JsonSerializerSettings
+        {
             Converters = new[]
             {
                 new TypeJsonConverter()

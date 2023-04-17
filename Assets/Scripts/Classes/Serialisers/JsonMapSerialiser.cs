@@ -1,13 +1,8 @@
 ﻿using Assets.Scripts.Classes.Models.Level;
+using Assets.Scripts.Classes.Models.Level.Map;
 using Assets.Scripts.Managers;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

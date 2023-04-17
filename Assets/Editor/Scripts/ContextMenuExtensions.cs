@@ -1,8 +1,6 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine.Tilemaps;
-using System;
-using System.Reflection;
 using System.IO;
 using Assets.Scripts.Managers;
 using Assets.Scripts.Classes.Serialisers;
@@ -15,7 +13,7 @@ public static class ContextMenuExtensions
     private static void TilemapToFile()
     {
         var map = Selection.activeGameObject.GetComponent<Tilemap>();
-        string path = EditorUtility.SaveFilePanel("Save Tilemap to a file:", string.Empty, "ZasYTilemapLevel","json");
+        string path = EditorUtility.SaveFilePanel("Save Tilemap to a file:", string.Empty, "ZasYTilemapLevel", "json");
         mapSerialiser.SerialiseTilemapToAFile(map, path, Path.GetFileNameWithoutExtension(path), map.gameObject.GetComponentInParent<MapManager>());
     }
 
@@ -38,7 +36,7 @@ public static class ContextMenuExtensions
         Tilemap map = Selection.activeGameObject.GetComponent<Tilemap>();
         foreach (UnityEngine.Vector3Int cell in map.cellBounds.allPositionsWithin)
         {
-            if(!map.HasTile(cell))
+            if (!map.HasTile(cell))
                 continue;
 
             map.SetTileFlags(cell, TileFlags.None);

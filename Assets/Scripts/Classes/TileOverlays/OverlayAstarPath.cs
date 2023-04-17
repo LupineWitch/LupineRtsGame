@@ -1,18 +1,8 @@
 ﻿using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Painters;
-using Assets.Scripts.Managers;
-using Assets.Scripts.Pathfinding;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.WSA;
-using static UnityEngine.Tilemaps.TilemapRenderer;
 
 namespace Assets.Scripts.Classes.TileOverlays
 {

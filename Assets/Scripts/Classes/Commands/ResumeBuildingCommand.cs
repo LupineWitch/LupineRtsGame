@@ -2,13 +2,6 @@
 using Assets.Scripts.Objects.Buildings;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Commands
@@ -33,7 +26,7 @@ namespace Assets.Scripts.Classes.Commands
             BasicUnitScript unit = reciever as BasicUnitScript;
             Vector3Int moveTo = manager.GetClosestPointNearBuildSite(unit.transform, target.TilePosition, target);
             CurrentState = CommandState.Starting;
-            AStarMoveCommand moveCmd = new AStarMoveCommand(sender, unit, moveTo, sender.MapManager , unit.unitSpeed);
+            AStarMoveCommand moveCmd = new AStarMoveCommand(sender, unit, moveTo, sender.MapManager, unit.unitSpeed);
             reciever.SetSubcommand(moveCmd);
             while (moveCmd.CurrentState != CommandState.Ended)
                 yield return null;
@@ -47,7 +40,7 @@ namespace Assets.Scripts.Classes.Commands
 
             target.GetComponent<SpriteRenderer>().enabled = true;
             var constructionSite = target.GetComponentInChildren<ConstructionSiteBase>();
-            if(constructionSite != null)
+            if (constructionSite != null)
                 UnityEngine.Object.Destroy(constructionSite.gameObject);
 
             CurrentState = CommandState.Ending;

@@ -1,14 +1,5 @@
 ﻿using Assets.Scripts.Classes.Events;
-using Assets.Scripts.Classes.Static;
 using Assets.Scripts.Commandables.Directives;
-using Mono.Cecil;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -20,8 +11,8 @@ namespace Assets.Scripts.Objects.Buildings
     {
         public event ProgressEvent ProductionProgressed;
 
-        public float ProductionProgress 
-        { 
+        public float ProductionProgress
+        {
             get => productionProgress;
             set
             {
