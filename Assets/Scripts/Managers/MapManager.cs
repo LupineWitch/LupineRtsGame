@@ -29,7 +29,7 @@ namespace Assets.Scripts.Managers
         private float cellSize;
 
 
-        private void Awake()
+        protected virtual void Awake()
         {
             //load map from the model
             if (loadMapFromFile)
