@@ -137,5 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preview: {fileID: 0}
+  prefabName: LumberHut
   buildingSize: {x: 5, y: 4}
   buildingProgressBar: {fileID: 2053501147327114412}

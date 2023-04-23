@@ -86,4 +86,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preview: {fileID: 0}
+  prefabName: WorkerUnit
   unitSpeed: 10

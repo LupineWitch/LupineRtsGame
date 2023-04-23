@@ -1,7 +1,10 @@
-﻿using Assets.Scripts.Classes.Models.Level;
+﻿using Assets.Scripts.Classes.Models.Entity;
+using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.Models.Level.Map;
 using Assets.Scripts.Managers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.UnityConverters.Math;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -17,14 +20,16 @@ namespace Assets.Scripts.Classes.Serialisers
             string jsonContents = File.ReadAllText(filepath);
             var settings = new JsonSerializerSettings
             {
-                Converters = new[]
+                Converters = new JsonConverter[]
                 {
-                    new TypeJsonConverter()
+                    new TypeJsonConverter(),
+                    new ISerializableComponentJsonConverter()
                 },
             };
 
             MapModel mapModel = JsonConvert.DeserializeObject<MapModel>(jsonContents, settings);
             DeserialiseMapModelToTilemap(map, mapModel);
+            mapManger.DeserialiseGivenEntities(mapModel.MapEntities);
         }
 
         public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel)
@@ -43,7 +48,7 @@ namespace Assets.Scripts.Classes.Serialisers
 
         public void SerialiseTilemapToAFile(Tilemap map, string filepath, string mapName, MapManager mapManger)
         {
-            MapModel mapModel = new MapModel(mapName);
+            MapModel mapModel = new(mapName);
             foreach (Vector3Int position in map.cellBounds.allPositionsWithin)
             {
                 if (!map.HasTile(position))
@@ -53,12 +58,18 @@ namespace Assets.Scripts.Classes.Serialisers
                 mapModel.AddCell(tileAtPos, position);
             }
 
+            mapModel.MapEntities = mapManger.GetEntitiesToSerialise();
+
             var settings = new JsonSerializerSettings
             {
-                Converters = new[]
+                Converters = new List<JsonConverter>()
                 {
-                    new TypeJsonConverter()
+                    new TypeJsonConverter(),
+                    new Vector3Converter(),
+                    new Vector3IntConverter()
                 },
+                ContractResolver = new JsonEntityCustomPropertyResolver(),
+                NullValueHandling = NullValueHandling.Ignore,
             };
 
             string jsonContent = JsonConvert.SerializeObject(mapModel, settings);

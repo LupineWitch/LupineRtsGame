@@ -71062,6 +71062,9 @@ MonoBehaviour:
   loadedMapData: {fileID: 0}
   loadMapFromFile: 0
   buildingSpaceManager: {fileID: 9194913572922429468}
+  UnitsContainer: {fileID: 1651343980280405050}
+  AmbientContainer: {fileID: 706599614071483900}
+  BuildingsContainer: {fileID: 9200162363142255313}
 --- !u!114 &9194913572922429468
 MonoBehaviour:
   m_ObjectHideFlags: 0

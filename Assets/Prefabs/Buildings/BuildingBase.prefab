@@ -135,6 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b29c03ed56b0d42b532add95b41073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preview: {fileID: 0}
+  prefabName: BuildingBase
   buildingSize: {x: 7, y: 6}
   buildingProgressBar: {fileID: 171886697630836876}
 --- !u!114 &3065541606502256110

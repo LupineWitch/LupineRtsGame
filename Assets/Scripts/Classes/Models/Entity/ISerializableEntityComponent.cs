@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Assets.Scripts.Classes.Models.Entity
 {
     public interface ISerializableEntityComponent
     {
-        public Type ComponentsType { get; set; }
-        public string ToJsonObject();
+        [JsonProperty]
+        public Type ComponentsType { get; }
     }
 }

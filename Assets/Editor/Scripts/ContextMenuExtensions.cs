@@ -7,7 +7,7 @@ using Assets.Scripts.Classes.Serialisers;
 
 public static class ContextMenuExtensions
 {
-    private static IMapSerialiser mapSerialiser = new JsonMapSerialiser();
+    private static readonly IMapSerialiser mapSerialiser = new JsonMapSerialiser();
 
     [MenuItem("CONTEXT/Tilemap/Export Tilemap to file")]
     private static void TilemapToFile()

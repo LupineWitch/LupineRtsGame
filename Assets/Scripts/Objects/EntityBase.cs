@@ -2,12 +2,16 @@
 using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Commandables.Directives;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 {
+    [JsonProperty]
+    public string PrefabName { get => prefabName; set => prefabName = value; }
+
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
     public CommandDirective DefaultDirective { get => defaultDirective; }
     public Sprite Preview { get => preview; set => preview = value; }
@@ -20,18 +24,23 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     protected Command<ICommander, IDeputy> executedCommand;
     protected CommandDirective[] menuActions = new CommandDirective[9];
     protected Coroutine currentlyRunCommandCoroutine = null;
-    protected List<Command<ICommander, IDeputy>> currentSubcommands = new List<Command<ICommander, IDeputy>>();
-    protected List<Coroutine> currentSubcoroutines = new List<Coroutine>();
-    protected bool isSelected { get; set; } = false;
+    protected List<Command<ICommander, IDeputy>> currentSubcommands = new();
+    protected List<Coroutine> currentSubcoroutines = new();
+    protected bool IsSelected { get; set; } = false;
 
     [SerializeField]
     private Sprite preview;
+    [SerializeField]
+    private string prefabName = string.Empty;
     private string displayLabel = "Placeholder Entity Label";
 
     protected virtual void Awake()
     {
         if (preview == null)
             preview = gameObject.GetComponent<SpriteRenderer>().sprite;
+
+        if(string.IsNullOrEmpty(prefabName))
+            prefabName = gameObject.name;
     }
 
     // Update is called once per frame
@@ -48,11 +57,11 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     public bool CanBeSelectedBy(BasicCommandControler selector) => true;
 
-    public bool IsSelectedBy(BasicCommandControler possibleOwner) => isSelected;
+    public bool IsSelectedBy(BasicCommandControler possibleOwner) => IsSelected;
 
     public void SetCommand(Command<ICommander, IDeputy> command)
     {
-        if (this.executedCommand != null)
+        if (executedCommand != null)
             this.executedCommand.CancelCommand();
 
         if (currentlyRunCommandCoroutine != null)
@@ -74,17 +83,17 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     public bool TrySelect(BasicCommandControler selector)
     {
-        this.isSelected = true;
+        this.IsSelected = true;
         Selected?.Invoke(this, new SelectedEventArgs(selector, true));
         return true;
     }
 
     public bool TryUnselect(BasicCommandControler selector)
     {
-        if (!isSelected)
+        if (!IsSelected)
             return false;
 
-        this.isSelected = false;
+        this.IsSelected = false;
         Selected?.Invoke(this, new SelectedEventArgs(selector, false));
         return true;
     }

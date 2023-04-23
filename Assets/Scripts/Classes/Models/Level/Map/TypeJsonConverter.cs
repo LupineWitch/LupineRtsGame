@@ -9,11 +9,7 @@ namespace Assets.Scripts.Classes.Models.Level.Map
         public override Type ReadJson(JsonReader reader, Type objectType, Type existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             string s = reader.Value as string;
-            Type foundType = Assembly.GetExecutingAssembly().GetType(s);
-
-            if (foundType == null)
-                foundType = SearchForType(s);
-
+            Type foundType = Assembly.GetExecutingAssembly().GetType(s) ?? SearchForType(s);
             return foundType;
         }
 
@@ -35,7 +31,7 @@ namespace Assets.Scripts.Classes.Models.Level.Map
 
             // Get the name of the assembly (Assumption is that we are using
             // fully-qualified type names)
-            var assemblyName = TypeName.Substring(0, TypeName.IndexOf('.'));
+            var assemblyName = TypeName[..TypeName.IndexOf('.')];
 
             // Attempt to load the indicated Assembly
             var assembly = Assembly.Load(assemblyName);

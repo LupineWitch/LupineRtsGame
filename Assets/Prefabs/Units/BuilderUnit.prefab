@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8068317609333302860, guid: fb12dcb410fd6ae49825973e65203aba, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.8
+      value: 0.875
       objectReference: {fileID: 0}
     - target: {fileID: 8068317609333302860, guid: fb12dcb410fd6ae49825973e65203aba, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.8
+      value: 0.9375
       objectReference: {fileID: 0}
     - target: {fileID: 8068317609333302865, guid: fb12dcb410fd6ae49825973e65203aba, type: 3}
       propertyPath: m_Name
@@ -93,4 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c043eb912caf74ca3f9b7a0809011f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preview: {fileID: 0}
+  prefabName: BuilderUnit
   unitSpeed: 10

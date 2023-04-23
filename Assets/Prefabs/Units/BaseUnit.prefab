@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preview: {fileID: 0}
+  prefabName: BaseUnit
   unitSpeed: 5
 --- !u!50 &5421309491841505509
 Rigidbody2D:

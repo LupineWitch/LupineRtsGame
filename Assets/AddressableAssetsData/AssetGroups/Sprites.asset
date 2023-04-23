@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 1118b8f785e399549a12d17b57b90b6e
   m_SerializeEntries:
   - m_GUID: 58e9db7d0c401d340b6c97a5ed85c3b0
-    m_Address: Assets/Sprites/Entities/Units/MiniWorker.png
+    m_Address: rker.pngprites/Entities/Units/MiniWorker.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - baseUnit

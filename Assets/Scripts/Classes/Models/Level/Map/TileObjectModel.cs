@@ -1,33 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Xml;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes.Models.Level.Map
 {
-    public abstract class TileObjectModel : ILevelPartXMLModel<TileObjectModel>
+    public abstract class TileObjectModel 
     {
+        [JsonProperty]
         public string Name { get; set; }
+        [JsonProperty]
         public Type TileObjectType { get; set; }
+        [JsonProperty]
         public Vector3 Position { get; set; }
-
-        public virtual XmlNode SerialiseToNode(XmlDocument document)
-        {
-            var parentNode = document.CreateElement(nameof(TileObjectModel));
-            parentNode.SetAttribute(nameof(Type), TileObjectType.FullName);
-            var nameNode = document.CreateElement(nameof(Name));
-            nameNode.AppendChild(document.CreateTextNode(Name));
-            var positionNode = document.CreateElement(nameof(Position));
-            positionNode.AppendChild(document.CreateTextNode(Position.ToString()));
-
-            parentNode.AppendChild(nameNode);
-            parentNode.AppendChild(positionNode);
-            return parentNode;
-        }
-
-        public virtual void DeserialiseFromNode(XmlNode node)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class TileScriptModel : TileObjectModel
