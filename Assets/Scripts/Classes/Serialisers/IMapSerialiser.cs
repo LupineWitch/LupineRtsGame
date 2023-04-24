@@ -10,6 +10,6 @@ namespace Assets.Scripts.Classes.Serialisers
 
         public void DeserialiseMapFromAFileToTileMap(Tilemap map, string filepath, MapManager mapManger);
 
-        public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel);
+        public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel, MapManager mapManger);
     }
 }

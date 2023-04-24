@@ -28,11 +28,10 @@ namespace Assets.Scripts.Classes.Serialisers
             };
 
             MapModel mapModel = JsonConvert.DeserializeObject<MapModel>(jsonContents, settings);
-            DeserialiseMapModelToTilemap(map, mapModel);
-            mapManger.DeserialiseGivenEntities(mapModel.MapEntities);
+            DeserialiseMapModelToTilemap(map, mapModel, mapManger);
         }
 
-        public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel)
+        public void DeserialiseMapModelToTilemap(Tilemap map, MapModel mapModel, MapManager mapManger)
         {
             //Turn map model into TileMap
             foreach (var layer in mapModel.MapLayers)
@@ -44,6 +43,8 @@ namespace Assets.Scripts.Classes.Serialisers
                     map.SetTile(tileModel.Position, tileToSet);
                 }
             }
+
+            mapManger.DeserialiseGivenEntities(mapModel.MapEntities);
         }
 
         public void SerialiseTilemapToAFile(Tilemap map, string filepath, string mapName, MapManager mapManger)

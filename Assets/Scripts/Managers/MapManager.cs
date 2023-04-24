@@ -49,7 +49,7 @@ namespace Assets.Scripts.Managers
             {
                 IMapSerialiser mapDeserialiser = new JsonMapSerialiser();
                 mainTilemap.ClearAllTiles();
-                mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel);
+                mapDeserialiser.DeserialiseMapModelToTilemap(this.mainTilemap, this.loadedMapData.LoadedMapModel, this);
             }
             //Generate path based on map
             pathingGrid = new SingleLayerPathingGrid(mainTilemap.cellBounds.xMax, mainTilemap.cellBounds.yMax);
