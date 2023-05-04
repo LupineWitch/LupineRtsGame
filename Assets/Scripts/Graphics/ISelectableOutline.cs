@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ISelectableOutline : MonoBehaviour
 {
-    protected BasicCommandControler controller;
+    protected CommandControllerBase controller;
     private Material outlineMaterial;
     protected ISelectable parent;
 

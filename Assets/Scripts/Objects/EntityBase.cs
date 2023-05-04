@@ -18,7 +18,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;
-    public BasicCommandControler Owner { get; protected set; }
+    public CommandControllerBase Owner { get; protected set; }
 
     protected CommandDirective defaultDirective;
     protected Command<ICommander, IDeputy> executedCommand;
@@ -55,9 +55,9 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
         StopAllCoroutines();
     }
 
-    public bool CanBeSelectedBy(BasicCommandControler selector) => true;
+    public bool CanBeSelectedBy(CommandControllerBase selector) => true;
 
-    public bool IsSelectedBy(BasicCommandControler possibleOwner) => IsSelected;
+    public bool IsSelectedBy(CommandControllerBase possibleOwner) => IsSelected;
 
     public void SetCommand(Command<ICommander, IDeputy> command)
     {
@@ -81,14 +81,14 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
         currentSubcoroutines.Add(StartCoroutine(command.CommandCoroutine()));
     }
 
-    public bool TrySelect(BasicCommandControler selector)
+    public bool TrySelect(CommandControllerBase selector)
     {
         this.IsSelected = true;
         Selected?.Invoke(this, new SelectedEventArgs(selector, true));
         return true;
     }
 
-    public bool TryUnselect(BasicCommandControler selector)
+    public bool TryUnselect(CommandControllerBase selector)
     {
         if (!IsSelected)
             return false;
@@ -137,7 +137,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
 
-    public virtual void ChangeOwner(BasicCommandControler newOwner)
+    public virtual void ChangeOwner(CommandControllerBase newOwner)
     {
         this.Owner = newOwner;
         OwnerChanged?.Invoke(this, EventArgs.Empty);

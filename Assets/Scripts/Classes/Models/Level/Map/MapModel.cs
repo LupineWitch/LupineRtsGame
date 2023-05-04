@@ -19,6 +19,8 @@ namespace Assets.Scripts.Classes.Models.Level.Map
         public Dictionary<int, List<TileModel>> MapLayers { get; set; }
         [JsonProperty]
         public List<SerializedEntityBase> MapEntities { get; set; }
+        [JsonProperty]
+        public List<StartingConditionsModel> startingPositions { get; set; }
 
         private readonly List<TileObjectModel> containedObjects;
 

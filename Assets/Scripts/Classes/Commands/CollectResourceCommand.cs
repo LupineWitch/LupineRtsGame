@@ -13,10 +13,10 @@ namespace Assets.Scripts.Classes.Commands
     public class CollectResourceCommand : Command<ICommander, IDeputy>
     {
         private ResourceBuilding targetStorage;
-        private ResourceNodeTree targetNode;
+        private ResourceNodeBase targetNode;
         private Action<CommandState> orginalCallback;
 
-        public CollectResourceCommand(ResourceBuilding storage, ResourceNodeTree node, IDeputy recieverType, ICommander sender) : base(recieverType, sender)
+        public CollectResourceCommand(ResourceBuilding storage, ResourceNodeBase node, IDeputy recieverType, ICommander sender) : base(recieverType, sender)
         {
             this.targetStorage = storage;
             this.targetNode = node;

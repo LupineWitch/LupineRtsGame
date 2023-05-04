@@ -7,13 +7,13 @@ namespace Assets.Scripts.Classes.Events
 
     public class SelectedEventArgs : EventArgs
     {
-        public SelectedEventArgs(BasicCommandControler commandControler, bool selectionStatusChangedTo)
+        public SelectedEventArgs(CommandControllerBase commandControler, bool selectionStatusChangedTo)
         {
             CommandControler = commandControler;
             SelectionChangedTo = selectionStatusChangedTo;
         }
 
-        public BasicCommandControler CommandControler { get; }
+        public CommandControllerBase CommandControler { get; }
         public bool SelectionChangedTo { get; }
 
     }

@@ -27,13 +27,13 @@ namespace Assets.Scripts.Graphics
             parent.Selected += (sender, args) => parent.RaiseSelectedEvent(sender, args);
         }
 
-        public bool CanBeSelectedBy(BasicCommandControler selector) => parent.CanBeSelectedBy(selector);
+        public bool CanBeSelectedBy(CommandControllerBase selector) => parent.CanBeSelectedBy(selector);
 
-        public bool IsSelectedBy(BasicCommandControler possibleOwner) => parent.IsSelectedBy(possibleOwner);
+        public bool IsSelectedBy(CommandControllerBase possibleOwner) => parent.IsSelectedBy(possibleOwner);
 
-        public bool TrySelect(BasicCommandControler selector) => parent.TrySelect(selector);
+        public bool TrySelect(CommandControllerBase selector) => parent.TrySelect(selector);
 
-        public bool TryUnselect(BasicCommandControler selector) => parent.TryUnselect(selector);
+        public bool TryUnselect(CommandControllerBase selector) => parent.TryUnselect(selector);
 
         public void RaiseSelectedEvent(object sender, EventArgs e)
         {

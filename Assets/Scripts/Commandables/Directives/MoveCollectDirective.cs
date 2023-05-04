@@ -21,7 +21,7 @@ namespace Assets.Scripts.Commandables.Directives
             Collider2D gameObject = Physics2D.OverlapPoint(mousePos);
             TopCellResult cellResult = commander.GetTopCellResult(mousePos);
 
-            ResourceNodeTree node = gameObject?.GetComponent<ResourceNodeTree>() ?? null;
+            ResourceNodeBase node = gameObject?.GetComponent<ResourceNodeBase>() ?? null;
             if (node == null || !node.CanBeMined)
             {
                 if (!cellResult.found)

@@ -1,6 +1,7 @@
 using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Commandables.Directives;
+using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
 using System;
@@ -12,39 +13,20 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
-public class BasicCommandControler : MonoBehaviour, ICommander
+public class BasicCommandControler : CommandControllerBase
 {
     public event SelectionChangedEvent SelectionChanged;
     public event CommandContextChangedEvent CommandContextChanged;
 
-    public MapManager MapManager => this.mapManager;
-    public BuildingManager BuildingsManager => this.buildingManager;
-    public AvailableBuildingSpaceManager BuildingSpaceManager => this.buildSpaceManager;
-    public GameObject UnitsContainer => unitsContainer;
-
-    [SerializeField]
-    private Tilemap mainTilemap;
     [SerializeField]
     private GameObject selectionBox;
-    [SerializeField]
-    private MapManager mapManager;
-    [SerializeField]
-    private AvailableBuildingSpaceManager buildSpaceManager;
-    [SerializeField]
-    private BuildingManager buildingManager;
-    [SerializeField]
-    private GameObject unitsContainer;
 
     private Vector2 startPosition;
     private BasicControls basicControls;
     private InputAction pointerPosition;
-    private InputAction SelectAction;
-    private List<ISelectable> selectedObjects;
-    private ITopCellSelector topCellSelector;
     private CommandDirective currentCommandDirective;
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
-    private IDeputy CurrentSelectionRepresentative;
     private bool wasGuiClickedThisFrame = false;
 
     public void SetCurrentCommandDirective(int actionId)
@@ -70,23 +52,26 @@ public class BasicCommandControler : MonoBehaviour, ICommander
         directive?.OnDirectiveSelection(this);
     }
 
-    public TopCellResult GetTopCellResult(Vector2 inputValue) => topCellSelector.GetTopCell(inputValue);
-
-    private void Awake()
+    protected override void Awake()
     {
-        _ = mainTilemap ?? throw new ArgumentNullException(nameof(mainTilemap) + "field is null");
         _ = selectionBox ?? throw new ArgumentNullException(nameof(selectionBox) + "field is null");
+        base.Awake();
 
         basicControls = new BasicControls();
         selectedObjects = new List<ISelectable>();
-        topCellSelector = new TopCellSelector(mainTilemap);
         previousCellColor = mainTilemap.GetColor(previousCell);
         currentCommandDirective = null;
 
         SelectionChanged += buildSpaceManager.OnCommanderSelectionChanged;
     }
 
-    private void OnEnable()
+    protected override void Update()
+    {
+        ColorCellAtPointer();
+        wasGuiClickedThisFrame = EventSystem.current.IsPointerOverGameObject();
+    }
+
+    protected virtual void OnEnable()
     {
         basicControls.CommandControls.Enable();
         basicControls.CommandControls.MainPointerDrag.started += MainPointerDrag_started;
@@ -95,15 +80,14 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
         basicControls.CommandControls.SendCommand.performed += SendCommandForSelectedEntities;
         pointerPosition = basicControls.CommandControls.PointerPosition;
-        SelectAction = basicControls.CommandControls.Select;
         basicControls.CommandControls.IncreaseDecrease.performed += ChangeTimeScale;
         selectionBox.SetActive(false);
     }
-
-    private void Update()
+   
+    protected override void SendCommandForSelectedEntities(CallbackContext obj)
     {
-        ColorCellAtPointer();
-        wasGuiClickedThisFrame = EventSystem.current.IsPointerOverGameObject();
+        if (currentCommandDirective?.ContextCommandDelegator != null)
+            currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);
     }
 
     private void ColorCellAtPointer()
@@ -229,12 +213,6 @@ public class BasicCommandControler : MonoBehaviour, ICommander
 
         SetCurrentCommandDirective(-1);
         SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
-    }
-
-    private void SendCommandForSelectedEntities(CallbackContext obj)
-    {
-        if (currentCommandDirective?.ContextCommandDelegator != null)
-            currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);
     }
 
     private void ChangeTimeScale(CallbackContext context)

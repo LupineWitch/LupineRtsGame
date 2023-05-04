@@ -779,7 +779,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: resources_basic_32
+      name: resource_ore
       rect:
         serializedVersion: 2
         x: 96
@@ -2383,6 +2383,7 @@ TextureImporter:
       resources_basic_19: 281179467
       resources_basic_103: 339055600
       resources_basic_23: -870838110
+      resource_ore: -1650797195
       resources_basic_65: 1809049763
       resources_basic_17: -775642229
       resources_basic_11: 784017366
@@ -2390,7 +2391,6 @@ TextureImporter:
       resources_basic_53: 1119091487
       resources_basic_50: -1087621567
       resources_basic_82: -112796048
-      resources_basic_32: -1650797195
       resources_basic_64: -1942404945
       resources_basic_89: -736043061
       resources_basic_3: 1371044468

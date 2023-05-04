@@ -15,6 +15,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Mono.Cecil.Cil;
 using Assets.Scripts.Objects.ResourceNodes;
+using Assets.Scripts.Classes.Models.Level;
+using Assets.Scripts.Faction;
 
 namespace Assets.Scripts.Managers
 {
@@ -23,6 +25,8 @@ namespace Assets.Scripts.Managers
         public PathingGridBase PathingGrid { get { return pathingGrid; } }
         public Tilemap MainTilemap { get { return mainTilemap; } }
         public float CellSize { get => cellSize; }
+
+        private const string Faction_Prefabs_Path = "Assets/Prefabs/SceneHierarchy/Faction";
 
         [SerializeField]
         private Tilemap mainTilemap;
@@ -41,6 +45,7 @@ namespace Assets.Scripts.Managers
 
         private PathingGridBase pathingGrid;
         private float cellSize;
+        private GameObject[] buildingPrefabs;
 
         protected virtual void Awake()
         {
@@ -143,6 +148,8 @@ namespace Assets.Scripts.Managers
             }
 
             GameObject[] loadedAssets = await LoadPrefabsFromAddress(@"Assets/Prefabs");
+            this.buildingPrefabs = loadedAssets;
+
             foreach(var entity in deserialisableEntities)
             {
                 GameObject entityPrefab = default;
@@ -158,8 +165,7 @@ namespace Assets.Scripts.Managers
 
                     entityPrefab = loadedAssets.FirstOrDefault(prefab =>
                     {
-                        var prefabEntityComp = prefab.GetComponent<EntityBase>();
-                        if (prefabEntityComp != null)
+                        if (prefab.TryGetComponent<EntityBase>(out EntityBase prefabEntityComp))
                             return prefabEntityComp.GetType() == entityComp.GetType();
                         else
                             return false;
@@ -211,6 +217,44 @@ namespace Assets.Scripts.Managers
             }
 
             return loadedPrefabs.ToArray();
+        }
+
+        public List<StartingConditionsModel> GetStartingPositions()
+        {
+            var factionContainer = this.transform.parent.Find("Factions");
+            List<StartingConditionsModel> startingPositions = new();
+
+            foreach(var faction in factionContainer.GetComponentsInChildren<BaseFaction>())
+            {
+                var startingManager = faction.GetComponentInChildren<StartingConditionsManager>();
+                var startModel = new StartingConditionsModel
+                {
+                    StartingBuildingPrefabName = startingManager.StartingBuildingPrefab.PrefabName,
+                    OrginalStartingFactionPrefabName = startingManager.gameObject.name,
+                    StartingResources = startingManager.MergeResourceListsIntoDictionary(),
+                    StartingPosition = startingManager.gameObject.transform.position
+                };
+                startingPositions.Add(startModel);
+            }
+
+            return startingPositions;
+        }
+
+        public async void SetStartingPositions(List<StartingConditionsModel> startingPositions)
+        {
+            var factionContainer = this.transform.parent.Find("Factions");
+            var loadedFactionPrefabs = await this.LoadPrefabsFromAddress(Faction_Prefabs_Path);
+
+            foreach (var conditionsModel in startingPositions)
+            {
+                var factionPrefab = loadedFactionPrefabs.FirstOrDefault(prefab => prefab.name == conditionsModel.OrginalStartingFactionPrefabName);
+                var factionInstance = Instantiate(factionPrefab, conditionsModel.StartingPosition, Quaternion.identity, factionContainer.transform);
+                var startManager = factionInstance.GetComponentInChildren<StartingConditionsManager>();
+                startManager.StartingResources = conditionsModel.StartingResources;
+                startManager.BuildingsParent = BuildingsContainer;
+                startManager.StartingBuildingPrefab =  buildingPrefabs.First( prefab => prefab.name == conditionsModel.StartingBuildingPrefabName ).GetComponent<BuildingBase>();
+
+            }
         }
     }
 }

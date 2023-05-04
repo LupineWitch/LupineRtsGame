@@ -10,10 +10,10 @@ namespace Assets.Scripts.Commandables
         public event SelectedEvent Selected;
         public Sprite Preview { get; set; }
         public string DisplayLabel { get; set; }
-        public bool TrySelect(BasicCommandControler selector);
-        public bool TryUnselect(BasicCommandControler selector);
-        public bool IsSelectedBy(BasicCommandControler possibleOwner);
-        public bool CanBeSelectedBy(BasicCommandControler selector);
+        public bool TrySelect(CommandControllerBase selector);
+        public bool TryUnselect(CommandControllerBase selector);
+        public bool IsSelectedBy(CommandControllerBase possibleOwner);
+        public bool CanBeSelectedBy(CommandControllerBase selector);
         public void RaiseSelectedEvent(object sender, EventArgs e);
     }
 
