@@ -17,6 +17,7 @@ using Mono.Cecil.Cil;
 using Assets.Scripts.Objects.ResourceNodes;
 using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Faction;
+using Assets.Scripts.Classes.Models.Level.Map;
 
 namespace Assets.Scripts.Managers
 {
@@ -45,7 +46,6 @@ namespace Assets.Scripts.Managers
 
         private PathingGridBase pathingGrid;
         private float cellSize;
-        private GameObject[] buildingPrefabs;
 
         protected virtual void Awake()
         {
@@ -80,21 +80,6 @@ namespace Assets.Scripts.Managers
 
             pathingGrid.RemoveNodesFromPathingGrid(occupiedPositions);
             buildingSpaceManager.RemoveCellsFromBuildingGrid(args.OccupiedBounds.Value.allPositionsWithin.GetEnumerator());
-        }
-
-        private List<Vector3Int> GetOverlappingWorldPointsForBuilding(object sender, BuildingEventArgs args)
-        {
-            BuildingBase building = sender as BuildingBase;
-            List<Vector3Int> occupiedPositions = new();
-            foreach (Vector3Int pos in args.OccupiedBounds?.allPositionsWithin)
-            {
-                var cellCenter = mainTilemap.GetCellCenterWorld(pos);
-                var distanceToCollider = Vector2.Distance(building.Collider.ClosestPoint(cellCenter), cellCenter);
-                if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
-                    occupiedPositions.Add(new Vector3Int(pos.x, pos.y, building.BuildingLayer));
-            }
-
-            return occupiedPositions;
         }
 
         public void BuildingDestroyedCallback(object sender, BuildingEventArgs args)
@@ -138,7 +123,50 @@ namespace Assets.Scripts.Managers
             return entitiesToSerialize;
         }
     
-        public async void DeserialiseGivenEntities(IEnumerable<SerializedEntityBase> deserialisableEntities)
+        public async void DeserialiseInMapManager(MapModel model)
+        {
+            GameObject[] loadedAssets = await LoadPrefabsFromAddress(@"Assets/Prefabs");
+            DeserialiseGivenEntities(model.MapEntities, loadedAssets);
+            SetStartingPositions(model.startingPositions, loadedAssets);
+        }
+
+        public List<StartingConditionsModel> GetStartingPositions()
+        {
+            var factionContainer = this.transform.parent.Find("Factions");
+            List<StartingConditionsModel> startingPositions = new();
+
+            foreach(var faction in factionContainer.GetComponentsInChildren<BaseFaction>())
+            {
+                var startingManager = faction.GetComponentInChildren<StartingConditionsManager>();
+                var startModel = new StartingConditionsModel
+                {
+                    StartingBuildingPrefabName = startingManager.StartingBuildingPrefab.PrefabName,
+                    OrginalStartingFactionPrefabName = startingManager.transform.parent.gameObject.name,
+                    StartingResources = startingManager.MergeResourceListsIntoDictionary(),
+                    StartingPosition = startingManager.gameObject.transform.position
+                };
+                startingPositions.Add(startModel);
+            }
+
+            return startingPositions;
+        }
+
+        private List<Vector3Int> GetOverlappingWorldPointsForBuilding(object sender, BuildingEventArgs args)
+        {
+            BuildingBase building = sender as BuildingBase;
+            List<Vector3Int> occupiedPositions = new();
+            foreach (Vector3Int pos in args.OccupiedBounds?.allPositionsWithin)
+            {
+                var cellCenter = mainTilemap.GetCellCenterWorld(pos);
+                var distanceToCollider = Vector2.Distance(building.Collider.ClosestPoint(cellCenter), cellCenter);
+                if (building.Collider.OverlapPoint(cellCenter) || distanceToCollider <= cellSize)
+                    occupiedPositions.Add(new Vector3Int(pos.x, pos.y, building.BuildingLayer));
+            }
+
+            return occupiedPositions;
+        }
+
+        private void DeserialiseGivenEntities(IEnumerable<SerializedEntityBase> deserialisableEntities, GameObject[] loadedAssets)
         {
             Transform entitiesContainer = this.gameObject.transform.Find("Entities");
             if(entitiesContainer == null)
@@ -146,9 +174,6 @@ namespace Assets.Scripts.Managers
                 Debug.LogError($"Can't find \"Entities\" Game Object in the 'Map Manger>Entities' hierarchy!!");
                 return;
             }
-
-            GameObject[] loadedAssets = await LoadPrefabsFromAddress(@"Assets/Prefabs");
-            this.buildingPrefabs = loadedAssets;
 
             foreach(var entity in deserialisableEntities)
             {
@@ -219,28 +244,7 @@ namespace Assets.Scripts.Managers
             return loadedPrefabs.ToArray();
         }
 
-        public List<StartingConditionsModel> GetStartingPositions()
-        {
-            var factionContainer = this.transform.parent.Find("Factions");
-            List<StartingConditionsModel> startingPositions = new();
-
-            foreach(var faction in factionContainer.GetComponentsInChildren<BaseFaction>())
-            {
-                var startingManager = faction.GetComponentInChildren<StartingConditionsManager>();
-                var startModel = new StartingConditionsModel
-                {
-                    StartingBuildingPrefabName = startingManager.StartingBuildingPrefab.PrefabName,
-                    OrginalStartingFactionPrefabName = startingManager.gameObject.name,
-                    StartingResources = startingManager.MergeResourceListsIntoDictionary(),
-                    StartingPosition = startingManager.gameObject.transform.position
-                };
-                startingPositions.Add(startModel);
-            }
-
-            return startingPositions;
-        }
-
-        public async void SetStartingPositions(List<StartingConditionsModel> startingPositions)
+        private async void SetStartingPositions(List<StartingConditionsModel> startingPositions, GameObject[] buildingPrefabs)
         {
             var factionContainer = this.transform.parent.Find("Factions");
             var loadedFactionPrefabs = await this.LoadPrefabsFromAddress(Faction_Prefabs_Path);
@@ -248,13 +252,18 @@ namespace Assets.Scripts.Managers
             foreach (var conditionsModel in startingPositions)
             {
                 var factionPrefab = loadedFactionPrefabs.FirstOrDefault(prefab => prefab.name == conditionsModel.OrginalStartingFactionPrefabName);
-                var factionInstance = Instantiate(factionPrefab, conditionsModel.StartingPosition, Quaternion.identity, factionContainer.transform);
+                var factionInstance = Instantiate(factionPrefab, Vector3.zero, Quaternion.identity, factionContainer.transform);
                 var startManager = factionInstance.GetComponentInChildren<StartingConditionsManager>();
                 startManager.StartingResources = conditionsModel.StartingResources;
                 startManager.BuildingsParent = BuildingsContainer;
-                startManager.StartingBuildingPrefab =  buildingPrefabs.First( prefab => prefab.name == conditionsModel.StartingBuildingPrefabName ).GetComponent<BuildingBase>();
+                startManager.transform.position = conditionsModel.StartingPosition;
+                var foundPrefab = buildingPrefabs.FirstOrDefault(prefab => prefab.name == conditionsModel.StartingBuildingPrefabName);
+                if (foundPrefab == default)
+                    Debug.LogWarning($"Haven't found prefab {conditionsModel.StartingBuildingPrefabName}");
 
+                startManager.StartingBuildingPrefab = foundPrefab == null ? null : foundPrefab.GetComponent<BuildingBase>();
             }
         }
+
     }
 }

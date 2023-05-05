@@ -44,7 +44,7 @@ namespace Assets.Scripts.Classes.Serialisers
                 }
             }
 
-            mapManger.DeserialiseGivenEntities(mapModel.MapEntities);
+            mapManger.DeserialiseInMapManager(mapModel);
         }
 
         public void SerialiseTilemapToAFile(Tilemap map, string filepath, string mapName, MapManager mapManger)
