@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using Assets.Scripts.Classes.Events;
 using TMPro;
 using Assets.Scripts.Commandables.Directives;
+using UnityEngine.SceneManagement;
+using Assets.Scripts.Managers;
+using Unity.VisualScripting;
 
 public class GUIManager : MonoBehaviour
 {
@@ -20,13 +23,14 @@ public class GUIManager : MonoBehaviour
     private Sprite defaultButtonIcon;
     [SerializeField]
     private Sprite emptyButtonIcon;
+    [SerializeField]
+    private MapManager mapManager;
 
     private Button[] menuButtons;
+    private bool initialised = false;
 
     private void Awake()
     {
-        commandControler.SelectionChanged += SelectionWasUpdated;
-        commandControler.CommandContextChanged += CommandContextHasChanged;
         selectedEntityPortrait.enabled = false;
         selectedEntityLabel.enabled = false;
     }
@@ -34,6 +38,36 @@ public class GUIManager : MonoBehaviour
     private void Start()
     {
         menuButtons = actionButtonsContainer.GetComponentsInChildren<Button>();
+    }
+
+    protected virtual bool OnMapLoaded()
+    {
+        if (commandControler == null)
+        {
+            var factions = GameObject.Find("Factions");
+            var commander = factions.GetComponentInChildren<BasicCommandControler>();
+            if (commander != null)
+            {
+                commandControler = commander;
+                commandControler.SelectionChanged += SelectionWasUpdated;
+                commandControler.CommandContextChanged += CommandContextHasChanged;
+                foreach (var button in menuButtons)
+                {
+                    int number = int.Parse(button.name.Remove(0, 12));
+                    button.onClick.AddListener(() => commandControler.SetCurrentCommandDirective(number));
+                }
+                return true;
+            }
+            else
+                return false;
+        }
+        return true;
+    }
+
+    protected virtual void LateUpdate()
+    {
+        if(!initialised)
+            initialised = this.OnMapLoaded();
     }
 
     private void OnDisable()

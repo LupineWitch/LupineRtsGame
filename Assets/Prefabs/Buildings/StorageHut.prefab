@@ -102,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3993512676211931642, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
       propertyPath: m_Name
-      value: LumberHut
+      value: StorageHut
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8992931114597568262, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
@@ -137,6 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preview: {fileID: 0}
-  prefabName: LumberHut
+  prefabName: StorageHut
   buildingSize: {x: 5, y: 4}
   buildingProgressBar: {fileID: 2053501147327114412}

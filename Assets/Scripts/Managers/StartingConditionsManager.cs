@@ -5,6 +5,7 @@ using Assets.Scripts.Managers;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StartingConditionsManager : MonoBehaviour
@@ -21,11 +22,7 @@ public class StartingConditionsManager : MonoBehaviour
     [SerializeField]
     private List<int> amounts = new();
 
-    protected virtual void Awake()
-    {
-    }
-
-    protected virtual void Start()
+    public void InitialiseStartingPositions()
     {
         foreach (var resourceIdNameValuePair in StartingResources ?? MergeResourceListsIntoDictionary())
             PlayerResourceManager.ChangeResourceLevel(resourceIdNameValuePair.Key, resourceIdNameValuePair.Value);
@@ -50,5 +47,10 @@ public class StartingConditionsManager : MonoBehaviour
             dictMergedFromLists.Add(resourceIdNames[i], amounts[i]);
 
         return dictMergedFromLists;
+    }
+
+    protected virtual void Start()
+    {
+        InitialiseStartingPositions();
     }
 }

@@ -199,6 +199,7 @@ MonoBehaviour:
   actionButtonsContainer: {fileID: 1651343979027941590}
   defaultButtonIcon: {fileID: 1449970627, guid: 9368a22d97c4b3242b93b9ba49fb95a8, type: 3}
   emptyButtonIcon: {fileID: 594374997, guid: 9368a22d97c4b3242b93b9ba49fb95a8, type: 3}
+  mapManager: {fileID: 1651343980714024471}
 --- !u!1 &1651343979538811395
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +209,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651343979538811396}
+  - component: {fileID: 2292103468802899597}
   m_Layer: 0
   m_Name: SceneRoot
   m_TagString: Untagged
@@ -235,6 +237,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2292103468802899597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651343979538811395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0800c5c6e1a44c945af96201e63e54d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapManager: {fileID: 1651343980714024471}
+  buildingSpaceManager: {fileID: 9194913572922429468}
+  mainTilemap: {fileID: 1651343980431148982}
+  selectionBox: {fileID: 1651343979925096590}
+  unitsContainer: {fileID: 1651343980280405050}
+  resourceReadout: {fileID: 7003991549625382655}
+  buildingsContainer: {fileID: 9200162363142255313}
 --- !u!1 &1651343979925096590
 GameObject:
   m_ObjectHideFlags: 0

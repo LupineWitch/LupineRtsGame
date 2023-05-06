@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.UnityConverters.Math;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -44,6 +45,7 @@ namespace Assets.Scripts.Classes.Serialisers
                 }
             }
 
+           
             mapManger.DeserialiseInMapManager(mapModel);
         }
 

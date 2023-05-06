@@ -31,6 +31,10 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         buildingsFactory = new PrefabbedBuildingFactory();
+        var refMngr = this.GetReferenceManagerInScene();
+        mainTilemap = refMngr.MainTilemap;
+        mapManager = refMngr.MapManager;
+        buildingParent = refMngr.BuildingsContainer;
     }
 
     public BuildingBase TryToPlaceBuildingInWorld(Vector3Int chosenCenterTile)

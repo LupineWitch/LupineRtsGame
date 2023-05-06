@@ -10,6 +10,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -54,6 +55,12 @@ public class BasicCommandControler : CommandControllerBase
 
     protected override void Awake()
     {
+        var sceneRoot = SceneManager.GetActiveScene().GetRootGameObjects().First(obj => obj.TryGetComponent<ReferenceManager>(out _));
+        //Resolve null field from global reference manager
+        var refManager = sceneRoot.GetComponent<ReferenceManager>();
+        if (selectionBox == null)
+            selectionBox = refManager.SelectionBox;
+
         _ = selectionBox ?? throw new ArgumentNullException(nameof(selectionBox) + "field is null");
         base.Awake();
 
@@ -165,7 +172,11 @@ public class BasicCommandControler : CommandControllerBase
         if (selectedObjects.Count <= 0)
         {
             ResetControllerContext();
-            CommandContextChanged.Invoke(this, null);
+            if (CommandContextChanged == null)
+                Debug.LogError($"No {nameof(CommandContextChanged)} listeners found");
+            else
+                CommandContextChanged.Invoke(this, null);
+
             return;
         }
 
@@ -193,7 +204,10 @@ public class BasicCommandControler : CommandControllerBase
             commandContextEventArgs = new CommandContextChangedArgs(CurrentSelectionRepresentative.AvailableDirectives);
         }
 
-        CommandContextChanged.Invoke(this, commandContextEventArgs);
+        if (CommandContextChanged == null)
+            Debug.LogError($"No {nameof(CommandContextChanged)} listeners found");
+        else
+            CommandContextChanged.Invoke(this, commandContextEventArgs);
     }
 
     private void HandleSelectionUnderSelectionRect()

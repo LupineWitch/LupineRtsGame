@@ -18,6 +18,7 @@ using Assets.Scripts.Objects.ResourceNodes;
 using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Faction;
 using Assets.Scripts.Classes.Models.Level.Map;
+using System.Collections;
 
 namespace Assets.Scripts.Managers
 {
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Managers
         public PathingGridBase PathingGrid { get { return pathingGrid; } }
         public Tilemap MainTilemap { get { return mainTilemap; } }
         public float CellSize { get => cellSize; }
+        public event Action TilemapLoaded;
 
         private const string Faction_Prefabs_Path = "Assets/Prefabs/SceneHierarchy/Faction";
 
@@ -242,8 +244,10 @@ namespace Assets.Scripts.Managers
                 var factionPrefab = loadedFactionPrefabs.FirstOrDefault(prefab => prefab.name == conditionsModel.OrginalStartingFactionPrefabName);
                 var factionInstance = Instantiate(factionPrefab, Vector3.zero, Quaternion.identity, factionContainer.transform);
                 var startManager = factionInstance.GetComponentInChildren<StartingConditionsManager>();
+                var buildingManager = factionInstance.GetComponentInChildren<BuildingManager>();
                 startManager.StartingResources = conditionsModel.StartingResources;
                 startManager.BuildingsParent = BuildingsContainer;
+                Debug.LogWarning($"Starting position: {conditionsModel.StartingPosition}");
                 startManager.transform.position = conditionsModel.StartingPosition;
                 var foundPrefab = buildingPrefabs.FirstOrDefault(prefab => prefab.name == conditionsModel.StartingBuildingPrefabName);
                 if (foundPrefab == default)

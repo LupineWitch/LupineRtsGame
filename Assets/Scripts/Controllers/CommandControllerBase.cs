@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using static UnityEngine.InputSystem.InputAction;
 
@@ -41,6 +42,18 @@ public abstract class CommandControllerBase : MonoBehaviour, ICommander
     
     protected virtual void Awake()
     {
+        var sceneRoot = SceneManager.GetActiveScene().GetRootGameObjects().First( obj => obj.TryGetComponent<ReferenceManager>(out _));
+        //Resolve null field from global reference manager
+        var refManager = sceneRoot.GetComponent<ReferenceManager>();
+        if (unitsContainer == null)
+            unitsContainer = refManager.UnitsContainer;
+        if(mainTilemap == null)
+            mainTilemap = refManager.MainTilemap;
+        if(mapManager == null)
+            mapManager = refManager.MapManager;
+        if(buildSpaceManager == null)
+            buildSpaceManager = refManager.BuildingSpaceManager;
+  
         _ = mainTilemap ?? throw new ArgumentNullException(nameof(mainTilemap) + "field is null");
         topCellSelector = new TopCellSelector(mainTilemap);
     }

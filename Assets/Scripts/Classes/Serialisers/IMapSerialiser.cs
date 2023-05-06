@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Classes.Models.Level.Map;
 using Assets.Scripts.Managers;
+using System.Threading.Tasks;
 using UnityEngine.Tilemaps;
 
 namespace Assets.Scripts.Classes.Serialisers
