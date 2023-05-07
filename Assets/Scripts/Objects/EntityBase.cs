@@ -2,6 +2,7 @@
 using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Commandables.Directives;
+using Assets.Scripts.Faction;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,19 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;
-    public CommandControllerBase Owner { get; protected set; }
+    public BaseFaction Faction 
+    { 
+        get 
+        {
+            if(owner != null)
+                return Owner.Faction;
+            return
+                null;
+        }
+    }
+
+
+    public CommandControllerBase Owner { get => owner; protected set => owner = value; }
 
     protected CommandDirective defaultDirective;
     protected Command<ICommander, IDeputy> executedCommand;
@@ -32,6 +45,8 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     private Sprite preview;
     [SerializeField]
     private string prefabName = string.Empty;
+    [SerializeField]
+    private CommandControllerBase owner;
     private string displayLabel = "Placeholder Entity Label";
 
     protected virtual void Awake()
@@ -39,7 +54,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
         if (preview == null)
             preview = gameObject.GetComponent<SpriteRenderer>().sprite;
 
-        if(string.IsNullOrEmpty(prefabName))
+        if (string.IsNullOrEmpty(prefabName))
             prefabName = gameObject.name;
     }
 

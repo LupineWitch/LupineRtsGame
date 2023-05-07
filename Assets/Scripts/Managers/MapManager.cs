@@ -17,6 +17,7 @@ using Mono.Cecil.Cil;
 using Assets.Scripts.Objects.ResourceNodes;
 using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Faction;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Models.Level.Map;
 using System.Collections;
 
@@ -48,6 +49,8 @@ namespace Assets.Scripts.Managers
 
         private PathingGridBase pathingGrid;
         private float cellSize;
+        private bool initialised = false;
+        private Dictionary<string, List<EntityBase>> factionEntities;
 
         protected virtual void Awake()
         {
@@ -100,12 +103,17 @@ namespace Assets.Scripts.Managers
                     else if (gameObj.TryGetComponent(out ResourceNodeTree resourceNode))
                         prefabName = resourceNode.PrefabName;
 
+
                     var entity = new SerializedEntityBase
                     {
                         Position = gameObj.transform.position,
                         PrefabName = prefabName,
-                        ParentName = parent.name
+                        ParentName = parent.name,
                     };
+
+                    if (entityComp != null && entityComp.Owner != null)
+                        entity.FactionName = entityComp.Owner.Faction.FactionName;
+
                     entity.Components.AddRange(gameObj.GetComponents<ISerializableEntityComponent>());
                     entitiesToSerialize.Add(entity);
                 }                
@@ -116,11 +124,11 @@ namespace Assets.Scripts.Managers
         public async void DeserialiseInMapManager(MapModel model)
         {
             GameObject[] loadedAssets = await LoadPrefabsFromAddress(@"Assets/Prefabs");
-            DeserialiseGivenEntities(model.MapEntities, loadedAssets);
+            this.factionEntities = DeserialiseGivenEntities(model.MapEntities, loadedAssets);
             SetStartingPositions(model.startingPositions, loadedAssets);
         }
 
-        public List<StartingConditionsModel> GetStartingPositions()
+        public List<StartingConditionsModel> GetSerialisableStartingPositions()
         {
             var factionContainer = this.transform.parent.Find("Factions");
             List<StartingConditionsModel> startingPositions = new();
@@ -132,6 +140,7 @@ namespace Assets.Scripts.Managers
                 {
                     StartingBuildingPrefabName = startingManager.StartingBuildingPrefab.PrefabName,
                     OrginalStartingFactionPrefabName = startingManager.transform.parent.gameObject.name,
+                    OrginalStartingFactionName = startingManager.transform.parent.GetComponentInChildren<CommandControllerBase>().Faction.FactionName,
                     StartingResources = startingManager.MergeResourceListsIntoDictionary(),
                     StartingPosition = startingManager.gameObject.transform.position
                 };
@@ -156,15 +165,16 @@ namespace Assets.Scripts.Managers
             return occupiedPositions;
         }
 
-        private void DeserialiseGivenEntities(IEnumerable<SerializedEntityBase> deserialisableEntities, GameObject[] loadedAssets)
+        private Dictionary<string, List<EntityBase>> DeserialiseGivenEntities(IEnumerable<SerializedEntityBase> deserialisableEntities, GameObject[] loadedAssets)
         {
             Transform entitiesContainer = this.gameObject.transform.Find("Entities");
             if(entitiesContainer == null)
             {
                 Debug.LogError($"Can't find \"Entities\" Game Object in the 'Map Manger>Entities' hierarchy!!");
-                return;
+                return null;
             }
 
+            Dictionary<string, List<EntityBase>> entitiesInFaction = new();
             foreach(var entity in deserialisableEntities)
             {
                 GameObject entityPrefab = default;
@@ -196,9 +206,18 @@ namespace Assets.Scripts.Managers
                     continue;
                 }
 
-                GameObject instantietedPrefab = Instantiate(entityPrefab, entitiesContainer.Find(entity.ParentName).transform);
-                instantietedPrefab.transform.position = entity.Position;
+                GameObject instantiatedPrefab = Instantiate(entityPrefab, entitiesContainer.Find(entity.ParentName).transform);
+                instantiatedPrefab.transform.position = entity.Position;
+                if (instantiatedPrefab.TryGetComponent(out EntityBase instantiatedEntity))
+                {
+                    if (!entitiesInFaction.ContainsKey(entity.FactionName))
+                        entitiesInFaction.Add(entity.FactionName, new List<EntityBase>());
+
+                    entitiesInFaction[entity.FactionName].Add(instantiatedEntity);
+                }
             }
+
+            return entitiesInFaction;
         }
 
         private async Task<GameObject[]> LoadPrefabsFromAddress(string prefabDirectoryPath)
@@ -257,5 +276,40 @@ namespace Assets.Scripts.Managers
             }
         }
 
+        private void AddFactionsToDeserialisedElements(Dictionary<string, List<EntityBase>> factionEntities)
+        {
+            GameObject factionsContainer = this.GetReferenceManagerInScene().FactionContainer;
+            var allLoadedFactions = factionsContainer.GetComponentsInChildren<BaseFaction>();
+            if(allLoadedFactions.Length <= 0)
+                return;
+
+            foreach (var factionKeyEntitiesPair in factionEntities)
+            {
+                BaseFaction faction = allLoadedFactions.FirstOrDefault(f => f.FactionName.Equals(factionKeyEntitiesPair.Key, StringComparison.OrdinalIgnoreCase));
+                if (faction == null)
+                {
+                    Debug.LogWarning($"Can't find faction named: {factionKeyEntitiesPair.Key}");
+                    continue;
+                }
+                var commander = faction.GetComponentInChildren<CommandControllerBase>();
+                if (commander == null)
+                {
+                    Debug.LogError($"Commander null here! Faction: {factionKeyEntitiesPair.Key}");
+                    continue;
+                }
+
+                foreach (var entity in factionKeyEntitiesPair.Value)
+                    entity.ChangeOwner(commander);
+            }
+
+            this.initialised = true;
+        }
+    
+        protected virtual void LateUpdate()
+        {
+            if (!initialised && factionEntities != default)
+                AddFactionsToDeserialisedElements(factionEntities);
+
+        }
     }
 }

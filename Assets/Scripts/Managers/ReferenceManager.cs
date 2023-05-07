@@ -13,6 +13,7 @@ public class ReferenceManager : MonoBehaviour
     public GameObject UnitsContainer => unitsContainer;
     public GameObject ResourceReadout => resourceReadout;
     public GameObject BuildingsContainer => buildingsContainer;
+    public GameObject FactionContainer => factionContainer;
 
     [SerializeField]
     private MapManager mapManager;
@@ -28,4 +29,6 @@ public class ReferenceManager : MonoBehaviour
     private GameObject resourceReadout;
     [SerializeField]
     private GameObject buildingsContainer;
+    [SerializeField]
+    private GameObject factionContainer;
 }

@@ -14,6 +14,8 @@ namespace Assets.Scripts.Classes.Models.Entity
         public string PrefabName { get; set; } = string.Empty;
         [JsonProperty]
         public string ParentName { get; set; } = "Ambient";
+        [JsonProperty]
+        public string FactionName { get; set; } = "Neutral";
 
         public SerializedEntityBase()
         {

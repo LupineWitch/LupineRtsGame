@@ -20,7 +20,7 @@ public abstract class CommandControllerBase : MonoBehaviour, ICommander
     public MapManager MapManager => this.mapManager;
     public BuildingManager BuildingsManager => this.buildingManager;
     public AvailableBuildingSpaceManager BuildingSpaceManager => this.buildSpaceManager;
-    public BaseFaction Faction { get; set; }
+    public BaseFaction Faction { get => faction; set => faction = value; }
 
     protected ITopCellSelector topCellSelector;
 
@@ -37,24 +37,31 @@ public abstract class CommandControllerBase : MonoBehaviour, ICommander
 
     protected IDeputy CurrentSelectionRepresentative;
     protected List<ISelectable> selectedObjects;
+    
+    [SerializeField]
+    private BaseFaction faction;
 
     public TopCellResult GetTopCellResult(Vector2 inputValue) => topCellSelector.GetTopCell(inputValue);
-    
+
     protected virtual void Awake()
     {
-        var sceneRoot = SceneManager.GetActiveScene().GetRootGameObjects().First( obj => obj.TryGetComponent<ReferenceManager>(out _));
+        var sceneRoot = SceneManager.GetActiveScene().GetRootGameObjects().First(obj => obj.TryGetComponent<ReferenceManager>(out _));
         //Resolve null field from global reference manager
         var refManager = sceneRoot.GetComponent<ReferenceManager>();
         if (unitsContainer == null)
             unitsContainer = refManager.UnitsContainer;
-        if(mainTilemap == null)
+        if (mainTilemap == null)
             mainTilemap = refManager.MainTilemap;
-        if(mapManager == null)
+        if (mapManager == null)
             mapManager = refManager.MapManager;
-        if(buildSpaceManager == null)
+        if (buildSpaceManager == null)
             buildSpaceManager = refManager.BuildingSpaceManager;
-  
-        _ = mainTilemap ?? throw new ArgumentNullException(nameof(mainTilemap) + "field is null");
+        if(faction == null)
+            faction = gameObject.GetComponentInParent<BaseFaction>();
+
+        if(mainTilemap == null)
+            throw new ArgumentNullException(nameof(mainTilemap) + "field is null");
+
         topCellSelector = new TopCellSelector(mainTilemap);
     }
 

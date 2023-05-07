@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72197a4e00e3474dbd7bef2768d0f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factionColor: {r: 0.09122462, g: 0.22576903, b: 0.7735849, a: 0}
+  factionColor: {r: 0.090196066, g: 0.77254903, b: 0.3593404, a: 0}
   factionName: Player
   whoIsControlling: 1
 --- !u!1 &6538183192199903025
@@ -148,6 +148,8 @@ MonoBehaviour:
   CommanderOwner: {fileID: 8623238212193984310}
   BuildingsParent: {fileID: 0}
   PlayerResourceManager: {fileID: 3735298590306203692}
+  resourceIdNames: []
+  amounts: 
 --- !u!1 &8623238210998407210
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,10 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 8623238212193984310}
-  resourceGauges:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  resourceGauges: []
 --- !u!1 &8623238212193984309
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,4 +245,5 @@ MonoBehaviour:
   mapManager: {fileID: 0}
   buildSpaceManager: {fileID: 0}
   buildingManager: {fileID: 4860060191283301585}
+  faction: {fileID: 0}
   selectionBox: {fileID: 0}

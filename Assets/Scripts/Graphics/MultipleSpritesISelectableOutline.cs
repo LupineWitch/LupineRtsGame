@@ -18,7 +18,10 @@ namespace Assets.Scripts.Graphics
         protected override void Update()
         {
             foreach (var material in instancedSubMaterials)
+            {
                 material.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
+                material.SetColor("_OutlineColor", parent.Faction.FactionColor);
+            }
         }
     }
 }

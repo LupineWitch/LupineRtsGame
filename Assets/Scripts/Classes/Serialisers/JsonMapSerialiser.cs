@@ -62,7 +62,7 @@ namespace Assets.Scripts.Classes.Serialisers
             }
 
             mapModel.MapEntities = mapManger.GetEntitiesToSerialise();
-            mapModel.startingPositions = mapManger.GetStartingPositions();
+            mapModel.startingPositions = mapManger.GetSerialisableStartingPositions();
 
             var settings = new JsonSerializerSettings
             {

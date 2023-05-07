@@ -1,16 +1,17 @@
 using Assets.Scripts.Commandables;
+using Assets.Scripts.Faction;
 using UnityEngine;
 
 public class ISelectableOutline : MonoBehaviour
 {
     protected CommandControllerBase controller;
-    private Material outlineMaterial;
     protected ISelectable parent;
+    
+    private Material outlineMaterial;
 
     protected virtual void Awake()
     {
-        var renderer = GetComponent<SpriteRenderer>();
-        if (renderer != null)
+        if (TryGetComponent(out SpriteRenderer renderer))
             outlineMaterial = renderer.material;
 
         parent = gameObject.GetComponent<ISelectable>();
@@ -24,6 +25,11 @@ public class ISelectableOutline : MonoBehaviour
 
     protected virtual void Update()
     {
-        outlineMaterial?.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
+        if(outlineMaterial != null)
+        {
+            outlineMaterial.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
+            if (parent.Faction != null)
+                outlineMaterial.SetColor("_OutlineColor", parent.Faction.FactionColor);
+        }
     }
 }

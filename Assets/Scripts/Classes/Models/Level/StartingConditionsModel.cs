@@ -9,6 +9,8 @@ namespace Assets.Scripts.Classes.Models.Level
         [JsonProperty]
         public string OrginalStartingFactionPrefabName;
         [JsonProperty]
+        public string OrginalStartingFactionName;
+        [JsonProperty]
         public Dictionary<string, int> StartingResources = new();
         [JsonProperty]
         public string StartingBuildingPrefabName = null;

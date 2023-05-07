@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Classes.Events;
+using Assets.Scripts.Faction;
 using System;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Commandables
         public bool IsSelectedBy(CommandControllerBase possibleOwner);
         public bool CanBeSelectedBy(CommandControllerBase selector);
         public void RaiseSelectedEvent(object sender, EventArgs e);
+        public BaseFaction Faction { get; }
     }
 
 }

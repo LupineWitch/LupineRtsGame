@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
+using Assets.Scripts.Faction;
 using System;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ namespace Assets.Scripts.Graphics
             set => parent.Preview = value;
         }
         public string DisplayLabel { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public BaseFaction Faction => parent.Faction;
 
         public event SelectedEvent Selected;
 
