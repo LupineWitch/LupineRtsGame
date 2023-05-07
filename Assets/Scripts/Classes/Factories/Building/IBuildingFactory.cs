@@ -6,5 +6,6 @@ namespace Assets.Scripts.Classes.Factories.Building
     public interface IBuildingFactory
     {
         public BuildingBase CreateAndPlaceBuildingBasedOnPrefab(BuildingBase prefab, Vector3Int tilePosition, GameObject parent, MapManager map);
+        public BuildingBase CreateAndPlaceBuildingBasedOnPrefab(BuildingBase prefab, Vector3Int tilePosition, GameObject parent, MapManager map, BuildingFactoryOptions options);
     }
 }

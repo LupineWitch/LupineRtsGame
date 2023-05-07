@@ -29,7 +29,12 @@ public class StartingConditionsManager : MonoBehaviour
 
         var buildingFactory = new PrefabbedBuildingFactory();
         var cellPosition = CommanderOwner.MapManager.MainTilemap.WorldToCell(this.transform.position);
-        var instancedBuilding = buildingFactory.CreateAndPlaceBuildingBasedOnPrefab(StartingBuildingPrefab, cellPosition, BuildingsParent, CommanderOwner.MapManager);
+        var factoryOptions = new BuildingFactoryOptions() { InitialiseAsFinished = true };
+        var instancedBuilding = buildingFactory.CreateAndPlaceBuildingBasedOnPrefab(StartingBuildingPrefab,
+                                                                                    cellPosition,
+                                                                                    BuildingsParent,
+                                                                                    CommanderOwner.MapManager,
+                                                                                    factoryOptions);
         instancedBuilding.ChangeOwner(CommanderOwner);
     }
 

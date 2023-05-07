@@ -93,6 +93,7 @@ public class BuildingBase : EntityBase
 
         buildingCollider = gameObject.GetComponent<Collider2D>();
         this.BuildingProgressChanged += buildingProgressBar.RespondToUpdatedProgress;
+        BuildingProgressChanged?.Invoke(this, new ProgressEventArgs(buildProgress));
     }
 
     protected override void OnDestroy()

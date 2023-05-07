@@ -23,5 +23,14 @@ namespace Assets.Scripts.Classes.Factories.Building
 
             return newBuilding;
         }
+
+        public BuildingBase CreateAndPlaceBuildingBasedOnPrefab(BuildingBase prefab, Vector3Int tilePosition, GameObject parent, MapManager map, BuildingFactoryOptions options)
+        {
+            var createdBuilding = CreateAndPlaceBuildingBasedOnPrefab(prefab, tilePosition, parent, map);
+            if(options.InitialiseAsFinished)
+                createdBuilding.BuildProgress = 1f;
+
+            return createdBuilding;
+        }
     }
 }
