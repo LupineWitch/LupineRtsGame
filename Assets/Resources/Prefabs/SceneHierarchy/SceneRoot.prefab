@@ -74035,7 +74035,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 22462333377881214, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: forResource
-      value: wood_plank
+      value: food
       objectReference: {fileID: 0}
     - target: {fileID: 3496335708245933655, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: m_Pivot.x
@@ -74128,7 +74128,7 @@ PrefabInstance:
     - target: {fileID: 5875750052569607228, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1959400066, guid: 8f6b2a0e6040a5045989b7e26d5cfd6c, type: 3}
+      objectReference: {fileID: 2145462206, guid: 8f6b2a0e6040a5045989b7e26d5cfd6c, type: 3}
     - target: {fileID: 5875750052569607228, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: m_PreserveAspect
       value: 0

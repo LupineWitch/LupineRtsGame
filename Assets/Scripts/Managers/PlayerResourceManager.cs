@@ -24,8 +24,8 @@ namespace Assets.Scripts.Managers
             OwnerId = owner.GetInstanceID();
             this.resourceCounts = new Dictionary<RtsResource, int>()
             {
-                { new RtsResource("wood_log"){ DisplayName = "Timber logs"}, 0 },
-                { new RtsResource("wood_plank"){ DisplayName = "Planks"}, 0 },
+                { new RtsResource("wood_log"){ DisplayName = "Wood"}, 0 },
+                { new RtsResource("food"){ DisplayName = "Food"}, 0 },
                 { new RtsResource("ore"){ DisplayName = "Ore"}, 0 },
             };
         }

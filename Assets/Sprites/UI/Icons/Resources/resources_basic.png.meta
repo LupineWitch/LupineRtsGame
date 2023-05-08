@@ -1367,7 +1367,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: resources_basic_60
+      name: resource_food
       rect:
         serializedVersion: 2
         x: 48
@@ -2338,9 +2338,8 @@ TextureImporter:
       resources_basic_44: -421485455
       resources_basic_69: 2030680881
       resources_basic_35: 404431653
-      resources_basic_60: 2145462206
-      resources_basic_79: 185605333
       resources_basic_71: 461970458
+      resources_basic_79: 185605333
       resources_basic_84: -1191934385
       resources_basic_34: 1891044760
       resources_basic_80: -1633625302
@@ -2356,6 +2355,7 @@ TextureImporter:
       resources_basic_62: 1497065881
       resources_basic_61: 618979775
       resources_basic_72: -50969122
+      resource_food: 2145462206
       resources_basic_14: 61934557
       resources_basic_25: -2069330833
       resources_basic_18: -2047636873
