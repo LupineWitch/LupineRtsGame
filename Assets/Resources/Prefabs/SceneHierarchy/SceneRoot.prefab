@@ -73811,7 +73811,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 22462333377881214, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: forResource
-      value: stone
+      value: ore
       objectReference: {fileID: 0}
     - target: {fileID: 3496335708245933655, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: m_Pivot.x
@@ -73923,7 +73923,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 22462333377881214, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: forResource
-      value: wood_log
+      value: wood
       objectReference: {fileID: 0}
     - target: {fileID: 3496335708245933655, guid: 62cbd51bb9ac09948a0c8196bcbce992, type: 3}
       propertyPath: m_Pivot.x

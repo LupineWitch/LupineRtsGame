@@ -18,7 +18,7 @@ namespace Assets.Scripts.Classes.GameData
         public override bool Equals(object obj)
         {
             return obj is RtsResource resource &&
-                   IdName == resource.IdName;
+                   this.IdName == resource.IdName;
         }
 
         public override int GetHashCode()

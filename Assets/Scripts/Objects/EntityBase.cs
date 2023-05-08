@@ -11,19 +11,22 @@ using UnityEngine;
 public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 {
     [JsonProperty]
-    public string PrefabName { get => prefabName; set => prefabName = value; }
+    public int HealthPoints { get => healthPoints; set => healthPoints = value; }
 
+    [JsonProperty]
+    public string PrefabName { get => prefabName; set => prefabName = value; }
+    public int MaxHealthPoints => maxHealthPoints;
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
     public CommandDirective DefaultDirective { get => defaultDirective; }
     public Sprite Preview { get => preview; set => preview = value; }
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;
-    public BaseFaction Faction 
-    { 
-        get 
+    public BaseFaction Faction
+    {
+        get
         {
-            if(owner != null)
+            if (owner != null)
                 return Owner.Faction;
             return
                 null;
@@ -47,7 +50,10 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     private string prefabName = string.Empty;
     [SerializeField]
     private CommandControllerBase owner;
+    [SerializeField]
+    private int maxHealthPoints;
     private string displayLabel = "Placeholder Entity Label";
+    private int healthPoints;
 
     protected virtual void Awake()
     {

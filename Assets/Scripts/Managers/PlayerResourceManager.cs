@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Classes.GameData;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.GUI;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,17 @@ namespace Assets.Scripts.Managers
             OwnerId = owner.GetInstanceID();
             this.resourceCounts = new Dictionary<RtsResource, int>()
             {
-                { new RtsResource("wood_log"){ DisplayName = "Wood"}, 0 },
+                { new RtsResource("wood"){ DisplayName = "Wood"}, 0 },
                 { new RtsResource("food"){ DisplayName = "Food"}, 0 },
                 { new RtsResource("ore"){ DisplayName = "Ore"}, 0 },
             };
+
+            if(resourceGauges == null || resourceGauges.Count <= 0)
+            {
+                var refManager = this.GetReferenceManagerInScene();
+                resourceGauges = new();
+                resourceGauges.AddRange(refManager.ResourceReadout.GetComponentsInChildren<ResourceGauge>());
+            }    
         }
 
         public void ChangeResourceLevel(string resourceIdName, int value)
@@ -44,7 +52,11 @@ namespace Assets.Scripts.Managers
             if (resourceCounts.ContainsKey(resource))
             {
                 resourceCounts[resource] += value;
-                resourceGauges.Find(g => g.ForResource == resource.IdName)?.ResourceValueChanged(resourceCounts[resource]); // we dont care if no gauge, just dont throw
+                var gauge = resourceGauges.Find(g => g.ForResource == resource.IdName);
+                if (gauge != null)
+                    gauge.ResourceValueChanged(resourceCounts[resource]);
+                else
+                    Debug.LogError($"No gauge found for: {resource.IdName}");
             }
             else
                 Debug.LogWarningFormat("Resource {0} doesn't exist", string.IsNullOrEmpty(resource.DisplayName) ? resource.IdName : resource.DisplayName);
