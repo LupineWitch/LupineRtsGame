@@ -20,7 +20,11 @@ namespace Assets.Scripts.Classes.Models.Level.Map
         [JsonProperty]
         public List<SerializedEntityBase> MapEntities { get; set; }
         [JsonProperty]
-        public List<StartingConditionsModel> startingPositions { get; set; }
+        public List<StartingConditionsModel> StartingPositions { get; set; }
+        [JsonProperty]
+        public BoundsInt MapSize { get; set; }
+        [JsonProperty]
+        public string Difficult { get; set; }
 
         private readonly List<TileObjectModel> containedObjects;
 

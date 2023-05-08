@@ -3,6 +3,7 @@ using Assets.Scripts.Classes.Models.Level;
 using Assets.Scripts.Classes.Models.Level.Map;
 using Assets.Scripts.Managers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.UnityConverters.Geometry;
 using Newtonsoft.Json.UnityConverters.Math;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,8 @@ namespace Assets.Scripts.Classes.Serialisers
                 Converters = new JsonConverter[]
                 {
                     new TypeJsonConverter(),
-                    new ISerializableComponentJsonConverter()
+                    new ISerializableComponentJsonConverter(),
+                    new BoundsIntConverter(),
                 },
             };
 
@@ -62,7 +64,9 @@ namespace Assets.Scripts.Classes.Serialisers
             }
 
             mapModel.MapEntities = mapManger.GetEntitiesToSerialise();
-            mapModel.startingPositions = mapManger.GetSerialisableStartingPositions();
+            mapModel.StartingPositions = mapManger.GetSerialisableStartingPositions();
+            mapModel.MapSize = map.cellBounds;
+            mapModel.Difficult = "Normal";
 
             var settings = new JsonSerializerSettings
             {
@@ -70,7 +74,8 @@ namespace Assets.Scripts.Classes.Serialisers
                 {
                     new TypeJsonConverter(),
                     new Vector3Converter(),
-                    new Vector3IntConverter()
+                    new Vector3IntConverter(),
+                    new BoundsIntConverter(),
                 },
                 ContractResolver = new JsonEntityCustomPropertyResolver(),
                 NullValueHandling = NullValueHandling.Ignore,

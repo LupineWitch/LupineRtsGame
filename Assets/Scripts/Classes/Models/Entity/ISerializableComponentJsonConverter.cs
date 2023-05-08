@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts.Classes.Models.Entity
 {
@@ -24,5 +26,14 @@ namespace Assets.Scripts.Classes.Models.Entity
         {
             throw new NotImplementedException("This converter cannot be used for serialisation");
         }
+
+        //JObject jObject = new();
+        //var propertiesToSerialise = value.GetType()
+        //     .GetProperties()
+        //     .Where(p => p.CustomAttributes.Any(a => a.GetType() == typeof(JsonPropertyAttribute)));
+        //    foreach(var property in propertiesToSerialise)
+        //        jObject.Add(property.Name, property.GetValue(value).ToString());
+
+        //    jObject.WriteTo(writer);
     }
 }

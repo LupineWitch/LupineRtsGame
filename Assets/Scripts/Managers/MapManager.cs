@@ -125,7 +125,7 @@ namespace Assets.Scripts.Managers
         {
             GameObject[] loadedAssets = await LoadPrefabsFromAddress(@"Assets/Prefabs");
             this.factionEntities = DeserialiseGivenEntities(model.MapEntities, loadedAssets);
-            SetStartingPositions(model.startingPositions, loadedAssets);
+            SetStartingPositions(model.StartingPositions, loadedAssets);
         }
 
         public List<StartingConditionsModel> GetSerialisableStartingPositions()

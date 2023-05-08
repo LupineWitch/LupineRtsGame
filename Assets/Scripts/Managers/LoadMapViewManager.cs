@@ -44,6 +44,10 @@ public class LoadMapViewManager : MonoBehaviour
         MapNameBaseText = MapNameLabel.text;
         MapDiffBaseText = MapDiffLabel.text;
 
+        MapDiffLabel.text = string.Format(MapDiffBaseText, string.Empty);
+        MapNameLabel.text = string.Format(MapNameBaseText, string.Empty);
+        MapSizeLabel.text = string.Format(MapSizeBaseText, string.Empty);
+
         loadingModal.SetActive(false);
 
         IEnumerable<string> filesEnumerator = Directory.EnumerateFiles(MapsDirectory, "*.json", SearchOption.AllDirectories);
@@ -74,6 +78,8 @@ public class LoadMapViewManager : MonoBehaviour
     public void SelectMap(int index, MapModel model)
     {
         MapNameLabel.text = string.Format(MapNameBaseText, model.Name);
+        MapDiffLabel.text = string.Format(MapDiffBaseText, model.Difficult);
+        MapSizeLabel.text = string.Format(MapSizeBaseText, model.MapSize.size);
         selectedIndex = index;
     }
 
