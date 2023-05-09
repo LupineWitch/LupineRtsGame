@@ -76,7 +76,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
         StopAllCoroutines();
     }
 
-    public bool CanBeSelectedBy(CommandControllerBase selector) => true;
+    public bool CanBeSelectedBy(CommandControllerBase selector) => selector.Faction == this.Owner.Faction;
 
     public bool IsSelectedBy(CommandControllerBase possibleOwner) => IsSelected;
 
@@ -104,6 +104,9 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     public bool TrySelect(CommandControllerBase selector)
     {
+        if(!this.CanBeSelectedBy(selector))
+            return false;
+
         this.IsSelected = true;
         Selected?.Invoke(this, new SelectedEventArgs(selector, true));
         return true;

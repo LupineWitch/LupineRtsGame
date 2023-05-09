@@ -25,5 +25,13 @@ namespace Assets.Scripts.Faction
         private string factionName;
         [SerializeField]
         private ControllerType whoIsControlling;
+
+        public override bool Equals(object obj)
+        {
+            return obj is BaseFaction faction &&
+                   base.Equals(obj) &&
+                   factionName == faction.factionName &&
+                   whoIsControlling == faction.whoIsControlling;
+        }
     }
 }
