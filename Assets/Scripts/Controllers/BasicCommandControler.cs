@@ -30,6 +30,7 @@ public class BasicCommandControler : CommandControllerBase
     private Color previousCellColor;
     private bool wasGuiClickedThisFrame = false;
     private List<ISelectable> selectablesToHighlight = new List<ISelectable>();
+    private List<ISelectable> selectablesToHighlightUnderSelectionRect = new List<ISelectable>();
 
     public void SetCurrentCommandDirective(int actionId)
     {
@@ -160,6 +161,9 @@ public class BasicCommandControler : CommandControllerBase
         if (wasGuiClickedThisFrame)
             return;
 
+        selectablesToHighlightUnderSelectionRect.ForEach(s => s.HighlightEntity(false));
+        selectablesToHighlightUnderSelectionRect.Clear();
+        
         //Draw selection box
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
@@ -172,13 +176,19 @@ public class BasicCommandControler : CommandControllerBase
 
         selectionBox.transform.position = lowerLeft;
         selectionBox.transform.localScale = upperRight - lowerLeft;
+
+        foreach (var selectable in GetAllSelectablesInSelectionRect())
+        {
+            selectable.HighlightEntity(true);
+            selectablesToHighlightUnderSelectionRect.Add(selectable);
+        }
     }
 
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
         if (!wasGuiClickedThisFrame)
         {
-            HandleSelectionUnderSelectionRect();
+            ProcessSelectionRect();
             SetCommandContextAccordingToSelection();
         }
         startPosition = default;
@@ -229,22 +239,28 @@ public class BasicCommandControler : CommandControllerBase
             CommandContextChanged.Invoke(this, commandContextEventArgs);
     }
 
-    private void HandleSelectionUnderSelectionRect()
+    private void ProcessSelectionRect()
+    {
+        foreach( var selectable in GetAllSelectablesInSelectionRect())
+            if (selectable.TrySelect(this))
+                selectedObjects.Add(selectable);
+
+        SetCurrentCommandDirective(-1);
+        SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
+    }
+
+    private IEnumerable<ISelectable>  GetAllSelectablesInSelectionRect()
     {
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
         foreach (var hit in hits)
         {
-            if(!hit.gameObject.TryGetComponent<ISelectable>(out ISelectable selected))
+            if (!hit.gameObject.TryGetComponent<ISelectable>(out ISelectable selected))
                 continue;
-
-            if (selected.TrySelect(this))
-                selectedObjects.Add(selected);
+            else
+                yield return selected;
         }
-
-        SetCurrentCommandDirective(-1);
-        SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
     }
 
     private void ChangeTimeScale(CallbackContext context)
