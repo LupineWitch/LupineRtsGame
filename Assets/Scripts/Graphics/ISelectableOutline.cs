@@ -28,8 +28,12 @@ public class ISelectableOutline : MonoBehaviour
         if(outlineMaterial != null)
         {
             outlineMaterial.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
+            outlineMaterial.SetInteger("_IsHighlighted", parent.Highlighted ? 1 : 0);
             if (parent.Faction != null)
+            {
                 outlineMaterial.SetColor("_OutlineColor", parent.Faction.FactionColor);
+                outlineMaterial.SetColor("_HighlightColor", parent.Faction.FactionHighlightColor);
+            }
         }
     }
 }

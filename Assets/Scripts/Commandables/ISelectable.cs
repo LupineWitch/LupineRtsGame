@@ -11,12 +11,14 @@ namespace Assets.Scripts.Commandables
         public event SelectedEvent Selected;
         public Sprite Preview { get; set; }
         public string DisplayLabel { get; set; }
+        public bool Highlighted { get; }
+        public BaseFaction Faction { get; }
         public bool TrySelect(CommandControllerBase selector);
         public bool TryUnselect(CommandControllerBase selector);
         public bool IsSelectedBy(CommandControllerBase possibleOwner);
         public bool CanBeSelectedBy(CommandControllerBase selector);
         public void RaiseSelectedEvent(object sender, EventArgs e);
-        public BaseFaction Faction { get; }
+        public void HighlightEntity(bool enable);
     }
 
 }

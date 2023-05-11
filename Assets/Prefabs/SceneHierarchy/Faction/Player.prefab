@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72197a4e00e3474dbd7bef2768d0f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factionColor: {r: 0.090196066, g: 0.77254903, b: 0.3593404, a: 0}
+  factionColor: {r: 0.090196066, g: 0.77254903, b: 0.3593404, a: 1}
   factionName: Player
   whoIsControlling: 1
 --- !u!1 &6538183192199903025

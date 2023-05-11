@@ -309,7 +309,6 @@ namespace Assets.Scripts.Managers
         {
             if (!initialised && factionEntities != default)
                 AddFactionsToDeserialisedElements(factionEntities);
-
         }
     }
 }

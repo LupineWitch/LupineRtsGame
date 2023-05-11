@@ -19,6 +19,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
     public CommandDirective DefaultDirective { get => defaultDirective; }
     public Sprite Preview { get => preview; set => preview = value; }
+    public bool Highlighted => highlighted;
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;
@@ -54,6 +55,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     private int maxHealthPoints;
     private string displayLabel = "Placeholder Entity Label";
     private int healthPoints;
+    private bool highlighted;
 
     protected virtual void Awake()
     {
@@ -102,9 +104,21 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
         currentSubcoroutines.Add(StartCoroutine(command.CommandCoroutine()));
     }
 
+    public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
+
+    public virtual void ChangeOwner(CommandControllerBase newOwner)
+    {
+        this.Owner = newOwner;
+        OwnerChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void HighlightEntity(bool enable)
+    {
+        highlighted = enable && !this.IsSelected;
+    }
     public bool TrySelect(CommandControllerBase selector)
     {
-        if(!this.CanBeSelectedBy(selector))
+        if (!this.CanBeSelectedBy(selector))
             return false;
 
         this.IsSelected = true;
@@ -159,11 +173,5 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     }
 
-    public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
 
-    public virtual void ChangeOwner(CommandControllerBase newOwner)
-    {
-        this.Owner = newOwner;
-        OwnerChanged?.Invoke(this, EventArgs.Empty);
-    }
 }

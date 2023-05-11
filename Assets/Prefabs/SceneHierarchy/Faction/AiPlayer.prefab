@@ -129,6 +129,7 @@ MonoBehaviour:
   mapManager: {fileID: 0}
   buildSpaceManager: {fileID: 0}
   buildingManager: {fileID: 8322271486591051639}
+  faction: {fileID: 0}
 --- !u!114 &8322271486591051639 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4860060191283301585, guid: ffb20619d3edb284ab1b13aa75d7a77b, type: 3}

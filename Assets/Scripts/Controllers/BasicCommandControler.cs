@@ -29,6 +29,7 @@ public class BasicCommandControler : CommandControllerBase
     private Vector3Int previousCell = Vector3Int.zero;
     private Color previousCellColor;
     private bool wasGuiClickedThisFrame = false;
+    private List<ISelectable> selectablesToHighlight = new List<ISelectable>();
 
     public void SetCurrentCommandDirective(int actionId)
     {
@@ -61,7 +62,6 @@ public class BasicCommandControler : CommandControllerBase
         if (selectionBox == null)
             selectionBox = refManager.SelectionBox;
 
-        _ = selectionBox ?? throw new ArgumentNullException(nameof(selectionBox) + "field is null");
         base.Awake();
 
         basicControls = new BasicControls();
@@ -74,7 +74,11 @@ public class BasicCommandControler : CommandControllerBase
 
     protected override void Update()
     {
+        selectablesToHighlight.ForEach(s => s.HighlightEntity(false));
+        selectablesToHighlight.Clear();
+
         ColorCellAtPointer();
+        HighlightSelectablesAtPointer();
         wasGuiClickedThisFrame = EventSystem.current.IsPointerOverGameObject();
     }
 
@@ -95,6 +99,22 @@ public class BasicCommandControler : CommandControllerBase
     {
         if (currentCommandDirective?.ContextCommandDelegator != null)
             currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);
+    }
+
+    private void HighlightSelectablesAtPointer()
+    {
+        Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(worldPos, Vector2.zero);
+        foreach (var hit in hits)
+        {
+            if (hit.collider != null &&
+                hit.transform.gameObject.TryGetComponent(out ISelectable pointedObject))
+            {
+                pointedObject.HighlightEntity(true);
+                selectablesToHighlight.Add(pointedObject);
+            }
+        }
     }
 
     private void ColorCellAtPointer()
@@ -143,10 +163,10 @@ public class BasicCommandControler : CommandControllerBase
         //Draw selection box
         Vector2 pointerPos = pointerPosition.ReadValue<Vector2>();
         pointerPos = Camera.main.ScreenToWorldPoint(pointerPos);
-        Vector2 lowerLeft = new Vector2(
+        Vector2 lowerLeft = new(
             Mathf.Min(startPosition.x, pointerPos.x),
             Mathf.Min(startPosition.y, pointerPos.y));
-        Vector2 upperRight = new Vector2(
+        Vector2 upperRight = new(
             Mathf.Max(startPosition.x, pointerPos.x),
             Mathf.Max(startPosition.y, pointerPos.y));
 
@@ -185,8 +205,7 @@ public class BasicCommandControler : CommandControllerBase
         CommandContextChangedArgs commandContextEventArgs;
         if (selectedObjects.TrueForAll(selected => firstType == selected.GetType()))
         { //Create single context
-            IDeputy deputyEntity = firstSelected as IDeputy;
-            if (deputyEntity == null)
+            if (firstSelected is not IDeputy deputyEntity)
             {
                 Debug.LogError("deputyEntity is null");
                 return;
@@ -217,8 +236,7 @@ public class BasicCommandControler : CommandControllerBase
         Collider2D[] hits = Physics2D.OverlapAreaAll(startPosition, pointerPos);
         foreach (var hit in hits)
         {
-            ISelectable selected = hit.gameObject.GetComponent<ISelectable>();
-            if (selected == null)
+            if(!hit.gameObject.TryGetComponent<ISelectable>(out ISelectable selected))
                 continue;
 
             if (selected.TrySelect(this))

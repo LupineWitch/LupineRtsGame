@@ -16,10 +16,11 @@ namespace Assets.Scripts.Graphics
             get => parent.Preview;
             set => parent.Preview = value;
         }
-        public string DisplayLabel { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string DisplayLabel { get => parent.DisplayLabel; set => parent.DisplayLabel = value; }
 
         public BaseFaction Faction => parent.Faction;
 
+        public bool Highlighted => parent.Highlighted;
         public event SelectedEvent Selected;
 
         private ISelectable parent;
@@ -42,5 +43,7 @@ namespace Assets.Scripts.Graphics
         {
             Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
         }
+
+        public void HighlightEntity(bool enable) => parent.HighlightEntity(enable);
     }
 }

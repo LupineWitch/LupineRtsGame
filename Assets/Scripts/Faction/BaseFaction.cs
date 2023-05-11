@@ -16,6 +16,7 @@ namespace Assets.Scripts.Faction
     public class BaseFaction : MonoBehaviour
     {
         public virtual Color FactionColor => factionColor;
+        public virtual Color FactionHighlightColor => factionColor * 0.9f;
         public virtual string FactionName { get => factionName; set => factionName = value; }
         public virtual ControllerType WhoIsControlling { get => whoIsControlling; }
 
