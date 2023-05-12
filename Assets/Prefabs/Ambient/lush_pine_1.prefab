@@ -28,9 +28,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162207073627138099}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.2, y: 7.36, z: 2.2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 2.2}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: -1
@@ -104,7 +104,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.6916667, y: 3.825}
+    oldSize: {x: 4.2291665, y: 9.5625}
     newSize: {x: 2.03, y: 4.59}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   resourceId: wood
   amount: 2147483647
   prefabName: lush_pine_1
+  displayLabel: 
 --- !u!114 &6433121172376516138
 MonoBehaviour:
   m_ObjectHideFlags: 0
