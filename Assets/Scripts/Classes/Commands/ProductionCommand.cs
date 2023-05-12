@@ -26,7 +26,7 @@ namespace Assets.Scripts.Classes.Commands
             base.currentStateCallback = stateCallback;
             CurrentState = CommandState.InProgress;
             BasicCommandControler commander = sender as BasicCommandControler;
-            var producer = reciever as ProductionBuilding;
+            var producer = reciever as BarracksBuilding;
             while (elapsedTime < buildTime)
             {
                 producer.ProductionProgress = elapsedTime / buildTime;
@@ -37,6 +37,7 @@ namespace Assets.Scripts.Classes.Commands
 
             var instantiatedUnit = UnityEngine.Object.Instantiate(unitPrefab, commander.UnitsContainer.transform);
             instantiatedUnit.transform.position = producer.ExitPoint.transform.position;
+            instantiatedUnit.ChangeOwner(commander);
             CurrentState = CommandState.Ended;
             CommandResult = CommandResult.Success;
         }

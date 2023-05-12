@@ -21,7 +21,7 @@ namespace Assets.Scripts.Commandables.Directives
         {
             foreach (ISelectable selectedObj in selectedObjects)
             {
-                if (selectedObj is not ProductionBuilding productionBuilding)
+                if (selectedObj is not BarracksBuilding productionBuilding)
                     continue;
 
                 ProductionCommand productionCommand = new ProductionCommand(buildTime, unitPrefab, productionBuilding, commander);

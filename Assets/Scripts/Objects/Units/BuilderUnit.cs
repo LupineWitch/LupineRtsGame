@@ -14,12 +14,17 @@ namespace Assets.Scripts.Objects.Units
             base.Awake();
             defaultDirective = new ContextDirective();
             var asyncLoadHandle = Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/Farmhouse/Farmhouse.prefab");
-            Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/LumberHut.prefab").Completed += (loadHandle) =>
+            asyncLoadHandle.Completed += AsyncLoadHandle_Completed;
+            Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/StorageHut.prefab").Completed += (loadHandle) =>
             {
                 ResourceBuilding storage = loadHandle.Result.GetComponent<ResourceBuilding>();
                 menuActions[2] = new BuildDirective(storage);
             };
-            asyncLoadHandle.Completed += AsyncLoadHandle_Completed;
+            Addressables.LoadAssetAsync<GameObject>("Assets/Prefabs/Buildings/Barracks.prefab").Completed += (loadHandle) =>
+            {
+                BarracksBuilding barracks = loadHandle.Result.GetComponent<BarracksBuilding>();
+                menuActions[3] = new BuildDirective(barracks);
+            };
             DisplayLabel = "Builder";
         }
 
