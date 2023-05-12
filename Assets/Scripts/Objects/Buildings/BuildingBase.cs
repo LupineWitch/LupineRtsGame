@@ -50,7 +50,7 @@ public class BuildingBase : EntityBase
     private float buildProgress = 0f;
     private SpriteRenderer spriteRenderer;
 
-    public void Initialize(int builidngLayer, BoundsInt occupiedBounds, Vector3Int tilePosition)
+    public virtual void Initialize(int builidngLayer, BoundsInt occupiedBounds, Vector3Int tilePosition)
     {
         BuildingLayer = builidngLayer;
         OccupiedBounds = occupiedBounds;
@@ -60,6 +60,7 @@ public class BuildingBase : EntityBase
 
     public void BuildingDestroy()
     {
+        StopAllCoroutines();
         this.Destroyed?.Invoke(this, new BuildingEventArgs(this.OccupiedBounds));
     }
 
