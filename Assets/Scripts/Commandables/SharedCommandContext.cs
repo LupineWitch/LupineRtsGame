@@ -28,8 +28,9 @@ namespace Assets.Scripts.Commandables
         public SharedCommandContext(IEnumerable<IDeputy> selectedDeputies)
         {
             Dictionary<CommandDirective, int> directivesCounts = new Dictionary<CommandDirective, int>();
+            var deputies = selectedDeputies.Where(sd => sd is IDeputy);
             //Define common
-            foreach (IDeputy deputy in selectedDeputies)
+            foreach (IDeputy deputy in deputies)
             {
                 foreach (CommandDirective deputyDirective in deputy.AvailableDirectives)
                 {

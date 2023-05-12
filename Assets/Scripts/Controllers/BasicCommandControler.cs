@@ -231,7 +231,8 @@ public class BasicCommandControler : CommandControllerBase
         }
         else //Define shared common command context
         {
-            SharedCommandContext newSharedContext = new SharedCommandContext(selectedObjects.Cast<IDeputy>());
+            var selectedDeputies = selectedObjects.Where( so => so is IDeputy);
+            SharedCommandContext newSharedContext = new SharedCommandContext(selectedDeputies.Cast<IDeputy>());
             this.CurrentSelectionRepresentative = newSharedContext;
             commandContextEventArgs = new CommandContextChangedArgs(CurrentSelectionRepresentative.AvailableDirectives);
         }

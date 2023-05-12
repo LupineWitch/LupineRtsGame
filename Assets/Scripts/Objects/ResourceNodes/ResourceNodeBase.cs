@@ -24,8 +24,8 @@ namespace Assets.Scripts.Objects.ResourceNodes
         public int Amount { get => amount; set => amount = value; }
         public bool CanBeMined => Resource != null && Amount > 0;
         public string PrefabName { get => prefabName; set => prefabName = value; }
-        public Sprite Preview { get; set; }
-        public string DisplayLabel { get; set; }
+        public Sprite Preview { get => preview; set => preview = value; }
+        public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
 
         public event SelectedEvent Selected;
         public bool Highlighted => highlighted;
@@ -33,11 +33,11 @@ namespace Assets.Scripts.Objects.ResourceNodes
         {
             get
             {
-                if(this.faction == null)
+                if (this.faction == null)
                     faction = this.GetReferenceManagerInScene().FactionContainer.transform
                                   .Find("Ambient")
                                   .GetComponent<BaseFaction>();
-                
+
                 return faction;
             }
         }
@@ -50,10 +50,21 @@ namespace Assets.Scripts.Objects.ResourceNodes
         private int amount;
         [SerializeField]
         private string prefabName;
+        [SerializeField]
+        private string displayLabel;
         private RtsResource resource;
         private bool highlighted;
         private bool selected;
         private BaseFaction faction;
+        private Sprite preview;
+
+        protected virtual void Awake()
+        {
+            if (preview == null)
+                preview = gameObject.GetComponent<SpriteRenderer>().sprite;
+
+            Resource = new RtsResource(resourceId);
+        }
 
         public bool CanBeSelectedBy(CommandControllerBase selector) => selector.Faction.WhoIsControlling == ControllerType.Player;
         public void HighlightEntity(bool enable)
@@ -75,7 +86,7 @@ namespace Assets.Scripts.Objects.ResourceNodes
         {
             selected = true;
             this.Selected?.Invoke(this, new SelectedEventArgs(selector, true));
-                return true;
+            return true;
         }
         public bool TryUnselect(CommandControllerBase selector)
         {
@@ -83,12 +94,6 @@ namespace Assets.Scripts.Objects.ResourceNodes
             this.Selected?.Invoke(this, new SelectedEventArgs(selector, false));
             return true;
         }
-
-        protected virtual void Awake()
-        {
-            Resource = new RtsResource(resourceId);
-        }
-
         public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
     }
 }

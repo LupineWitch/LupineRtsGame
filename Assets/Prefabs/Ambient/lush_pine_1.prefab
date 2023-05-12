@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeToGather: 8
-  resourceId: wood_log
+  resourceId: wood
   amount: 2147483647
   prefabName: lush_pine_1
 --- !u!114 &6433121172376516138
