@@ -186,6 +186,8 @@ public class BasicCommandControler : CommandControllerBase
 
     private void MainPointerDrag_canceled(CallbackContext obj)
     {
+        this.selectablesToHighlightUnderSelectionRect.ForEach(s => s.HighlightEntity(false));
+
         if (!wasGuiClickedThisFrame)
         {
             ProcessSelectionRect();
@@ -210,17 +212,18 @@ public class BasicCommandControler : CommandControllerBase
             return;
         }
 
-        ISelectable firstSelected = selectedObjects.First();
+        ISelectable firstSelected = selectedObjects.FirstOrDefault( s => s is IDeputy);
+        if(firstSelected == default)
+        {
+            Debug.LogWarning("No Deputies in selection");
+            return;
+        }
+
         Type firstType = firstSelected.GetType();
         CommandContextChangedArgs commandContextEventArgs;
         if (selectedObjects.TrueForAll(selected => firstType == selected.GetType()))
         { //Create single context
-            if (firstSelected is not IDeputy deputyEntity)
-            {
-                Debug.LogError("deputyEntity is null");
-                return;
-            }
-
+            IDeputy deputyEntity = firstSelected as IDeputy;
             this.CurrentSelectionRepresentative = deputyEntity;
             currentCommandDirective = deputyEntity.DefaultDirective;
             commandContextEventArgs = new CommandContextChangedArgs(deputyEntity.AvailableDirectives);

@@ -136,6 +136,9 @@ namespace Assets.Scripts.Managers
             foreach(var faction in factionContainer.GetComponentsInChildren<BaseFaction>())
             {
                 var startingManager = faction.GetComponentInChildren<StartingConditionsManager>();
+                if (startingManager == default)
+                    continue;
+
                 var startModel = new StartingConditionsModel
                 {
                     StartingBuildingPrefabName = startingManager.StartingBuildingPrefab.PrefabName,
@@ -255,11 +258,11 @@ namespace Assets.Scripts.Managers
 
         private async void SetStartingPositions(List<StartingConditionsModel> startingPositions, GameObject[] buildingPrefabs)
         {
-            var factionContainer = this.transform.parent.Find("Factions");
+            var factionContainer = this.GetReferenceManagerInScene().FactionContainer;
             var loadedFactionPrefabs = await this.LoadPrefabsFromAddress(Faction_Prefabs_Path);
 
             foreach (var conditionsModel in startingPositions)
-            {
+            { 
                 var factionPrefab = loadedFactionPrefabs.FirstOrDefault(prefab => prefab.name == conditionsModel.OrginalStartingFactionPrefabName);
                 var factionInstance = Instantiate(factionPrefab, Vector3.zero, Quaternion.identity, factionContainer.transform);
                 var startManager = factionInstance.GetComponentInChildren<StartingConditionsManager>();
@@ -280,7 +283,9 @@ namespace Assets.Scripts.Managers
         {
             GameObject factionsContainer = this.GetReferenceManagerInScene().FactionContainer;
             var allLoadedFactions = factionsContainer.GetComponentsInChildren<BaseFaction>();
-            if(allLoadedFactions.Length <= 0)
+            if (allLoadedFactions.Length <= 0)
+                return;
+            else if (allLoadedFactions.Length == 1 && allLoadedFactions[0].FactionName.Equals("Ambient", StringComparison.OrdinalIgnoreCase))
                 return;
 
             foreach (var factionKeyEntitiesPair in factionEntities)

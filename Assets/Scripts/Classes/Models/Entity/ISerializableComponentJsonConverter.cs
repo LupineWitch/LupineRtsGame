@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets.Scripts.Classes.Models.Entity
@@ -24,7 +25,8 @@ namespace Assets.Scripts.Classes.Models.Entity
 
         public override void WriteJson(JsonWriter writer, ISerializableEntityComponent value, JsonSerializer serializer)
         {
-            throw new NotImplementedException("This converter cannot be used for serialisation");
+            // Call the default serialization behavior
+            serializer.Serialize(writer, value);
         }
 
         //JObject jObject = new();

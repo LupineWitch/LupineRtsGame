@@ -1,5 +1,9 @@
-﻿using Assets.Scripts.Classes.GameData;
+﻿using Assets.Scripts.Classes.Events;
+using Assets.Scripts.Classes.GameData;
+using Assets.Scripts.Classes.Helpers;
 using Assets.Scripts.Classes.Models.Entity;
+using Assets.Scripts.Commandables;
+using Assets.Scripts.Faction;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,10 +14,33 @@ using UnityEngine;
 
 namespace Assets.Scripts.Objects.ResourceNodes
 {
-    public class ResourceNodeBase : MonoBehaviour, ISerializableEntityComponent
+    public class ResourceNodeBase : MonoBehaviour, ISerializableEntityComponent, ISelectable
     {
-
         public float TimeToGather = 4f;//s
+
+        [JsonProperty]
+        public virtual Type ComponentsType { get => this.GetType(); }
+        public RtsResource Resource { get => resource; set => resource = value; }
+        public int Amount { get => amount; set => amount = value; }
+        public bool CanBeMined => Resource != null && Amount > 0;
+        public string PrefabName { get => prefabName; set => prefabName = value; }
+        public Sprite Preview { get; set; }
+        public string DisplayLabel { get; set; }
+
+        public event SelectedEvent Selected;
+        public bool Highlighted => highlighted;
+        public BaseFaction Faction
+        {
+            get
+            {
+                if(this.faction == null)
+                    faction = this.GetReferenceManagerInScene().FactionContainer.transform
+                                  .Find("Ambient")
+                                  .GetComponent<BaseFaction>();
+                
+                return faction;
+            }
+        }
 
         [SerializeField]
         [JsonProperty]
@@ -21,16 +48,21 @@ namespace Assets.Scripts.Objects.ResourceNodes
         [SerializeField]
         [JsonProperty]
         private int amount;
-        
         [SerializeField]
         private string prefabName;
         private RtsResource resource;
-        [JsonProperty]
-        public virtual Type ComponentsType { get => this.GetType(); }
-        public RtsResource Resource { get => resource; set => resource = value; }
-        public int Amount { get => amount; set => amount = value; }
-        public bool CanBeMined => Resource != null && Amount > 0;
-        public string PrefabName { get => prefabName; set => prefabName = value; }
+        private bool highlighted;
+        private bool selected;
+        private BaseFaction faction;
+
+        public bool CanBeSelectedBy(CommandControllerBase selector) => selector.Faction.WhoIsControlling == ControllerType.Player;
+        public void HighlightEntity(bool enable)
+        {
+            highlighted = enable && !this.selected;
+        }
+
+        public bool IsSelectedBy(CommandControllerBase possibleOwner) => selected;
+
 
         public virtual int TryGather(int howMuch)
         {
@@ -39,9 +71,24 @@ namespace Assets.Scripts.Objects.ResourceNodes
             return ableToGet;
         }
 
+        public bool TrySelect(CommandControllerBase selector)
+        {
+            selected = true;
+            this.Selected?.Invoke(this, new SelectedEventArgs(selector, true));
+                return true;
+        }
+        public bool TryUnselect(CommandControllerBase selector)
+        {
+            selected = false;
+            this.Selected?.Invoke(this, new SelectedEventArgs(selector, false));
+            return true;
+        }
+
         protected virtual void Awake()
         {
             Resource = new RtsResource(resourceId);
         }
+
+        public void RaiseSelectedEvent(object sender, EventArgs e) => this.Selected?.Invoke(sender as ISelectable, e as SelectedEventArgs);
     }
 }

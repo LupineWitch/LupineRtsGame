@@ -57,6 +57,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     private int healthPoints;
     private bool highlighted;
 
+
     protected virtual void Awake()
     {
         if (preview == null)
@@ -76,6 +77,29 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     protected virtual void OnDestroy()
     {
         StopAllCoroutines();
+    }
+    public void HighlightEntity(bool enable)
+    {
+        highlighted = enable && !this.IsSelected;
+    }
+    public bool TrySelect(CommandControllerBase selector)
+    {
+        if (!this.CanBeSelectedBy(selector))
+            return false;
+
+        this.IsSelected = true;
+        Selected?.Invoke(this, new SelectedEventArgs(selector, true));
+        return true;
+    }
+
+    public bool TryUnselect(CommandControllerBase selector)
+    {
+        if (!IsSelected)
+            return false;
+
+        this.IsSelected = false;
+        Selected?.Invoke(this, new SelectedEventArgs(selector, false));
+        return true;
     }
 
     public bool CanBeSelectedBy(CommandControllerBase selector) => selector.Faction == this.Owner.Faction;
@@ -110,30 +134,6 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     {
         this.Owner = newOwner;
         OwnerChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void HighlightEntity(bool enable)
-    {
-        highlighted = enable && !this.IsSelected;
-    }
-    public bool TrySelect(CommandControllerBase selector)
-    {
-        if (!this.CanBeSelectedBy(selector))
-            return false;
-
-        this.IsSelected = true;
-        Selected?.Invoke(this, new SelectedEventArgs(selector, true));
-        return true;
-    }
-
-    public bool TryUnselect(CommandControllerBase selector)
-    {
-        if (!IsSelected)
-            return false;
-
-        this.IsSelected = false;
-        Selected?.Invoke(this, new SelectedEventArgs(selector, false));
-        return true;
     }
 
     private void HandleCommandExecution()
@@ -172,6 +172,4 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
         }
 
     }
-
-
 }
