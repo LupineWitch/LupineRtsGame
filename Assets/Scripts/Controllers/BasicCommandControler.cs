@@ -4,9 +4,11 @@ using Assets.Scripts.Commandables.Directives;
 using Assets.Scripts.Controllers;
 using Assets.Scripts.Helpers;
 using Assets.Scripts.Managers;
+using Assets.Scripts.Objects.ResourceNodes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -31,6 +33,13 @@ public class BasicCommandControler : CommandControllerBase
     private bool wasGuiClickedThisFrame = false;
     private List<ISelectable> selectablesToHighlight = new List<ISelectable>();
     private List<ISelectable> selectablesToHighlightUnderSelectionRect = new List<ISelectable>();
+
+    private static List<Type> selectableImportanceOrder = new List<Type>
+        {
+            typeof(BasicUnitScript),
+            typeof(BuildingBase),
+            typeof(ResourceNodeBase)
+        };
 
     public void SetCurrentCommandDirective(int actionId)
     {
@@ -106,15 +115,12 @@ public class BasicCommandControler : CommandControllerBase
     {
         Vector2 mousePos = basicControls.CommandControls.PointerPosition.ReadValue<Vector2>();
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(worldPos, Vector2.zero);
-        foreach (var hit in hits)
+        RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+        if (hit.collider != null &&
+            hit.transform.gameObject.TryGetComponent(out ISelectable pointedObject))
         {
-            if (hit.collider != null &&
-                hit.transform.gameObject.TryGetComponent(out ISelectable pointedObject))
-            {
-                pointedObject.HighlightEntity(true);
-                selectablesToHighlight.Add(pointedObject);
-            }
+            pointedObject.HighlightEntity(true);
+            selectablesToHighlight.Add(pointedObject);
         }
     }
 
@@ -230,7 +236,7 @@ public class BasicCommandControler : CommandControllerBase
 
         }
         else //Define shared common command context
-        {
+                {
             var selectedDeputies = selectedObjects.Where( so => so is IDeputy);
             SharedCommandContext newSharedContext = new SharedCommandContext(selectedDeputies.Cast<IDeputy>());
             this.CurrentSelectionRepresentative = newSharedContext;
@@ -245,9 +251,21 @@ public class BasicCommandControler : CommandControllerBase
 
     private void ProcessSelectionRect()
     {
-        foreach( var selectable in GetAllSelectablesInSelectionRect())
+        int priority = -1;
+        var filteredSelection = FilterByImportance(GetAllSelectablesInSelectionRect(), selectableImportanceOrder);
+        foreach (var selectable in filteredSelection )
+        {
+            if (priority != -1 && priority != GetPriority(selectable.GetType(), selectableImportanceOrder))
+                break;
+
             if (selectable.TrySelect(this))
+            {
+                if (priority == -1)
+                    priority = GetPriority(selectable.GetType(), selectableImportanceOrder);
+
                 selectedObjects.Add(selectable);
+            }
+        }
 
         SetCurrentCommandDirective(-1);
         SelectionChanged?.Invoke(this, new SelectionChangedEventArgs(selectedObjects));
@@ -265,6 +283,25 @@ public class BasicCommandControler : CommandControllerBase
             else
                 yield return selected;
         }
+    }
+
+    private static List<ISelectable> FilterByImportance(IEnumerable<ISelectable> selectableList, List<Type> importanceOrder)
+    {
+        return selectableList
+            .OrderBy(s => GetPriority(s.GetType(), importanceOrder))
+            .ToList();
+    }
+
+    private static int GetPriority(Type type, List<Type> importanceOrder)
+    {
+        int priority = importanceOrder.IndexOf(type);
+
+        if (priority != -1 || importanceOrder.IndexOf(type.BaseType) == -1)
+        {
+            return priority;
+        }
+
+        return GetPriority(type.BaseType, importanceOrder);
     }
 
     private void ChangeTimeScale(CallbackContext context)
