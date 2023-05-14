@@ -105,7 +105,7 @@ public class BasicCommandControler : CommandControllerBase
         selectionBox.SetActive(false);
     }
    
-    protected override void SendCommandForSelectedEntities(CallbackContext obj)
+    protected void SendCommandForSelectedEntities(CallbackContext obj)
     {
         if (currentCommandDirective?.ContextCommandDelegator != null)
             currentCommandDirective.ContextCommandDelegator(obj, this, selectedObjects);

@@ -67,5 +67,4 @@ public abstract class CommandControllerBase : MonoBehaviour, ICommander
 
     protected abstract void Update();
 
-    protected abstract void SendCommandForSelectedEntities(CallbackContext obj);
 }

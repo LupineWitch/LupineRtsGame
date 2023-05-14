@@ -91,11 +91,6 @@ namespace Assets.Scripts.Controllers
             }
         }
 
-        protected override void SendCommandForSelectedEntities(InputAction.CallbackContext obj)
-        {
-            throw new NotImplementedException();
-        }
-
         private IEnumerator RunDecisionTree()
         {
             decisionTree.StartTree();
