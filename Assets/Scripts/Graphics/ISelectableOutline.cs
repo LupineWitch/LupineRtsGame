@@ -25,14 +25,19 @@ public class ISelectableOutline : MonoBehaviour
 
     protected virtual void Update()
     {
-        if(outlineMaterial != null)
+        SetShaderVariables(outlineMaterial);
+    }
+
+    protected virtual void SetShaderVariables(Material material)
+    {
+        if (material != null)
         {
-            outlineMaterial.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
-            outlineMaterial.SetInteger("_IsHighlighted", parent.Highlighted ? 1 : 0);
+            material.SetInteger("_IsSelected", parent.IsSelectedBy(controller) ? 1 : 0);
+            material.SetInteger("_IsHighlighted", parent.Highlighted ? 1 : 0);
             if (parent.Faction != null)
             {
-                outlineMaterial.SetColor("_OutlineColor", parent.Faction.FactionColor);
-                outlineMaterial.SetColor("_HighlightColor", parent.Faction.FactionHighlightColor);
+                material.SetColor("_OutlineColor", parent.Faction.FactionColor);
+                material.SetColor("_HighlightColor", parent.Faction.FactionHighlightColor);
             }
         }
     }
