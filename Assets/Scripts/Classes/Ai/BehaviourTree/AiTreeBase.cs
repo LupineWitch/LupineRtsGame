@@ -11,7 +11,7 @@ namespace Assets.Scripts.Classes.Ai.BehaviourTree
     {
         private AiTreeNodeBase rootNode = null;
 
-        public virtual void StartTree()
+        public virtual void InitializeTree()
         {
             rootNode = SetupTree();
         }

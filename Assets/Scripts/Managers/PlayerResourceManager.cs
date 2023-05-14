@@ -55,8 +55,6 @@ namespace Assets.Scripts.Managers
                 var gauge = resourceGauges.Find(g => g.ForResource == resource.IdName);
                 if (gauge != null)
                     gauge.ResourceValueChanged(resourceCounts[resource]);
-                else
-                    Debug.LogError($"No gauge found for: {resource.IdName}");
             }
             else
                 Debug.LogWarningFormat("Resource {0} doesn't exist", string.IsNullOrEmpty(resource.DisplayName) ? resource.IdName : resource.DisplayName);

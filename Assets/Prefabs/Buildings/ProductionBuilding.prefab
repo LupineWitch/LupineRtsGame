@@ -127,8 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c8fecca5876c084bab01903f95c0dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: building_production
   preview: {fileID: 0}
   prefabName: ProductionBuilding
+  owner: {fileID: 0}
+  maxHealthPoints: 0
   buildingSize: {x: 7, y: 6}
   buildingProgressBar: {fileID: 5302518566829385452}
   exitPoint: {fileID: 5078264579388198872}

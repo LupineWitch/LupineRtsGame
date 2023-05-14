@@ -508,6 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281433d3f0aa09549932e61819d211be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: building_barracks
   preview: {fileID: 0}
   prefabName: Barracks
   owner: {fileID: 0}

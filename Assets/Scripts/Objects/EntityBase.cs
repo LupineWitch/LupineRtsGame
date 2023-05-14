@@ -15,6 +15,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     [JsonProperty]
     public string PrefabName { get => prefabName; set => prefabName = value; }
+    public string IdName { get => idName; }
     public int MaxHealthPoints => maxHealthPoints;
     public IReadOnlyCollection<CommandDirective> AvailableDirectives => menuActions;
     public CommandDirective DefaultDirective { get => defaultDirective; }
@@ -38,6 +39,8 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
     public CommandControllerBase Owner { get => owner; protected set => owner = value; }
 
+    [SerializeField]
+    private string idName;
     protected CommandDirective defaultDirective;
     protected Command<ICommander, IDeputy> executedCommand;
     protected CommandDirective[] menuActions = new CommandDirective[9];

@@ -26,9 +26,12 @@ namespace Assets.Scripts.Classes.Commands
 
     public abstract class Command<SenderType, RecieverType>
     {
+        public event Action<object, CommandResult> CommandFinished;
+
         public CommandState CurrentState
         {
-            get => _currentState; protected set
+            get => _currentState; 
+            protected set
             {
                 _currentState = value;
                 if (currentStateCallback != null)
@@ -39,9 +42,11 @@ namespace Assets.Scripts.Classes.Commands
         }
         public CommandResult CommandResult
         {
-            get => _commandResult; protected set
+            get => _commandResult; 
+            protected set
             {
                 _commandResult = value;
+                this.CommandFinished?.Invoke(this, value);
                 if (commandResultCallback != null)
                     commandResultCallback(_commandResult);
                 else

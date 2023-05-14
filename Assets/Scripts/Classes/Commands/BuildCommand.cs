@@ -16,7 +16,7 @@ namespace Assets.Scripts.Classes.Commands
         Vector3Int placementPosition;
         private BuildingManager buildingManager;
 
-        public BuildCommand(IDeputy reciever, BasicCommandControler sender, Vector3Int placement, BuildingBase prefab, BuildingManager buildingManager) : base(reciever, sender)
+        public BuildCommand(IDeputy reciever, CommandControllerBase sender, Vector3Int placement, BuildingBase prefab, BuildingManager buildingManager) : base(reciever, sender)
         {
             this.buildingPrefab = prefab;
             this.placementPosition = placement;
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Classes.Commands
             currentStateCallback = stateCallback;
 
             CurrentState = CommandState.Starting;
-            BasicCommandControler commander = base.sender as BasicCommandControler ?? throw new InvalidCastException();
+            CommandControllerBase commander = base.sender as CommandControllerBase ?? throw new InvalidCastException();
             BasicUnitScript builder = base.reciever as BasicUnitScript ?? throw new InvalidCastException();
             var buildersPosition = commander.MapManager.TransformToCellPosition(builder.transform);
             var targetPosition = buildingManager.GetClosestPointNearBuildSite(buildersPosition, placementPosition, buildingPrefab);

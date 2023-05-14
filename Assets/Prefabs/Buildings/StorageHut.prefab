@@ -136,7 +136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44e814412bc43c4195a8e1137c5dd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: building_storage
   preview: {fileID: 0}
   prefabName: StorageHut
+  owner: {fileID: 0}
+  maxHealthPoints: 0
   buildingSize: {x: 5, y: 4}
   buildingProgressBar: {fileID: 2053501147327114412}

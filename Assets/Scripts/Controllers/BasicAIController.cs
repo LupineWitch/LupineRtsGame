@@ -93,7 +93,7 @@ namespace Assets.Scripts.Controllers
 
         private IEnumerator RunDecisionTree()
         {
-            decisionTree.StartTree();
+            decisionTree.InitializeTree();
             while (true)
             {
                 decisionTree.RunTree();

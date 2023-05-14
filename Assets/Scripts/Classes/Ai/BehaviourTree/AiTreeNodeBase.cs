@@ -76,7 +76,7 @@ namespace Assets.Scripts.Classes.Ai.BehaviourTree
             if (nodeData.TryGetValue(key, out data)) return data;
 
             AiTreeNodeBase parentNode = this.Parent;
-            if(parentNode != null) data = parentNode.Evaluate();
+            if(parentNode != null) data = parentNode.GetData(key);
 
             return data;
         }

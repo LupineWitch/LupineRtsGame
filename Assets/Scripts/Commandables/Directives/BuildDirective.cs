@@ -11,7 +11,8 @@ namespace Assets.Scripts.Commandables.Directives
 {
     public class BuildDirective : CommandDirective
     {
-        BuildingBase buildingPrefab;
+        public BuildingBase BuildingPrefab { get => buildingPrefab; }
+        private BuildingBase buildingPrefab;
 
         public BuildDirective()
         {
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Commandables.Directives
 
         public override ContextCommandDelegator ContextCommandDelegator => DelegateBuildCommand;
 
+
         public override void OnDirectiveDeselection(BasicCommandControler controller)
         {
             controller.BuildingSpaceManager.Show(false);
@@ -34,7 +36,7 @@ namespace Assets.Scripts.Commandables.Directives
 
         public override void OnDirectiveSelection(BasicCommandControler controller)
         {
-            controller.BuildingSpaceManager.SetSelectedBuilding(buildingPrefab);
+            controller.BuildingSpaceManager.SetSelectedBuilding(BuildingPrefab);
             controller.BuildingSpaceManager.Show(true);
         }
 
@@ -49,12 +51,12 @@ namespace Assets.Scripts.Commandables.Directives
                 return;
 
             //Validate if bulding can be built here
-            if (!(buildingPrefab.ValidatePlacement(clickResult.topCell, commander.BuildingSpaceManager)))
+            if (!(BuildingPrefab.ValidatePlacement(clickResult.topCell, commander.BuildingSpaceManager)))
                 return;
 
             foreach (BasicUnitScript unit in selectedObjects)
             {
-                unit.SetCommand(new BuildCommand(unit, commander, clickResult.topCell, buildingPrefab ?? commander.BuildingsManager.BuildingPrefab, commander.BuildingsManager));
+                unit.SetCommand(new BuildCommand(unit, commander, clickResult.topCell, BuildingPrefab ?? commander.BuildingsManager.BuildingPrefab, commander.BuildingsManager));
             }
 
         }
