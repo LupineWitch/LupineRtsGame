@@ -69,6 +69,8 @@ namespace Assets.Scripts.Classes.Ai.BasicAiBehaviour
                 BoundsInt boundsInt = new BoundsInt(positionCell, new Vector3Int(25, 25, 1));
                 foreach (var cell in boundsInt.allPositionsWithin)
                 {
+                    if(Vector3Int.Distance(cell, positionCell) < 0.5f)
+                        continue;
                     if (!buildDirective.BuildingPrefab.ValidatePlacement(cell, controller.BuildingSpaceManager))
                         continue;
 

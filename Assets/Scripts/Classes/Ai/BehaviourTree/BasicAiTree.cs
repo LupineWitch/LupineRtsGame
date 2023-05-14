@@ -21,6 +21,7 @@ namespace Assets.Scripts.Classes.Ai.BehaviourTree
             var rootNode = new SequenceNode();
             rootNode.Attach(new CollectResourcesNode("wood"));
             rootNode.Attach(new BuildBuildingNode("building_barracks"));                
+            rootNode.Attach(new BuildBuildingNode("building_farm"));                
 
             rootNode.SetData("AiController", controller);
             return rootNode;
