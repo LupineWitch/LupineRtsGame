@@ -136,10 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b29c03ed56b0d42b532add95b41073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: 
   preview: {fileID: 0}
   prefabName: BuildingBase
   owner: {fileID: 0}
-  maxHealthPoints: 0
+  maxHealthPoints: 100
+  healthBar: {fileID: 5615549513676375632}
   buildingSize: {x: 7, y: 6}
   buildingProgressBar: {fileID: 171886697630836876}
 --- !u!114 &3065541606502256110
@@ -393,3 +395,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6844015840936823651, guid: 531ace2c1afc2d8428163a6c314e807a, type: 3}
   m_PrefabInstance: {fileID: 1803508545743990741}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5615549513676375632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6118467680455354757, guid: 531ace2c1afc2d8428163a6c314e807a, type: 3}
+  m_PrefabInstance: {fileID: 1803508545743990741}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

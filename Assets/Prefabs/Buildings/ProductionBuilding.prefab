@@ -94,6 +94,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1259290771532597151}
   m_SourcePrefab: {fileID: 100100000, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
+--- !u!114 &439820075049781296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5615549513676375632, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
+  m_PrefabInstance: {fileID: 5473279275406839392}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5302518566829385452 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 171886697630836876, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
@@ -132,6 +143,7 @@ MonoBehaviour:
   prefabName: ProductionBuilding
   owner: {fileID: 0}
   maxHealthPoints: 0
+  healthBar: {fileID: 439820075049781296}
   buildingSize: {x: 7, y: 6}
   buildingProgressBar: {fileID: 5302518566829385452}
   exitPoint: {fileID: 5078264579388198872}

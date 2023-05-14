@@ -486,6 +486,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5318331219554029765}
   m_SourcePrefab: {fileID: 100100000, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
+--- !u!114 &3615019552080486608 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5615549513676375632, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
+  m_PrefabInstance: {fileID: 9206854789262288512}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5237298480807190393 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3993512676211931641, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
@@ -513,6 +524,7 @@ MonoBehaviour:
   prefabName: Barracks
   owner: {fileID: 0}
   maxHealthPoints: 450
+  healthBar: {fileID: 3615019552080486608}
   buildingSize: {x: 4, y: 4}
   buildingProgressBar: {fileID: 9054482295988391436}
   exitPoint: {fileID: 8698410627975993697}

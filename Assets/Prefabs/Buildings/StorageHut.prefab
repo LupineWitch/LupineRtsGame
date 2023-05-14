@@ -140,6 +140,18 @@ MonoBehaviour:
   preview: {fileID: 0}
   prefabName: StorageHut
   owner: {fileID: 0}
-  maxHealthPoints: 0
+  maxHealthPoints: 100
+  healthBar: {fileID: 6049278660540678768}
   buildingSize: {x: 5, y: 4}
   buildingProgressBar: {fileID: 2053501147327114412}
+--- !u!114 &6049278660540678768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5615549513676375632, guid: 52b765d332554f74cb8884e0480b0463, type: 3}
+  m_PrefabInstance: {fileID: 2169937202596578336}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

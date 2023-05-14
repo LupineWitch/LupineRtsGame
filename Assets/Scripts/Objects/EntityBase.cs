@@ -3,6 +3,7 @@ using Assets.Scripts.Classes.Events;
 using Assets.Scripts.Commandables;
 using Assets.Scripts.Commandables.Directives;
 using Assets.Scripts.Faction;
+using Assets.Scripts.GUI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,17 @@ using UnityEngine;
 public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 {
     [JsonProperty]
-    public int HealthPoints { get => healthPoints; set => healthPoints = value; }
+    public float HealthPoints
+    {
+        get => healthPoints;
+        set
+        {
+            healthPoints = value;
+            HealthUpdated?.Invoke(this, new ValueUpdatedEventArgs(healthPoints));
+        }
+    }
+
+    public event Action<object, ValueUpdatedEventArgs> HealthUpdated;
 
     [JsonProperty]
     public string PrefabName { get => prefabName; set => prefabName = value; }
@@ -40,7 +51,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     public CommandControllerBase Owner { get => owner; protected set => owner = value; }
 
     [SerializeField]
-    private string idName;
+    protected string idName;
     protected CommandDirective defaultDirective;
     protected Command<ICommander, IDeputy> executedCommand;
     protected CommandDirective[] menuActions = new CommandDirective[9];
@@ -57,8 +68,10 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     private CommandControllerBase owner;
     [SerializeField]
     private int maxHealthPoints;
+    [SerializeField]
+    private RelativeValueBar healthBar;
     private string displayLabel = "Placeholder Entity Label";
-    private int healthPoints;
+    private float healthPoints;
     private bool highlighted;
 
 
@@ -69,6 +82,11 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
 
         if (string.IsNullOrEmpty(prefabName))
             prefabName = gameObject.name;
+
+        healthPoints = maxHealthPoints;
+        healthBar.MaxValue = maxHealthPoints;
+        healthBar.MinValue = 0f;
+        this.HealthUpdated += healthBar.RespondToUpdatedValue;
     }
 
     // Update is called once per frame

@@ -93,6 +93,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c043eb912caf74ca3f9b7a0809011f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: 
   preview: {fileID: 0}
   prefabName: BuilderUnit
+  owner: {fileID: 0}
+  maxHealthPoints: 100
+  healthBar: {fileID: 8921090957504098486}
   unitSpeed: 10
+--- !u!114 &8921090957504098486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5298285122926495624, guid: fb12dcb410fd6ae49825973e65203aba, type: 3}
+  m_PrefabInstance: {fileID: 3623531600433542974}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

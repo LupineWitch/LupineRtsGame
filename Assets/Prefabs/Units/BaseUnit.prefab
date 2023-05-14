@@ -128,10 +128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c787961868af2104cb1bb4b9560f3d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idName: 
   preview: {fileID: 0}
   prefabName: BaseUnit
   owner: {fileID: 0}
-  maxHealthPoints: 0
+  maxHealthPoints: 100
+  healthBar: {fileID: 5298285122926495624}
   unitSpeed: 5
 --- !u!50 &5421309491841505509
 Rigidbody2D:
@@ -280,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8067824149040315597, guid: d258f01dd2238ad428414f6edbc6f7e9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -394,3 +396,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6844015840936823651, guid: 531ace2c1afc2d8428163a6c314e807a, type: 3}
   m_PrefabInstance: {fileID: 2120742216757063181}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5298285122926495624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6118467680455354757, guid: 531ace2c1afc2d8428163a6c314e807a, type: 3}
+  m_PrefabInstance: {fileID: 2120742216757063181}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

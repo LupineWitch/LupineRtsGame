@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6844015840446650733}
   - component: {fileID: 6844015840446650732}
   m_Layer: 0
-  m_Name: ProgressBar
+  m_Name: ValueBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 6844015840936823654}
   - component: {fileID: 6844015840936823653}
   - component: {fileID: 6844015840936823652}
-  - component: {fileID: 3534339947468881456}
+  - component: {fileID: 6118467680455354757}
   m_Layer: 0
   m_Name: HpBar
   m_TagString: Untagged
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3534339947468881456
+--- !u!114 &6118467680455354757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,13 +189,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6844015840936823650}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee894c395d1728441a1132e841c7f368, type: 3}
+  m_Script: {fileID: 11500000, guid: 779952e228103a441a053c7045ba4576, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightOffset: 0
-  leftOffset: 0.04
-  fillBar: {fileID: 6844015841225383722}
-  progress: 0
+  rightOffset: 0.04
+  leftOffset: 0.03
+  fillBar: {fileID: 6844015840446650731}
+  value: 0
+  minValue: 0
+  maxValue: 100
 --- !u!1 &6844015841225383721
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,7 +210,7 @@ GameObject:
   - component: {fileID: 6844015841225383724}
   - component: {fileID: 6844015841225383723}
   m_Layer: 0
-  m_Name: ProgressFill
+  m_Name: ValueFillBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
