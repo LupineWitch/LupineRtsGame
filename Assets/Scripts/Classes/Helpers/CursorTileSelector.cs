@@ -8,10 +8,10 @@ namespace Assets.Scripts.Classes.Helpers
     [Obsolete("This Implementation doesnt work correctly", true)]
     internal class CursorTileSelector : ITopCellSelector
     {
-        //Tweak based on you tile origin; constant offset applied to mouse coordinates
+        //Tweak based on tile origin; constant offset applied to mouse coordinates
         public Vector3 mouseOffset = new Vector3(0, 0f, 0);
 
-        //y difference for each 1 unit of z; My tiles were .25 units tall
+        //y difference for each 1 unit of z; My tiles are .5 units tall 
         public float ydelta = -0.5f;
         //0 to zMax are iterated through when selecting a tile
         private int zMax;

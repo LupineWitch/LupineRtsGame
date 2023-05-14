@@ -7,19 +7,21 @@ using UnityEngine;
 
 namespace Assets.Scripts.Classes.Ai.BehaviourTree
 {
-    public abstract class AiTreeBase : MonoBehaviour
+    public abstract class AiTreeBase
     {
         private AiTreeNodeBase rootNode = null;
 
-        protected virtual void Start()
+        public virtual void StartTree()
         {
             rootNode = SetupTree();
         }
 
-        protected virtual void Update()
+        public virtual NodeState RunTree()
         {
             if (rootNode != null)
-                rootNode.Evaluate();
+               return rootNode.Evaluate();
+            else
+                return NodeState.None;
         }
 
         protected abstract AiTreeNodeBase SetupTree();

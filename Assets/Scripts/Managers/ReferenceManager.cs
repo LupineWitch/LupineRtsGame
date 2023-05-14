@@ -14,14 +14,14 @@ public class ReferenceManager : MonoBehaviour
     public GameObject ResourceReadout => resourceReadout;
     public GameObject BuildingsContainer => buildingsContainer;
     public GameObject FactionContainer => factionContainer;
-
+    public GameObject AmbientContainer => ambientContainer;
     [SerializeField]
     private MapManager mapManager;
     [SerializeField]
     private AvailableBuildingSpaceManager buildingSpaceManager;
-    [SerializeField] 
+    [SerializeField]
     private Tilemap mainTilemap;
-    [SerializeField] 
+    [SerializeField]
     private GameObject selectionBox;
     [SerializeField]
     private GameObject unitsContainer;
@@ -31,4 +31,6 @@ public class ReferenceManager : MonoBehaviour
     private GameObject buildingsContainer;
     [SerializeField]
     private GameObject factionContainer;
+    [SerializeField]
+    private GameObject ambientContainer;
 }

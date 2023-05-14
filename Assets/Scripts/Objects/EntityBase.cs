@@ -20,6 +20,7 @@ public class EntityBase : MonoBehaviour, ISelectable, IDeputy
     public CommandDirective DefaultDirective { get => defaultDirective; }
     public Sprite Preview { get => preview; set => preview = value; }
     public bool Highlighted => highlighted;
+    public CommandState CurrentCommandState => executedCommand?.CurrentState ?? CommandState.Ended;
     public string DisplayLabel { get => displayLabel; set => displayLabel = value; }
     public event SelectedEvent Selected;
     public event OwnerChangedEvent OwnerChanged;

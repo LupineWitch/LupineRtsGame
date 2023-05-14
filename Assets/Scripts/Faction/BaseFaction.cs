@@ -34,5 +34,7 @@ namespace Assets.Scripts.Faction
                    factionName == faction.factionName &&
                    whoIsControlling == faction.whoIsControlling;
         }
+
+        public override int GetHashCode() => HashCode.Combine(base.GetHashCode(), factionName, whoIsControlling);
     }
 }

@@ -129,7 +129,8 @@ MonoBehaviour:
   mapManager: {fileID: 0}
   buildSpaceManager: {fileID: 0}
   buildingManager: {fileID: 8322271486591051639}
-  faction: {fileID: 0}
+  faction: {fileID: 9057972001322380912}
+  playerInput: {fileID: 0}
 --- !u!114 &8322271486591051639 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4860060191283301585, guid: ffb20619d3edb284ab1b13aa75d7a77b, type: 3}
@@ -139,5 +140,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3898c8fc63bcfa04789ca3f37e270375, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9057972001322380912 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5600404975561426390, guid: ffb20619d3edb284ab1b13aa75d7a77b, type: 3}
+  m_PrefabInstance: {fileID: 3462356809080794022}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72197a4e00e3474dbd7bef2768d0f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

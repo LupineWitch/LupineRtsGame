@@ -30,7 +30,7 @@ namespace Assets.Scripts.Managers
                 { new RtsResource("ore"){ DisplayName = "Ore"}, 0 },
             };
 
-            if(resourceGauges == null || resourceGauges.Count <= 0)
+            if( owner.Faction.WhoIsControlling == Faction.ControllerType.Player && (resourceGauges == null || resourceGauges.Count <= 0))
             {
                 var refManager = this.GetReferenceManagerInScene();
                 resourceGauges = new();

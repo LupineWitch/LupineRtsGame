@@ -258,6 +258,7 @@ MonoBehaviour:
   resourceReadout: {fileID: 7003991549625382655}
   buildingsContainer: {fileID: 9200162363142255313}
   factionContainer: {fileID: 1050572792510655692}
+  ambientContainer: {fileID: 706599614071483900}
 --- !u!1 &1651343979925096590
 GameObject:
   m_ObjectHideFlags: 0

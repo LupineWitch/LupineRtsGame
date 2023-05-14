@@ -28,7 +28,7 @@ namespace Assets.Scripts.Classes.Commands
             this.commandResultCallback = resultCallback;
             this.currentStateCallback = SetNewCommand;
             CurrentState = CommandState.Starting;
-            BasicCommandControler controler = this.sender as BasicCommandControler;
+            CommandControllerBase controler = this.sender as CommandControllerBase;
             Vector3Int cellPosOfTargetNode = controler.MapManager.TransformToCellPosition(targetNode.transform);
             WorkerUnit worker = reciever as WorkerUnit;
             //Assuming this doesnt change
