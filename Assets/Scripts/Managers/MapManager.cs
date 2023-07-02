@@ -123,7 +123,7 @@ namespace Assets.Scripts.Managers
     
         public async void DeserialiseInMapManager(MapModel model)
         {
-            GameObject[] loadedAssets = await LoadPrefabsFromAddress(@"Assets/Prefabs");
+            GameObject[] loadedAssets = await LoadPrefabsFromLabel("allPrefabs");
             this.factionEntities = DeserialiseGivenEntities(model.MapEntities, loadedAssets);
             SetStartingPositions(model.StartingPositions, loadedAssets);
         }
@@ -223,35 +223,14 @@ namespace Assets.Scripts.Managers
             return entitiesInFaction;
         }
 
-        private async Task<GameObject[]> LoadPrefabsFromAddress(string prefabDirectoryPath)
+        private async Task<GameObject[]> LoadPrefabsFromLabel(string key)
         {
-            string[] prefabFilePaths = Directory.GetFiles(prefabDirectoryPath, "*.prefab", SearchOption.AllDirectories);
 
             // Load all prefabs asynchronously using Addressables
-            List<AsyncOperationHandle<GameObject>> loadOperationHandles = new();
-            foreach (string filePath in prefabFilePaths)
-            {
-                var loadOperationHandle = Addressables.LoadAssetAsync<GameObject>(filePath.Replace('\\','/')); //normalize windows path format
-                loadOperationHandles.Add(loadOperationHandle);
-            }
-
-            await Task.WhenAll(loadOperationHandles.Select(handle => handle.Task));
+            AsyncOperationHandle<IList<GameObject>> loadOperationHandles = Addressables.LoadAssetsAsync<GameObject>(key, null);
 
             // Collect all loaded prefabs into a list
-            var loadedPrefabs = new List<GameObject>(loadOperationHandles.Count);
-            foreach (var loadOperationHandle in loadOperationHandles)
-            {
-                if (loadOperationHandle.Status == AsyncOperationStatus.Succeeded)
-                {
-                    loadedPrefabs.Add(loadOperationHandle.Result);
-                }
-            }
-
-            // Release the load operation handles
-            foreach (var loadOperationHandle in loadOperationHandles)
-            {
-                Addressables.Release(loadOperationHandle);
-            }
+            var loadedPrefabs = await loadOperationHandles.Task;
 
             return loadedPrefabs.ToArray();
         }
@@ -259,7 +238,7 @@ namespace Assets.Scripts.Managers
         private async void SetStartingPositions(List<StartingConditionsModel> startingPositions, GameObject[] buildingPrefabs)
         {
             var factionContainer = this.GetReferenceManagerInScene().FactionContainer;
-            var loadedFactionPrefabs = await this.LoadPrefabsFromAddress(Faction_Prefabs_Path);
+            var loadedFactionPrefabs = await this.LoadPrefabsFromLabel("factionPrefabs");
 
             foreach (var conditionsModel in startingPositions)
             { 

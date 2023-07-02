@@ -53,6 +53,10 @@ namespace Assets.Scripts.Classes.Ai.BasicAiBehaviour
 
                 return true;
             });
+
+            if(!builders.Any())
+                return NodeState.Failure;
+
             //get building prefab
             var buildDirective = builders.First().AvailableDirectives.First(dir => 
             {

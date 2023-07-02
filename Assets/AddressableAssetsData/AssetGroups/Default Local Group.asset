@@ -20,47 +20,32 @@ MonoBehaviour:
   - m_GUID: 924f460fd7ea4214f97803fb02f4dfd7
     m_Address: Assets/Tilepallets/UtilityTilePalette.prefab
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 107b23aa8455e5c4590cff0a79220779
     m_Address: Assets/Tilepallets/UtilityPaletteAssets
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1fe5472b435f8de48a1fb5d865854e33
     m_Address: Assets/Tilepallets/UtilityPaletteAssets/BasicWhiteTile.asset
     m_ReadOnly: 1
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3e5c63c901120af488ff7ab91a34d328
     m_Address: Assets/Sprites/Entities/Building/Farmhouse
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f97f0b1c4925a8648ab69746344543c8
     m_Address: Assets/Sprites/UI/Icons/Resources
     m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4823619b2a2fe4f4e891161052385987
-    m_Address: Assets/Prefabs/Buildings/LumberHut.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dc6ab2413f3beed468a82db82836753f
-    m_Address: Assets/Prefabs/SceneHierarchy/AiPlayer.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ffb20619d3edb284ab1b13aa75d7a77b
-    m_Address: Assets/Prefabs/SceneHierarchy/Player.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c3bcbede93338644da72e9df87c03477
-    m_Address: Assets/Prefabs/SceneHierarchy
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dca91341924f447b6ea0f4abfe783f, type: 2}

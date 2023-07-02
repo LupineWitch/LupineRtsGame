@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 22ab413828a7f534abedc0ca12a483fe
   m_CachedHash:
     serializedVersion: 2
-    Hash: d92431da70c1453d669817523d636a3b
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   m_NonRecursiveBuilding: 1
   m_CCDEnabled: 0
   m_maxConcurrentWebRequests: 3
-  m_ContiguousBundles: 1
+  m_ContiguousBundles: 0
   m_StripUnityVersionFromBundleBuild: 0
   m_DisableVisibleSubAssetRepresentations: 0
   m_ShaderBundleNaming: 0
@@ -38,10 +38,10 @@ MonoBehaviour:
     m_Id: 
   m_RemoteCatalogLoadPath:
     m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
-  m_BuildAddressablesWithPlayerBuild: 0
+  m_BuildAddressablesWithPlayerBuild: 1
   m_overridePlayerVersion: 
   m_GroupAssets:
   - {fileID: 11400000, guid: 3f60fbc9ca769ba4cb07a3c874eafe24, type: 2}
@@ -90,6 +90,8 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - baseUnit
+    - factionPrefabs
+    - allPrefabs
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 0111fc2cfdfafec44b8d265bbfacee12, type: 2}

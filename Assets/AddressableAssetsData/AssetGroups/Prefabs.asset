@@ -22,32 +22,48 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - baseUnit
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fb12dcb410fd6ae49825973e65203aba
     m_Address: Assets/Prefabs/Units/BaseUnit.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - baseUnit
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 52b765d332554f74cb8884e0480b0463
-    m_Address: Assets/Prefabs/Buildings/BuildingBase.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 21fc637be7a66104ab60e39f40d2e8e1
-    m_Address: Assets/Prefabs/Buildings/ProductionBuilding.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3dcd0fd9f6a6d4540b76605bd3739673
-    m_Address: Assets/Prefabs/Buildings/Farmhouse/Farmhouse.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 162b1cb9b589e9648bab3da1ad5a81af
     m_Address: Assets/Prefabs
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - allPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3bcbede93338644da72e9df87c03477
+    m_Address: Assets/Prefabs/SceneHierarchy
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - factionPrefabs
+    - allPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bf7840d596e27c4b9c6b401dd35ce8f
+    m_Address: Assets/Prefabs/SceneHierarchy/Faction
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - factionPrefabs
+    - allPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc6ab2413f3beed468a82db82836753f
+    m_Address: Assets/Prefabs/SceneHierarchy/AiPlayer.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - factionPrefabs
+    - allPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ffb20619d3edb284ab1b13aa75d7a77b
+    m_Address: Assets/Prefabs/SceneHierarchy/Player.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - factionPrefabs
+    - allPrefabs
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: f4dca91341924f447b6ea0f4abfe783f, type: 2}
